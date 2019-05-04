@@ -5,6 +5,7 @@ html/*
 cgi-bin/*
 
 .well-known/*
+.htaccess
 
 application/cache/*
 !application/cache/index.html
