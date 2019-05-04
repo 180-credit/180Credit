@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800");
 @import url("https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700");
+@import url("https://fonts.googleapis.com/css?family=PT+Sans:400,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
 /*-------- Font family & Comman Bgcolor Variable--------*/
 /*-------- Body Variable --------*/
 /*-------------- Generic Css Starts --------------*/
@@ -13,7 +15,7 @@
 .text-secondary { color: #4a5566 !important; }
 
 /*-------------- Generic Css Ends --------------*/
-body { font-family: "Open Sans", sans-serif; font-weight: 400; color: #777; font-size: 16px; line-height: 20px; width: 100%; }
+body { font-family: "Open Sans", sans-serif; font-weight: 400; color: #777; font-size: 16px; line-height: 20px; background-color: #f3f3f4; width: 100%; }
 
 a { color: #777; }
 a:hover { text-decoration: none; color: #e57125; }
@@ -27,15 +29,23 @@ a:hover { text-decoration: none; color: #e57125; }
 
 h1 { font-size: 2.06rem; }
 
-.btn-primary { background-color: #e57125; border-color: #e57125; color: #fff; }
+.btn-link { color: #777; }
+.btn-link:hover { text-decoration: none; color: #e57125; }
+
+.btn-primary { background-color: #e57125; border-color: #e57125; color: #fff !important; }
 .btn-primary.disabled, .btn-primary:disabled { background-color: #e57125; border-color: #e57125; color: #fff; }
 .btn-primary:hover { background-color: #4a5566; border-color: #4a5566; color: #fff; }
 
 .btn-secondary { background-color: #4a5566; border-color: #4a5566; color: #fff; }
 .btn-secondary.disabled, .btn-secondary:disabled { background-color: #4a5566; border-color: #4a5566; color: #fff; }
 .btn-secondary:hover { background-color: #4a5566; border-color: #4a5566; color: #fff; }
-.txtwhite{color: #fff !important;}
+
+.btn-default { background-color: #fff; }
+
+@media (min-width: 1400px) { .container { max-width: 1230px; } }
 /* Header CSS Starts */
+.home header { z-index: 2; width: 100%; background: rgba(255, 255, 255, 0.8); }
+
 header { z-index: 2; width: 100%; background: rgba(255, 255, 255, 0.8); }
 header .navbar .navbar-toggler { color: #e57125; margin-left: 15px; padding: 2px 18px; border-radius: 8px; border: 1px solid #e57125; }
 header .navbar .navbar-toggler span { font-size: 17px; line-height: normal; }
@@ -79,7 +89,6 @@ header .navbar-nav a:hover { color: #e57125; }
 .how-can-we-help .right-content h4 { font-weight: 700; color: #e57125; }
 .how-can-we-help .help-bottom-row h4 { color: #4a5566; }
 
-
 /* How Can We Help Block CSS Ends */
 footer { background-color: #4a5566; }
 footer li { margin-bottom: 5px; }
@@ -95,5 +104,94 @@ footer .footer-bottom .social-links { text-align: right; }
 footer .footer-bottom .social-links ul li a { border-radius: 100%; text-align: center; height: 40px; width: 40px; background-color: #001a33; color: #8c8c8c; border: 3px solid #8c8c8c; display: inline-block; line-height: 33px; }
 footer .footer-bottom .social-links ul li a:hover { color: #fff; border-color: #fff; }
 @media (max-width: 768px) { footer .footer-bottom .col-md-6, footer .footer-bottom .social-links { text-align: center; } }
+
+/*google button*/
+.login-btn-block p { margin-bottom: 30px; }
+.login-btn-block a { color: #e57125; cursor: pointer; }
+.login-btn-block a:hover { text-decoration: underline; }
+.login-btn-block h6 { color: #333; }
+.login-btn-block h4 { font-family: "PT Sans", sans-serif; color: #4a5566; font-weight: 700; }
+.login-btn-block h5 { color: #4a5566; font-weight: 600; }
+.login-btn-block .form-group input { border-color: #e1e1e4; }
+.login-btn-block .form-group input::placeholder { font-size: 13px; color: #999; }
+.login-btn-block .form-check { color: #333; }
+
+.btn-primary.btn-icon { padding: 11px; font-family: "Roboto", sans-serif; font-weight: 500; }
+.btn-primary.btn-icon.google-btn { background-color: #4688f1; border-color: #4688f1; }
+.btn-primary.btn-icon.google-btn:before { content: ""; position: absolute; left: 10px; background-image: url("../images/btn_google.svg"); background-repeat: no-repeat; background-position: center; width: 29px; height: 29px; top: 9px; }
+.btn-primary.btn-icon.google-btn:active, .btn-primary.btn-icon.google-btn:focus { background-color: #4688f1; border-color: #4688f1; }
+.btn-primary.btn-icon i { position: absolute; left: 10px; font-size: 33px; }
+.btn-primary.btn-icon.fb-btn { background-color: #4267b2; border-color: #4267b2; }
+.btn-primary.btn-icon.fb-btn i { top: 7px; }
+.btn-primary.btn-icon.fb-btn:active, .btn-primary.btn-icon.fb-btn:focus { background-color: #4267b2; border-color: #4267b2; }
+.btn-primary.btn-icon.envelope-btn { background-color: #4a5566; border-color: #4a5566; }
+.btn-primary.btn-icon.envelope-btn i { top: 8px; }
+.btn-primary.btn-icon.envelope-btn:active, .btn-primary.btn-icon.envelope-btn:focus { background-color: #4a5566; border-color: #4a5566; }
+
+.account-page aside h3 { color: #e57125; font-family: "PT Sans Narrow", sans-serif; }
+.account-page aside .card-body ul li { background: transparent; padding: 15px; font-size: 16px; }
+.account-page aside .card-body ul li a i { margin-right: 15px; }
+.account-page aside .card-body ul li.active, .account-page aside .card-body ul li:hover { background: #e57125; border-radius: 5px; }
+.account-page aside .card-body ul li.active a, .account-page aside .card-body ul li:hover a { color: #fff; }
+.account-page .col-md-7 .card-header { border-bottom: 2px solid #e57125; }
+.account-page .col-md-7 .card-header h5 { font-weight: 600; color: #5e5e5e; }
+.account-page .col-md-7 .card-header h5 a { position: absolute; right: 0; cursor: pointer; }
+.account-page .col-md-7 .account-content-block h5 { color: #333; font-weight: 600; }
+.account-page .col-md-7 .account-content-block span.verified-span { font-weight: 700; color: #006600; font-size: 13px; }
+.account-page .col-md-7 .account-content-block span.verified-span i { font-size: 14px; }
+.account-page .col-md-7 .account-content-block .acc-mail-content span { margin-bottom: 10px; }
+.account-page .col-md-7 .account-content-block .acc-mail-content span i { font-size: 20px; }
+.account-page .col-md-7 .account-content-block .acc-mail-content span:nth-child(1) i { color: #006600; }
+.account-page .col-md-7 .account-content-block .acc-mail-content span:nth-child(2) i { color: #fc0101; }
+.account-page .col-md-7 .account-content-block .acc-pass-sec-content i { font-size: 25px; }
+.account-page .col-md-7 .account-content-block .acc-pass-sec-content h6 { margin-bottom: 0; font-weight: 600; }
+.account-page .col-md-7 .account-content-block .acc-pass-sec-content p { font-size: 12px; }
+.account-page .col-md-7 .account-content-block .acc-pass-sec-content .pass-block i { color: #006600; }
+.account-page .col-md-7 .account-content-block .acc-pass-sec-content .sec-block i { color: #fc0101; }
+.account-page .pass-sec-edit h6 { color: #e57125; font-weight: 600; }
+.account-page .pass-sec-edit p { font-size: 11px; line-height: initial; margin-top: 5px; }
+.account-page .pass-sec-edit .form-group label { font-size: 14px; }
+.account-page .pass-sec-edit .form-check-label { font-size: 14px; }
+
+.my-bis-pro .card-header .nav { width: auto; margin-left: auto; }
+.my-bis-pro .card-header .nav .nav-item { position: relative; margin-right: 15px; }
+.my-bis-pro .card-header .nav .nav-item .nav-link { padding-left: 0; padding-right: 0; }
+.my-bis-pro .card-header .nav .nav-item .nav-link:before { content: ''; background: #e57125; height: 3px; width: 100%; position: absolute; left: 0; bottom: 0; opacity: 0; }
+.my-bis-pro .card-header .nav .nav-item .nav-link.active:before { opacity: 1; }
+.my-bis-pro .card-header .nav .nav-item:last-child { margin-right: 0; }
+
+.chk-box-block .form-group { margin-bottom: 0; }
+.chk-box-block .form-check-label { font-size: 13px; }
+
+.abt-us-tab p { font-size: 12px; margin-bottom: 0; }
+
+.fee-tab h5 { font-weight: 600; color: #e57125; }
+.fee-tab h6 { font-weight: 600; font-size: 14px; color: #222; }
+.fee-tab i { font-size: 20px; }
+.fee-tab p { font-size: 14px; margin: 20px 0 15px; }
+.fee-tab label { font-size: 13px; margin-bottom: 5px; }
+
+.toggle.btn { min-height: 25px; border-color: #3ac47d; cursor: pointer; margin-left: 5px; }
+.toggle.off { border-color: #d92550; }
+.toggle .btn { font-size: 14px; padding: 0 12px; color: #fff; text-transform: capitalize; cursor: pointer; margin-bottom: 0; }
+.toggle .btn.toggle-on { padding: 0 18px 0 5px; background-color: #3ac47d; border-color: #3ac47d; }
+.toggle .btn.toggle-off { padding: 0 5px 0 18px; background-color: #d92550; border-color: #d92550; }
+.toggle .btn.btn-default { padding: 0 5px 0 18px; }
+
+.fee-tab .toggle.btn { min-height: 28px; }
+
+.form-top-row i { color: #3ac47d; }
+
+.fee-bottom-block .form-row { margin-bottom: 7px; }
+.fee-bottom-block .form-row i { color: #ff0000; }
+.fee-bottom-block .row { background: #f2f2f2; border: 1px solid #c8c8c8; padding: 10px 15px; color: #333; }
+.fee-bottom-block .row label { margin-bottom: 0; font-size: 14px; }
+
+.select2-outer-div { width: 100%; }
+.select2-outer-div .select2 { width: 100% !important; }
+.select2-outer-div .select2-container--default.select2-container--focus .select2-selection--multiple { border: 1px solid #aaa; }
+.select2-outer-div .select2-container--default .select2-selection--multiple { border: 1px solid #ced4da; min-height: 38px; }
+.select2-outer-div .select2-container--default .select2-selection--multiple .select2-selection__choice { background-color: #e0f3ff; border: 1px solid #94d5ff; color: #222; font-size: 14px; margin-top: 6px; }
+.select2-outer-div .select2-container--default .select2-selection--multiple .select2-selection__choice span { color: #222; }
 
 /*# sourceMappingURL=stylesheet.css.map */
