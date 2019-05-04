@@ -26,11 +26,17 @@
 	<!-- Required CSS [Bootstrap Stylesheets] Starts -->
 	<link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 	<!-- Required CSS [Bootstrap Stylesheets] Ends -->
+        
+        <!-- [Owl Stylesheets] Starts-->
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/owlcarousel/assets/owl.carousel.min.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/owlcarousel/assets/owl.theme.default.min.css">
+	<!-- [Owl Stylesheets] Ends-->
 
 	<!-- [Our Stylesheets] Starts -->
 	<link href="<?php echo base_url(); ?>assets/css/stylesheet.css" rel="stylesheet" media="screen" />
         <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" media="screen" />
 	<!-- [Our Stylesheets] Ends -->
+        <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.slim.min.js" type="text/javascript"></script>
         
 </head>
 
@@ -41,7 +47,7 @@
 			<div class="row">
 				<div class="col-6 col-md-3">
 					<div class="logo">
-						<a href="index.html"><img src="<?php echo base_url(); ?>assets/images/logo.png" title="logo" alt="logo" class="img-res"></a>
+						<a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>assets/images/logo.png" title="logo" alt="logo" class="img-res"></a>
 					</div>
 				</div>
 				<div class="col-6 col-md-9">

@@ -69,7 +69,7 @@
 	<!--  [Script Section] Starts -->
 
 	<!--  Required JS [Bootstrap Js] Starts -->
-	<script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.slim.min.js" type="text/javascript"></script>
+	
 	<script src="<?php echo base_url(); ?>assets/js/popper.min.js" type="text/javascript"></script>
 	<script src="<?php echo base_url(); ?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<!--  Required JS [Bootstrap Js] Ends -->
