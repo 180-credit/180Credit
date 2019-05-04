@@ -7,38 +7,38 @@ class Login extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->model('login_model');
-        $this->load->library('email');        
-    }
+        $this->load->library('email');     
+	}	
 	
     public function index() {
         
         $data['msg'] = '';
         $data['title'] = 'Consumer access';
-        $data['view'] = 'login/loginconsumer';
+        $data['view'] = 'login/login_consumer';
         $this->load->view('content', $data);
     }
 	
-	public function loginserviceprovider() {
+	public function login_service_provider() {
         
         $data['msg'] = '';
         $data['title'] = 'Service Provider Access';
-        $data['view'] = 'login/loginserviceprovider';
+        $data['view'] = 'login/login_service_provider';
         $this->load->view('content', $data);
     }
 	
-	public function consumer() {
+	public function signup_consumer() {
         
         $data['msg'] = '';
         $data['title'] = 'Create a consumer account';
-        $data['view'] = 'login/consumer';
+        $data['view'] = 'login/signup_consumer';
         $this->load->view('content', $data);
     }
 	
-	public function serviceprovider() {
+	public function signup_service_provider() {
         
         $data['msg'] = '';
         $data['title'] = 'Create a service provider account';
-        $data['view'] = 'login/serviceprovider';
+        $data['view'] = 'login/signup_service_provider';
         $this->load->view('content', $data);
     }
 	

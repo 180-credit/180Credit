@@ -11,10 +11,9 @@ class Home extends CI_Controller {
     }
 
     public function index() {
-        
         $data['msg'] = '';
-        $data['title'] = 'Account';
-        $data['view'] = 'myaccount';
+        $data['title'] = 'Dashboard';
+        $data['view'] = 'dashboard';
         $this->load->view('content', $data);
     }
 	
@@ -22,11 +21,11 @@ class Home extends CI_Controller {
         
         $data['msg'] = '';
         $data['title'] = 'My Business Profile';
-        $data['view'] = 'my-bis-pro';
+        $data['view'] = 'profile';
         $this->load->view('content', $data);
     }
 	
-	public function editprofile() {
+	public function edit_profile() {
         
         $data['msg'] = '';
         $data['title'] = 'Account';
@@ -34,11 +33,11 @@ class Home extends CI_Controller {
         $this->load->view('content', $data);
     }
 	
-	public function passandsecurity() {
+	public function passand_security() {
         
         $data['msg'] = '';
         $data['title'] = 'Password & Security';
-        $data['view'] = 'my-pass-sec';
+        $data['view'] = 'passand_security';
         $this->load->view('content', $data);
     }
 	
@@ -53,7 +52,7 @@ class Home extends CI_Controller {
         } else {
 			$data['msg'] = '';
 			$data['title'] = 'Password & Security';
-            $data['view'] = 'login/changepassword';
+            $data['view'] = 'login/change_password';
             $this->load->view('content', $data);
         }
     }

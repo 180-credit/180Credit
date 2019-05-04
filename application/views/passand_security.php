@@ -1,18 +1,7 @@
 <main>
 	<div class="container account-page">
 		<div class="row justify-content-center my-5 py-5">
-			<aside class="col-md-3 mb-4 mb-md-0">
-				<div class="card p-0 border-0 bg-transparent">
-					<h3 class="mb-4">Manage my account</h3>
-					<div class="card-body p-0 border-0">
-						<ul class="list-group">
-							<li class="list-group-item border-0"><a href="my-account.html"><i class="fas fa-globe"></i>My Account</a></li>
-							<li class="list-group-item border-0"><a href="#"><i class="fas fa-user"></i>My Business Profile</a></li>
-							<li class="list-group-item border-0 active"><a href="my-pass-sec.html"><i class="fas fa-lock"></i>Password and Security</a></li>
-						</ul>
-					</div>
-					</div>
-			</aside>
+			<?php $this->load->view('left'); ?>
 			<div class="col-md-7 shadow bg-white px-0">
 				<div class="mb-3 card border-0">
 					<div class="card-header bg-transparent">

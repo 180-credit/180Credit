@@ -68,8 +68,8 @@
 									</a>
 
 									<div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
-										<a href="<?= base_url(); ?>/login/consumer" class="btn btn-primary btn-block txtwhite">Consumer</a>
-										<a href="<?= base_url(); ?>login/serviceprovider" class="btn btn-secondary btn-block txtwhite">Service Provider</a>
+										<a href="<?= base_url(); ?>login/signup_consumer" class="btn btn-primary btn-block txtwhite">Consumer</a>
+										<a href="<?= base_url(); ?>login/signup_service_provider" class="btn btn-secondary btn-block txtwhite">Service Provider</a>
 									</div>
 								</div>
 								<button type="button" class="btn list-buis">List Your Business</button>
