@@ -15,11 +15,13 @@ class Login extends CI_Controller {
 
     public function login_service_provider() {
         $data['title'] = 'Service Provider access';
+        $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $this->template->load('layout', 'login/login_service_provider', $data);
     }
 
     public function login_consumer() {
         $data['title'] = 'Consumer access';
+        $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $this->template->load('layout', 'login/login_consumer', $data);
     }
 
@@ -34,12 +36,12 @@ class Login extends CI_Controller {
     }
     
 
-    public function signup_cunsumer_store(){
+    public function signup_store(){
         $trackToken = rand(100000,999999);
         $data = [
             'firstName'=>$this->input->post('first_name'),
             'lastName'=>$this->input->post('last_name'),
-            '180creditUserType'=>2,
+            '180creditUserType'=> $this->input->post('user_type'),
             'userEmail'=>$this->input->post('email'),
             'userPassword'=>password_hash($this->input->post('password'),PASSWORD_DEFAULT),
             'verificationToken'=>$trackToken
@@ -91,10 +93,41 @@ class Login extends CI_Controller {
                 'email' => $result->userEmail,
             );
             $this->session->set_userdata('logged_in', $session_data);
+            $this->session->set_flashdata('success', 'An verification mail has been sent to your mail, please verify your account.');
             redirect('/login/login_consumer');
         }
         else{
+            $this->session->set_flashdata('success', 'An verification mail has been sent to your mail, please verify your account.');
             redirect('/login/login_consumer');
         }
+    }
+    
+    public function login_post(){
+        $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where($condition);
+        $this->db->limit(1);
+        $result = (array)$this->db->get()->row();
+        if(password_verify($this->input->post('password'), $result['userPassword'])){
+            $this->session->set_flashdata('success', 'You are login successfully.');
+            redirect('/login/success_screen');
+        }
+        else {
+            if($result['180creditUserType'] == 1){
+                $this->session->set_flashdata('error', 'Email and password mismetch.');
+                redirect('/login/login_service_provider');
+            }
+            else {
+                $this->session->set_flashdata('error', 'Email and password mismetch.');
+                redirect('/login/login_consumer');
+            }
+        }
+    }
+
+    public function success_screen() {
+        $data['title'] = 'Success';
+        $data['msg'] = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+        $this->template->load('layout', 'login/success_screen', $data);
     }
 }

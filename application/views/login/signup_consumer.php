@@ -5,7 +5,8 @@
             <h4 class="mb-3">Create a consumer account</h4>
             <p class="mb-2">If you offer credit repair and/or industry related services, <a href="#">click here</a>.</p>
             <p>Already have an account? <a href="<?= base_url(); ?>login/login_consumer">Log in</a>.</p>
-            <form id="consumer_form" method="post" action="<?= base_url(); ?>login/signup_cunsumer_store">
+            <form id="consumer_form" method="post" action="<?= base_url(); ?>login/signup_store">
+                <input type="hidden" name="user_type" value="2">
                 <div class="form-group">
                     <label for="email">Enter your email</label>
                     <input type="email" class="form-control" name="email" id="email">

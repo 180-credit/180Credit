@@ -8,12 +8,22 @@
             <a href="<?= base_url(); ?>login/signup_consumer" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
             <h6 class="text-center mt-3">or</h6>
             <h5 class="text-center mb-4">Log in with email</h5>
-            <form>
+            <form action="<?= base_url(); ?>login/login_post" method="post">
+                <?php
+                if(isset($error)){
+                    ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Danger!</strong> <?= $error ?>
+                    </div>
+                    <?php
+                }
+                ?>
                 <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="email address">
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="email address">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="password">
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="password">
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">

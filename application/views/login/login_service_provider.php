@@ -9,6 +9,16 @@
             <h6 class="text-center mt-3">or</h6>
             <h5 class="text-center mb-4">Log in with email</h5>
             <form>
+                <?php
+                if (isset($error)) {
+                    ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Danger!</strong> <?= $error ?>
+                    </div>
+                    <?php
+                }
+                ?>
                 <div class="form-group">
                     <input type="email" class="form-control" id="exampleInputEmail1" placeholder="email address">
                 </div>
