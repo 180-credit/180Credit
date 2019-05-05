@@ -6,3 +6,7 @@
 .txtwhite {
     color: #fff !important;
 }
+.error{
+    color: red;
+    font-size: small;
+}

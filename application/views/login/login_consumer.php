@@ -2,7 +2,7 @@
     <div class="row justify-content-center my-5 py-5">
         <div class="col-md-6">
             <h4 class="text-center mb-3">Consumer access</h4>
-            <p class="text-center">If you offer credit repair and/or industry related services, <a href="#">click here</a>.</p>
+            <p class="text-center">If you offer credit repair and/or industry related services, <a href="<?= base_url(); ?>login/signup_consumer">click here</a>.</p>
             <button type="button" class="btn btn-primary btn-block btn-icon google-btn position-relative">Continue with Google</button>
             <button type="button" class="btn btn-primary btn-block btn-icon fb-btn position-relative"><i class="fab fa-facebook-square"></i>Continue with Facebook</button>
             <a href="<?= base_url(); ?>login/signup_consumer" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
