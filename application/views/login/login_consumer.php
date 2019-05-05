@@ -8,13 +8,21 @@
             <a href="<?= base_url(); ?>login/signup_consumer" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
             <h6 class="text-center mt-3">or</h6>
             <h5 class="text-center mb-4">Log in with email</h5>
-            <form action="<?= base_url(); ?>login/login_post" method="post">
+            <form action="<?= base_url(); ?>login/login_post" autocomplete="off" id='consumer_form' method="post">
                 <?php
                 if(isset($error)){
                     ?>
                     <div class="alert alert-danger alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Danger!</strong> <?= $error ?>
+                        <?= $error ?>
+                    </div>
+                    <?php
+                }
+                if(isset($success)){
+                    ?>
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <?= $success ?>
                     </div>
                     <?php
                 }
@@ -29,9 +37,33 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Keep me logged in</label>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <button type="button" id='submit-consumer' class="btn btn-primary btn-block">Login</button>
                 <a class="text-center btn-block" href="#">Forgot your password?</a>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#consumer_form").validate({
+            rules: {
+                // simple rule, converted to {required:true}
+                // compound rule
+                email: {
+                    required: true,
+                    email: true
+                },
+                password:{
+                    required: true,
+                    minlength:8
+                }
+
+            }
+        });
+        $("#submit-consumer").click(function(){
+            if($("#consumer_form").valid()){
+                $("#consumer_form").submit();
+            }
+        })
+    })
+</script>

@@ -8,30 +8,62 @@
             <a href="<?= base_url(); ?>login/signup_service_provider" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
             <h6 class="text-center mt-3">or</h6>
             <h5 class="text-center mb-4">Log in with email</h5>
-            <form>
+            <form  action="<?= base_url(); ?>login/login_post" autocomplete="off" id='provider_form' method="post">
                 <?php
                 if (isset($error)) {
                     ?>
                     <div class="alert alert-danger alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Danger!</strong> <?= $error ?>
+                        <?= $error ?>
+                    </div>
+                    <?php
+                }
+                if(isset($success)){
+                    ?>
+                    <div class="alert alert-success alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <?= $success ?>
                     </div>
                     <?php
                 }
                 ?>
                 <div class="form-group">
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="email address">
+                    <input type="email" class="form-control" name='email' id="exampleInputEmail1" placeholder="email address">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="password">
+                    <input type="password" class="form-control" name='password' id="exampleInputPassword1" placeholder="password">
                 </div>
                 <div class="form-group form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Keep me logged in</label>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <button type="button" id='submit-provider' class="btn btn-primary btn-block">Login</button>
                 <a class="text-center btn-block" href="#">Forgot your password?</a>
             </form>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $("#provider_form").validate({
+            rules: {
+                // simple rule, converted to {required:true}
+                // compound rule
+                email: {
+                    required: true,
+                    email: true
+                },
+                password:{
+                    required: true,
+                    minlength:8
+                }
+
+            }
+        });
+        $("#submit-provider").click(function(){
+            if($("#provider_form").valid()){
+                $("#provider_form").submit();
+            }
+        })
+    })
+</script>

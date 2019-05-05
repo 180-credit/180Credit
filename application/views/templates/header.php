@@ -36,8 +36,10 @@
 	<link href="<?php echo base_url(); ?>assets/css/stylesheet.css" rel="stylesheet" media="screen" />
         <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" media="screen" />
 	<!-- [Our Stylesheets] Ends -->
-		<script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.slim.min.js" type="text/javascript"></script>
+		<script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+		<!-- <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
 		<script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
+		<script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js" type="text/javascript"></script>
         
 </head>
 

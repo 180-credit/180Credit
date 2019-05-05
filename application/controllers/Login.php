@@ -10,18 +10,20 @@ class Login extends CI_Controller {
         $this->load->library('session');
         $this->load->database();
         $this->load->helper('url'); 
-
+        $this->load->model('Login_model'); 
     }
 
     public function login_service_provider() {
         $data['title'] = 'Service Provider access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+        $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
         $this->template->load('layout', 'login/login_service_provider', $data);
     }
 
     public function login_consumer() {
         $data['title'] = 'Consumer access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+        $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
         $this->template->load('layout', 'login/login_consumer', $data);
     }
 
@@ -37,16 +39,19 @@ class Login extends CI_Controller {
     
 
     public function signup_store(){
-        $trackToken = rand(100000,999999);
+        $this->load->library('uuid');
+        $token = $this->uuid->v4();
         $data = [
             'firstName'=>$this->input->post('first_name'),
             'lastName'=>$this->input->post('last_name'),
             '180creditUserType'=> $this->input->post('user_type'),
             'userEmail'=>$this->input->post('email'),
+            'active'=>1,
+            'userStatus'=>1,
             'userPassword'=>password_hash($this->input->post('password'),PASSWORD_DEFAULT),
-            'verificationToken'=>$trackToken
+            'verificationToken'=>$token
         ];
-        $linkToken = base_url().'verify?email='.$this->input->post('email').'&token='.password_hash($trackToken,PASSWORD_DEFAULT);
+        $linkToken = base_url().'verify/'.$token;
         $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -81,7 +86,7 @@ class Login extends CI_Controller {
             $this->email->send();
 
         if( $this->input->post('keep_login')){
-            $insert_id = $this->db->insert_id();
+            /*$insert_id = $this->db->insert_id();
             $condition = "userId =" . "'" . $insert_id . "'";
             $this->db->select('*');
             $this->db->from('users');
@@ -92,34 +97,33 @@ class Login extends CI_Controller {
                 'username' => $result->userEmail,
                 'email' => $result->userEmail,
             );
-            $this->session->set_userdata('logged_in', $session_data);
+            $this->session->set_userdata('logged_in', $session_data)*/
             $this->session->set_flashdata('success', 'An verification mail has been sent to your mail, please verify your account.');
-            redirect('/login/login_consumer');
         }
         else{
             $this->session->set_flashdata('success', 'An verification mail has been sent to your mail, please verify your account.');
+        }   
+        if($this->input->post('user_type') == "1"){
+            redirect('/login/login_service_provider');
+        }else{
             redirect('/login/login_consumer');
         }
     }
     
     public function login_post(){
         $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
-        $this->db->select('*');
-        $this->db->from('users');
-        $this->db->where($condition);
-        $this->db->limit(1);
-        $result = (array)$this->db->get()->row();
+        $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
         if(password_verify($this->input->post('password'), $result['userPassword'])){
             $this->session->set_flashdata('success', 'You are login successfully.');
             redirect('/login/success_screen');
         }
         else {
             if($result['180creditUserType'] == 1){
-                $this->session->set_flashdata('error', 'Email and password mismetch.');
+                $this->session->set_flashdata('error', 'Email and password mismatch.');
                 redirect('/login/login_service_provider');
             }
             else {
-                $this->session->set_flashdata('error', 'Email and password mismetch.');
+                $this->session->set_flashdata('error', 'Email and password mismatch.');
                 redirect('/login/login_consumer');
             }
         }
@@ -129,5 +133,16 @@ class Login extends CI_Controller {
         $data['title'] = 'Success';
         $data['msg'] = isset($_SESSION['success']) ? $_SESSION['success'] : '';
         $this->template->load('layout', 'login/success_screen', $data);
+    }
+
+    public function user_exists(){
+        $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
+        $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
+        
+        if(empty($result)){
+            echo "true";
+        }else{
+            echo "false";
+        }
     }
 }
