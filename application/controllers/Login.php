@@ -68,23 +68,33 @@ class Login extends CI_Controller {
                 </body>
                 </html>';
         $data = $this->db->insert('users',$data);
-        $this->email->initialize(array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'smtp.sendgrid.net',
-                'smtp_user' => '180credit',
-                'smtp_pass' => 'bD8mbh576789k2g',
-                'smtp_port' => 587,
-                'crlf' => "\r\n",
-                'newline' => "\r\n",
-                'mailtype' => "html"
-            ));
+        $mail_status = $this->SendMail("donotreply@180credit.com", $this->input->post('email'), "Welcome to your 180Credit account", $html);
+        /*
+        echo $mail_status; exit;
+        
+        $config = array(
+            'protocol' => 'smtp', 
+            'smtp_host' => 'smtp.sendgrid.net',
+            'smtp_port' => 587,
+            'smtp_user' => 'chetanakum',
+            'smtp_pass' => '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',
+            'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+            'mailtype' => 'html', //plaintext 'text' mails or 'html'
+            'smtp_timeout' => '4', //in seconds
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+        );
+        $this->email->initialize($config);
 
             $this->email->from('donotreply@180credit.com', '180Credit');
             $this->email->to($this->input->post('email'));
             $this->email->subject('Welcome to your 180Credit account');
             $this->email->message($html);
+            //$this->email->message("TEST email");
             $this->email->send();
-
+        //echo $this->email->print_debugger(); exit;
+        
+        */
         if( $this->input->post('keep_login')){
             /*$insert_id = $this->db->insert_id();
             $condition = "userId =" . "'" . $insert_id . "'";
@@ -109,6 +119,47 @@ class Login extends CI_Controller {
             redirect('/login/login_consumer');
         }
     }
+    
+    function SendMail($from, $email, $subject, $message, $attach = '', $filename = '') {
+       $url = 'https://api.sendgrid.com/';
+       //$user = '180credit';
+       //$pass = 'bD8mbh576789k2g';
+
+       $user = 'chetanakum';
+       $pass = 'nakumajax@92';
+
+
+        $params = array(
+                'api_user' => $user,
+                'api_key' => $pass,
+                'to' => $email,
+                'fromname' => $from,
+                'from' => $from,
+                'subject' => $subject,
+                'html' => $message);
+    
+        $request = $url . 'api/mail.send.json';
+        $session = curl_init($request);
+        curl_setopt($session, CURLOPT_POST, true);
+        curl_setopt($session, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($session, CURLOPT_HEADER, false);
+        // Tell PHP not to use SSLv3 (instead opting for TLS)
+       //curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
+       curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+       curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+       // obtain response
+       $response = curl_exec($session);
+       //echo "<pre>";
+       //print_r($response);
+       //exit;
+       
+       if (curl_error($session)) {
+            echo $error_msg = curl_error($session); exit;
+        }
+        
+        curl_close($session);
+                return true; 
+}
     
     public function login_post(){
         $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
