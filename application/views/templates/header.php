@@ -40,6 +40,7 @@
 		<!-- <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
 		<script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
 		<script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js" type="text/javascript"></script>
+		<script src="<?php echo base_url(); ?>assets/js/letter-avatar.js" type="text/javascript"></script>
         
 </head>
 
@@ -76,15 +77,44 @@
 							</ul>
 							<div class="register-block d-flex">
 								<div class="dropdown login-dropdown mr-3">
+									<?php
+										if(isset($_SESSION['user'])){
+											$user = $_SESSION['user'];
+											?>
+												<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<?php 
+													if(isset($user['profile_image'])){
+														?>
+															<img class="round"  width="30" height="30" src="<?= base_url().$user['profile_image']; ?>"> <?= ucfirst($user['firstName']) ?>
+														<?php
+													}
+													else{
+														?>
+															<img class="round" width="30" height="30" avatar="<?= ucfirst($user['firstName']).' '.ucfirst($user['lastName']) ?>"> <?= ucfirst($user['firstName']) ?>
+														<?php	
+													}
+												?>
+												</a>
 
-									<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="fas fa-user"></i>Log in/Register
-									</a>
+												<div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
+													<a href="<?= base_url(); ?>my-account" class="btn profile-class">My Account</a>
+													<a href="<?= base_url(); ?>logout" class="btn profile-class">Logout</a>
+												</div>
+											<?php
+										}
+										else{
+											?>
+												<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												<i class="fas fa-user"></i> Log in/Register
+												</a>
 
-									<div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
-										<a href="<?= base_url(); ?>consumer/login" class="btn btn-primary btn-block txtwhite">Consumer</a>
-										<a href="<?= base_url(); ?>service-provider/login" class="btn btn-secondary btn-block txtwhite">Service Provider</a>
-									</div>
+												<div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
+													<a href="<?= base_url(); ?>consumer/login" class="btn btn-primary btn-block txtwhite">Consumer</a>
+													<a href="<?= base_url(); ?>service-provider/login" class="btn btn-secondary btn-block txtwhite">Service Provider</a>
+												</div>		
+											<?php
+										}
+									?>
 								</div>
 								<button type="button" class="btn list-buis">List Your Business</button>
 							</div>

@@ -10,3 +10,27 @@ label.error{
     color: red;
     font-size: small;
 }
+
+.register-block .login-dropdown a.btn i{
+    opacity: 1;
+}
+
+
+.register-block .login-dropdown a.btn.profile-class:hover{
+    color: #4a5566 !important
+}
+
+
+.round { border-radius: 50%; }
+
+.pull-left{
+    float: left;
+}
+.toggle .btn.toggle-on {
+    padding: 6px 18px 0 5px;
+    background-color: #3ac47d;
+    border-color: #3ac47d;
+}
+.toggle .btn.btn-default {
+    padding: 6px 5px 0 18px;
+}   

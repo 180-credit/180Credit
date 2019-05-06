@@ -64,6 +64,14 @@
             if($("#provider_form").valid()){
                 $("#provider_form").submit();
             }
-        })
+        });
+        $('#provider_form input').keypress(function (e) {
+        if (e.which == 13) {
+            if($("#provider_form").valid()){
+                $("#provider_form").submit();
+            }
+            return false;
+        }
+        });
     })
 </script>

@@ -1,9 +1,9 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require_once 'application/helpers/Authenticate.php';
 class Login extends CI_Controller {
-
+    use Authenticate;
     function __construct() {
         parent::__construct();
         $this->load->library('email');
@@ -14,6 +14,9 @@ class Login extends CI_Controller {
     }
 
     public function login_service_provider() {
+        if($this->checkLogin()){
+            redirect('/');
+        }
         $data['title'] = 'Service Provider access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
@@ -21,6 +24,9 @@ class Login extends CI_Controller {
     }
 
     public function login_consumer() {
+        if($this->checkLogin()){
+            redirect('/');
+        }
         $data['title'] = 'Consumer access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
@@ -28,11 +34,17 @@ class Login extends CI_Controller {
     }
 
     public function signup_consumer() {
+        if($this->checkLogin()){
+            redirect('/');
+        }
         $data['title'] = 'Consumer access';
         $this->template->load('layout', 'login/signup_consumer', $data);
     }
 
     public function signup_service_provider() {
+        if($this->checkLogin()){
+            redirect('/');
+        }
         $data['title'] = 'Service Provider access';
         $this->template->load('layout', 'login/signup_service_provider', $data);
     }
@@ -160,13 +172,24 @@ class Login extends CI_Controller {
         curl_close($session);
                 return true; 
 }
+
+
+    public function logout(){
+        if(isset($_SESSION['user'])){
+            unset($_SESSION['user']);
+        }
+
+        $this->session->set_flashdata('success', 'You are logout successfully.');
+            redirect('/login/success_screen');
+    }
     
     public function login_post(){
         $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
         $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
         if(password_verify($this->input->post('password'), $result['userPassword'])){
+            $this->session->set_userdata('user', $result);
             $this->session->set_flashdata('success', 'You are login successfully.');
-            redirect('/login/success_screen');
+            redirect('/my-account');
         }
         else {
             if($result['180creditUserType'] == 1){
@@ -188,6 +211,10 @@ class Login extends CI_Controller {
 
     public function user_exists(){
         $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
+        $userId =$this->input->post('userId');
+        if(isset($userId)){
+            $condition.=' and userId <>'.$userId;    
+        }
         $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
         
         if(empty($result)){

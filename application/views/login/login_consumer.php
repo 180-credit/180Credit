@@ -65,5 +65,14 @@
                 $("#consumer_form").submit();
             }
         })
+
+        $('#consumer_form input').keypress(function (e) {
+        if (e.which == 13) {
+            if($("#consumer_form").valid()){
+                $("#consumer_form").submit();
+            }
+            return false;
+        }
+        });
     })
 </script>
