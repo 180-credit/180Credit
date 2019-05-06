@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <h4 class="mb-3">Create a service provider account</h4>
             <p class="mb-2">If you are a consumer looking for help or information, <a href="#">click here</a>.</p>
-            <p>Already have an account? <a href="<?= base_url(); ?>login/login_service_provider">Log in</a>.</p>
+            <p>Already have an account? <a href="<?= base_url(); ?>service-provider/login">Log in</a>.</p>
             <form  id="provider_form"  autocomplete="off" method="post" action="<?= base_url(); ?>login/signup_store">
                 <input type="hidden" name="user_type" value="1">
                 <div class="form-group">

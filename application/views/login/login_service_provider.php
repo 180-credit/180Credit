@@ -5,7 +5,7 @@
             <p class="text-center">If you are a consumer looking for help and/or information, <a href="#">click here</a>.</p>
             <button type="button" class="btn btn-primary btn-block btn-icon google-btn position-relative">Continue with Google</button>
             <button type="button" class="btn btn-primary btn-block btn-icon fb-btn position-relative"><i class="fab fa-facebook-square"></i>Continue with Facebook</button>
-            <a href="<?= base_url(); ?>login/signup_service_provider" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
+            <a href="<?= base_url(); ?>service-provider/register" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
             <h6 class="text-center mt-3">or</h6>
             <h5 class="text-center mb-4">Log in with email</h5>
             <form  action="<?= base_url(); ?>login/login_post" autocomplete="off" id='provider_form' method="post">
