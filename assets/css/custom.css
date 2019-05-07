@@ -34,3 +34,16 @@ label.error{
 .toggle .btn.btn-default {
     padding: 6px 5px 0 18px;
 }   
+
+.account-page .col-md-7 .account-content-block span.unverified-span {
+    font-weight: 700;
+    color: #fc0101;
+    font-size: 13px;
+}
+
+.account-page .col-md-7 .account-content-block .acc-mail-content span.d-block i.fa-check-circle{
+    color: #006600;
+}
+.account-page .col-md-7 .account-content-block .acc-mail-content span.d-block i.fa-times-circle{
+    color: #fc0101;
+}

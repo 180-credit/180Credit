@@ -97,7 +97,9 @@
 												</a>
 
 												<div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
-													<a href="<?= base_url(); ?>my-account" class="btn profile-class">My Account</a>
+													<a href="<?= base_url(); ?>my-account" class="btn profile-class">My account</a>
+													<!-- <a href="<?= base_url(); ?>my-business-profile" class="btn profile-class">My business profile</a> -->
+													<!-- <a href="<?= base_url(); ?>password-and-security" class="btn profile-class">Password and security</a> -->
 													<a href="<?= base_url(); ?>logout" class="btn profile-class">Logout</a>
 												</div>
 											<?php

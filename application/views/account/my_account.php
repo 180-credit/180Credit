@@ -29,11 +29,11 @@
 								<div class="col-md-9 account-content-block">
 									<h5 class="mt-0"><?= ucfirst($user['firstName']).' '.ucfirst($user['lastName']) ?></h5>
 									<div class="acc-mail">
-										<p class="d-inline-block"><?= $user['userEmail'] ?></p><?= $user['isEmailVerified'] == 1 ? '<span class="ml-2 verified-span"><i class="fas fa-check-circle mx-1"></i>verified</span>' : '' ?>
+										<p class="d-inline-block"><?= $user['userEmail'] ?></p><?= $user['isEmailVerified'] == 1 ? '<span class="ml-2 verified-span"><i class="fas fa-check-circle mx-1"></i>Verified</span>' : '<span class="ml-2 unverified-span"><i class="fas fa-times-circle mx-1"></i>Unverified</span>' ?>
 									</div>
 									<div class="acc-mail-content">
-										<span class="d-block"><i class="fas fa-check-circle mr-2"></i>Offers credit repair services</span>
-										<span class="d-block"><i class="fas fa-times-circle mr-2"></i>Does not offer services to the industry</span>
+										<span class="d-block"><?= (isset($user['isCreditRepairService']) && $user['isCreditRepairService'] == 1  ? '<i class="fas fa-check-circle mr-2"></i>' : '<i class="fas fa-times-circle mr-2"></i>') ?>Offers credit repair services</span>
+										<span class="d-block"><?= (isset($user['isCreditRepairIndustry']) && $user['isCreditRepairIndustry'] == 1  ? '<i class="fas fa-check-circle mr-2"></i>' : '<i class="fas fa-times-circle mr-2"></i>') ?>Does not offer services to the industry</span>
 									</div>
 								</div>
 							</div>

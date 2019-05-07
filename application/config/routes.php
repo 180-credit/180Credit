@@ -57,6 +57,7 @@ $route['logout'] = 'login/logout';
 $route['my-account'] = 'account';
 $route['my-account/edit'] = 'account/edit_profile';
 $route['my-business-profile'] = 'account/my_business_profile';
+$route['password-and-security'] = 'account/change_password';
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

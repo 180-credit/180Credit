@@ -1,14 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once 'application/helpers/Authenticate.php';
 
 class Account extends CI_Controller {
-
+	use Authenticate;
 	function __construct() {
         parent::__construct();
         $this->load->library('email');
         $this->load->library('session');
         $this->load->database();
-        $this->load->model('Login_model'); 
+		$this->load->model('Login_model');
+		if(!$this->checkLogin()){
+            redirect('/consumer/login');
+        } 
     }
 
 	public function index()
@@ -39,7 +43,10 @@ class Account extends CI_Controller {
 	{
 		$data=[
 			'firstName'=> $this->input->post('first_name'),
-			'lastName'=>$this->input->post('last_name')
+			'lastName'=>$this->input->post('last_name'),
+			'userEmail'=>$this->input->post('email'),
+			'isCreditRepairService' => isset($_POST['isCreditRepairService']) ? $_POST['isCreditRepairService'] : 0 ,
+			'isCreditRepairIndustry' => isset($_POST['isCreditRepairIndustry']) ? $_POST['isCreditRepairIndustry'] : 0 ,
 		];
 		$path = 'assets/profile_images';
 		if(isset($_FILES['profile_image']['name']) && !empty($_FILES['profile_image']['name'])){

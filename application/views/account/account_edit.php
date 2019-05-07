@@ -46,15 +46,15 @@
 												<input type="text" class="form-control" id="last_name" name="last_name" value="<?= ucfirst($user['lastName']) ?>" placeholder="Last Name">
 											</div>
 											<div class="form-group col-md-12">
-												<label for="email">Email address</label><?= $user['isEmailVerified'] == 1 ? '<span class="ml-2 verified-span"><i class="fas fa-check-circle mx-1"></i>verified</span>' :'' ?>
+												<label for="email">Email address</label><?= $user['isEmailVerified'] == 1 ? '<span class="ml-2 verified-span"><i class="fas fa-check-circle mx-1"></i>verified</span>' :'<span class="ml-2 unverified-span"><i class="fas fa-times-circle mx-1"></i>Unverified</span>' ?>
 												<input type="email" class="form-control" name="email" id="email" value="<?= $user['userEmail'] ?>" placeholder="Email address">
 											</div>
 											<div class="form-group col-md-12 acc-mail-content">
 												<span class="d-block">Do you offer credit repair services?
-													<input type="checkbox" checked data-toggle="toggle">
+													<input type="checkbox" name="isCreditRepairService" value="1" <?= (isset($user['isCreditRepairService']) && $user['isCreditRepairService'] == 1  ? 'checked' : '') ?>  data-toggle="toggle">
 												</span>
 												<span class="d-block">Do you offer services to the credit repair industry?
-													<input type="checkbox" checked data-toggle="toggle"></span>
+													<input type="checkbox" name="isCreditRepairIndustry" value="1" <?= (isset($user['isCreditRepairIndustry']) && $user['isCreditRepairIndustry'] == 1  ? 'checked' : '') ?>  data-toggle="toggle"></span>
 											</div>
 										</div>
 										<button type="button" id="submit-account" class="btn btn-primary">Save</button>
