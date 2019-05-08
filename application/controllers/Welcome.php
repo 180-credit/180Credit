@@ -28,4 +28,9 @@ class Welcome extends CI_Controller {
 		$data['title'] = 'Terms of use';
 		$this->template->load('layout', 'information/terms', $data);
 	}
+	public function privacy_policy()
+	{
+		$data['title'] = 'Privacy policy';
+		$this->template->load('layout', 'information/policy', $data);
+	}
 }
