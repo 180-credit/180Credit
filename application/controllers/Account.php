@@ -29,13 +29,13 @@ class Account extends CI_Controller {
 
 	public function my_business_profile()
 	{
-		$data['title']='My account edit';
+		$data['title']='My Business profile';
 		$this->template->load('layout', 'account/business_profile', $data);
 	}
 
 	public function change_password()
 	{
-		$data['title']='My account edit';
+		$data['title']='Password & Security';
 		$this->template->load('layout', 'account/pwd_change', $data);
 	}
 

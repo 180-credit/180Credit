@@ -37,7 +37,7 @@ class Login extends CI_Controller {
         if($this->checkLogin()){
             redirect('/');
         }
-        $data['title'] = 'Consumer access';
+        $data['title'] = 'Create a consumer account';
         $this->template->load('layout', 'login/signup_consumer', $data);
     }
 
@@ -45,7 +45,7 @@ class Login extends CI_Controller {
         if($this->checkLogin()){
             redirect('/');
         }
-        $data['title'] = 'Service Provider access';
+        $data['title'] = 'Create a service provider account';
         $this->template->load('layout', 'login/signup_service_provider', $data);
     }
     
