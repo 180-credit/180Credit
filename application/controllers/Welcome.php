@@ -22,4 +22,10 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function terms_of_use()
+	{
+		$data['title'] = 'Terms of use';
+		$this->template->load('layout', 'information/terms', $data);
+	}
 }
