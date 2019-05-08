@@ -83,3 +83,13 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+/* Google App Client Id */
+define('GOOGLE_CLIENT_ID', '606584122510-673bei25l7badd8e2pdu3ri52o92bbig.apps.googleusercontent.com');
+
+/* Google App Client Secret */
+define('GOOGLE_CLIENT_SECRET', 'wf-LfGnW4-JbUZAFu4mjEi9Q');
+
+/* Google App Redirect Url */
+define('GOOGLE_CLIENT_REDIRECT_URL', 'social-login/google-callback');

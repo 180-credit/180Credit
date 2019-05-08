@@ -20,6 +20,7 @@ class Login extends CI_Controller {
         $data['title'] = 'Service Provider access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
+        $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url().GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=1';
         $this->template->load('layout', 'login/login_service_provider', $data);
     }
 
@@ -30,6 +31,7 @@ class Login extends CI_Controller {
         $data['title'] = 'Consumer access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
+        $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url().GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=2';
         $this->template->load('layout', 'login/login_consumer', $data);
     }
 
@@ -222,5 +224,89 @@ class Login extends CI_Controller {
         }else{
             echo "false";
         }
+    }
+
+
+    public function google_login_callback(){
+        try{
+            $code = $this->input->get('code');
+            $state = $this->input->get('state');
+            $client_id = GOOGLE_CLIENT_ID;
+            $redirect_uri = base_url().GOOGLE_CLIENT_REDIRECT_URL;
+            $client_secret = GOOGLE_CLIENT_SECRET;
+            $accessToken = $this->GetAccessToken($client_id,$redirect_uri,$client_secret,$code);
+            $userDetails = $this->GetUserProfileInfo($accessToken['access_token']);
+            if(isset($userDetails['email'])){
+                $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
+                $user = (array)$this->Login_model->getDataByCondition('users',$condition,true);
+                if(!empty($user)){
+                    $data=['googleId' => $userDetails['id']];
+                    $this->db->where('userId', $user['userId']);
+                    $this->db->update('users', $data);
+                    $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
+                    $user = (array)$this->Login_model->getDataByCondition('users',$condition,true); 
+                }else{
+                    $name= explode(' ',$userDetails['name']);
+                    $path = 'assets/profile_images';
+                    $fileName = $path.'/'.time().'.'.pathinfo($userDetails['picture'])['extension'];
+                    file_put_contents(FCPATH.$fileName, file_get_contents($userDetails['picture']));
+                    $data = [
+                        'firstName'=>isset($name[0]) ? $name[0] : '',
+                        'lastName'=>isset($name[1]) ? $name[1] : '',
+                        '180creditUserType'=> $state,
+                        'userEmail'=>$userDetails['email'],
+                        'profile_image'=>$fileName,
+                        'active'=>1,
+                        'googleId' => $userDetails['id'],
+                        'userStatus'=>1,
+                        'userPassword'=>password_hash(rand(100000,999999),PASSWORD_DEFAULT),
+                        'isEmailVerified'=>1
+                    ];
+                    $data = $this->db->insert('users',$data);
+                    $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
+                    $user = (array)$this->Login_model->getDataByCondition('users',$condition,true); 
+                }
+                $this->session->set_userdata('user', $user);
+                $this->session->set_flashdata('success', 'You are login successfully.');
+                redirect('/my-account');
+            }
+            
+        }catch(\Exception $e){
+            
+        }
+    }
+
+    private function GetAccessToken($client_id, $redirect_uri, $client_secret, $code) {	
+        $url = 'https://www.googleapis.com/oauth2/v4/token';			
+    
+        $curlPost = 'client_id=' . $client_id . '&redirect_uri=' . $redirect_uri . '&client_secret=' . $client_secret . '&code='. $code . '&grant_type=authorization_code';
+        $ch = curl_init();		
+        curl_setopt($ch, CURLOPT_URL, $url);		
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);		
+        curl_setopt($ch, CURLOPT_POST, 1);		
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);	
+        $data = json_decode(curl_exec($ch), true);
+        $http_code = curl_getinfo($ch,CURLINFO_HTTP_CODE);		
+        if($http_code != 200) 
+            throw new Exception('Error : Failed to receieve access token');
+        
+        return $data;
+    }
+
+    private function GetUserProfileInfo($access_token) {	
+        $url = 'https://www.googleapis.com/oauth2/v2/userinfo?fields=name,email,gender,id,picture,verified_email';	
+        
+        $ch = curl_init();		
+        curl_setopt($ch, CURLOPT_URL, $url);		
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer '. $access_token));
+        $data = json_decode(curl_exec($ch), true);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);		
+        if($http_code != 200) 
+            throw new \Exception('Error : Failed to get user information');
+            
+        return $data;
     }
 }

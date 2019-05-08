@@ -53,6 +53,7 @@ $route['service-provider/login'] = 'login/login_service_provider';
 $route['service-provider/register'] = 'login/signup_service_provider';
 $route['consumer/login'] = 'login/login_consumer';
 $route['consumer/register'] = 'login/signup_consumer';
+$route['social-login/google-callback'] = 'login/google_login_callback';
 $route['logout'] = 'login/logout';
 $route['my-account'] = 'account';
 $route['my-account/edit'] = 'account/edit_profile';
