@@ -22,7 +22,8 @@ class Login extends CI_Controller {
         $data['title'] = 'Service Provider access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
-        $data['facebook_login_url'] = $this->facebook->login_url(1);
+        $_SESSION['fb_user_type'] = 1;
+        $data['facebook_login_url'] = $this->facebook->login_url();
         $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url().GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=1';
         $this->template->load('layout', 'login/login_service_provider', $data);
     }
@@ -34,7 +35,8 @@ class Login extends CI_Controller {
         $data['title'] = 'Consumer access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
-        $data['facebook_login_url'] = $this->facebook->login_url(2);
+        $_SESSION['fb_user_type'] = 2;
+        $data['facebook_login_url'] = $this->facebook->login_url();
         $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url().GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=2';
         $this->template->load('layout', 'login/login_consumer', $data);
     }
@@ -233,7 +235,8 @@ class Login extends CI_Controller {
     
     public function facebook_login_callback(){
         $userDetails = array();
-        $state = $this->input->get('state');
+        $state = $_SESSION['fb_user_type'];
+        unset($_SESSION['fb_user_type']);
         // Check if user is logged in
         if ($this->facebook->is_authenticated()) {
             // Get user facebook profile details
