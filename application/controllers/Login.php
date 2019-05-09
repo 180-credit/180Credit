@@ -252,7 +252,7 @@ class Login extends CI_Controller {
                 $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                 $user = (array) $this->Login_model->getDataByCondition('users', $condition, true);
                 if (!empty($user)) {
-                    $data = ['facebookId' => $userDetails['id']];
+                    $data = ['facebookId' => $userDetails['id'],'isEmailVerified' => 1];
                     $this->db->where('userId', $user['userId']);
                     $this->db->update('users', $data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
@@ -300,7 +300,7 @@ class Login extends CI_Controller {
                 $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                 $user = (array)$this->Login_model->getDataByCondition('users',$condition,true);
                 if(!empty($user)){
-                    $data=['googleId' => $userDetails['id']];
+                    $data=['googleId' => $userDetails['id'],'isEmailVerified' => 1];
                     $this->db->where('userId', $user['userId']);
                     $this->db->update('users', $data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";

@@ -42,3 +42,11 @@
 				</div>
 			</div>
 		</div>
+
+		<script>
+			var loc = window.location.href,
+		    index = loc.indexOf('#');
+			if (index > 0) {
+			window.location = loc.substring(0, index);
+			}
+		</script>
