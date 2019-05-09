@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * It also requires social configuration file and it should be placed in the config directory.
  */
 // Include the autoloader provided in the SDK
-require_once 'vendor/facebook/graph-sdk/src/Facebook/autoload.php';
+require_once 'facebook-graph-sdk/Facebook/autoload.php';
 
 use Facebook\Facebook as FB;
 use Facebook\Authentication\AccessToken;
