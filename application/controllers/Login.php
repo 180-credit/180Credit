@@ -196,7 +196,7 @@ class Login extends CI_Controller {
         $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
         if(!isset($result['userPassword']) && isset($result['userEmail'])){
             $this->session->set_flashdata('error', 'User is not registered');
-            redirect('/login/login_consumer');
+            redirect('/consumer/login');
         }
         if(isset($result['userPassword']) && password_verify($this->input->post('password'), $result['userPassword'])){
             $this->session->set_userdata('user', $result);
@@ -206,11 +206,11 @@ class Login extends CI_Controller {
         else {
             if(isset($result['180creditUserType']) && $result['180creditUserType'] == 1){
                 $this->session->set_flashdata('error', 'Email and password mismatch.');
-                redirect('/login/login_service_provider');
+                redirect('/service-provider/login');
             }
             else {
                 $this->session->set_flashdata('error', 'Email and password mismatch.');
-                redirect('/login/login_consumer');
+                redirect('/consumer/login');
             }
         }
     }
