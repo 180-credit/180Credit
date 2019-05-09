@@ -250,6 +250,7 @@ class Login extends CI_Controller {
                     $path = 'assets/profile_images';
                     $fileName = $path.'/'.time().'.'.pathinfo($userDetails['picture'])['extension'];
                     file_put_contents(FCPATH.$fileName, file_get_contents($userDetails['picture']));
+                    chmod(FCPATH.$fileName, 0777);
                     $data = [
                         'firstName'=>isset($name[0]) ? $name[0] : '',
                         'lastName'=>isset($name[1]) ? $name[1] : '',
