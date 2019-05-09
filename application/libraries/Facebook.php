@@ -124,9 +124,11 @@ Class Facebook {
         if ($this->config->item('facebook_login_type') != 'web') {
             return '';
         }
+        $pdata = $this->helper->getPersistentDataHandler();
+        $pdata->set('state', $paramitor);
         // Get login url
         return $this->helper->getLoginUrl(
-                        base_url() . $this->config->item('facebook_login_redirect_url').'&state='. $paramitor, $this->config->item('facebook_permissions')
+                        base_url() . $this->config->item('facebook_login_redirect_url'), $this->config->item('facebook_permissions')
         );
     }
 

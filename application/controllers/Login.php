@@ -34,6 +34,7 @@ class Login extends CI_Controller {
         $data['title'] = 'Consumer access';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
+        $data['facebook_login_url'] = $this->facebook->login_url(2);
         $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url().GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=2';
         $this->template->load('layout', 'login/login_consumer', $data);
     }
@@ -232,11 +233,11 @@ class Login extends CI_Controller {
     
     public function facebook_login_callback(){
         $userDetails = array();
-
+        $state = $this->input->get('state');
         // Check if user is logged in
         if ($this->facebook->is_authenticated()) {
             // Get user facebook profile details
-            $fbUser = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,picture');
+            $fbUser = $this->facebook->request('get', '/me?fields=id,first_name,last_name,email,picture.width(800).height(800)');
 
             // Preparing data for database insertion
             $userDetails['id'] = !empty($fbUser['id']) ? $fbUser['id'] : '';
@@ -248,25 +249,24 @@ class Login extends CI_Controller {
                 $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                 $user = (array) $this->Login_model->getDataByCondition('users', $condition, true);
                 if (!empty($user)) {
-                    $data = ['googleId' => $userDetails['id']];
+                    $data = ['facebookId' => $userDetails['id']];
                     $this->db->where('userId', $user['userId']);
                     $this->db->update('users', $data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                     $user = (array) $this->Login_model->getDataByCondition('users', $condition, true);
                 } else {
-                    $name = explode(' ', $userDetails['name']);
                     $path = 'assets/profile_images';
-                    $fileName = $path . '/' . time() . '.' . pathinfo($userDetails['picture'])['extension'];
+                    $fileName = $path . '/' . time() . '.jpg';
                     file_put_contents(FCPATH . $fileName, file_get_contents($userDetails['picture']));
                     chmod(FCPATH . $fileName, 0777);
                     $data = [
-                        'firstName' => isset($name[0]) ? $name[0] : '',
-                        'lastName' => isset($name[1]) ? $name[1] : '',
+                        'firstName' => $userDetails['first_name'],
+                        'lastName' => $userDetails['last_name'],
                         '180creditUserType' => $state,
                         'userEmail' => $userDetails['email'],
                         'profile_image' => $fileName,
                         'active' => 1,
-                        'googleId' => $userDetails['id'],
+                        'facebookId' => $userDetails['id'],
                         'userStatus' => 1,
                         'userPassword' => password_hash(rand(100000, 999999), PASSWORD_DEFAULT),
                         'isEmailVerified' => 1
