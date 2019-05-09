@@ -194,13 +194,17 @@ class Login extends CI_Controller {
     public function login_post(){
         $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
         $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
-        if(password_verify($this->input->post('password'), $result['userPassword'])){
+        if(!isset($result['userPassword']) && isset($result['userEmail'])){
+            $this->session->set_flashdata('error', 'User is not registered');
+            redirect('/login/login_consumer');
+        }
+        if(isset($result['userPassword']) && password_verify($this->input->post('password'), $result['userPassword'])){
             $this->session->set_userdata('user', $result);
             $this->session->set_flashdata('success', 'You are login successfully.');
             redirect('/my-account');
         }
         else {
-            if($result['180creditUserType'] == 1){
+            if(isset($result['180creditUserType']) && $result['180creditUserType'] == 1){
                 $this->session->set_flashdata('error', 'Email and password mismatch.');
                 redirect('/login/login_service_provider');
             }
