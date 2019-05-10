@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap-toggle-master/css/bootstrap-toggle.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/select2/dist/css/select2.min.css">
+<script src="<?php echo base_url(); ?>assets/plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/select2/dist/js/select2.min.js" type="text/javascript"></script>
 <div class="container account-page">
 			<div class="row justify-content-center my-5 py-5">
 			<?php $this->load->view('templates/account_side_bar',array('c_view' => $_ci_view)); ?>
@@ -14,200 +18,80 @@
 						<div class="card-body">
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
-									<form>
+									<form action="<?= base_url(); ?>account/store_business_profile" method="post" >
 										<div class="form-row">
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Company Name</label>
-													<input type="text" class="form-control" id="inputAnswer1">
+													<input type="text" class="form-control" id="company_name" name="company_name">
 												</div>
 												<div class="form-group">
 													<label>Street Address</label>
-													<input type="text" class="form-control" id="inputAnswer2">
+													<input type="text" class="form-control" id="street_address" name="street_address">
 												</div>
 												<div class="form-group">
 													<label>City</label>
-													<input type="text" class="form-control" id="inputAnswer3">
+													<input type="text" class="form-control" id="city" name="city">
 												</div>
 												<div class="form-group">
-													<label for="inputState">State</label>
-													<select id="inputState" class="form-control">
+													<label for="state">State</label>
+													<select id="state" name="state" class="form-control">
 														<option selected>Please Select...</option>
 														<option>...</option>
 													</select>
 												</div>
 												<div class="form-group">
 													<label>Zip code</label>
-													<input type="text" class="form-control" id="inputAnswer4">
+													<input type="text" class="form-control" id="zip_code" name="zip_code">
 												</div>
 												<div class="form-group">
 													<label>Phone Number</label>
-													<input type="text" class="form-control" id="inputAnswer5">
+													<input type="text" class="form-control" id="phone_number" name="phone_number">
 												</div>
 											</div>
 											<div class="col-md-6 pl-md-4 chk-box-block">
 												<label>Areas of Speciality...</label>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck1">
-														<label class="form-check-label">Authorized User Accounts</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck2">
-														<label class="form-check-label">Bankruptcy</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck3">
-														<label class="form-check-label">Budget & Savings</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck4">
-														<label class="form-check-label">Charge Offs</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck5">
-														<label class="form-check-label">Collections</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck6">
-														<label class="form-check-label">Consumer Credit Counseling</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck7">
-														<label class="form-check-label">Credit Cards</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck8">
-														<label class="form-check-label">Credit Inquiries</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck9">
-														<label class="form-check-label">Credit Repair</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck10">
-														<label class="form-check-label">Credit Repair Mistakes</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck11">
-														<label class="form-check-label">Credit Reports</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck12">
-														<label class="form-check-label">Credit Scores</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck13">
-														<label class="form-check-label">Debt Consolidation</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck14">
-														<label class="form-check-label">Debt Negotiation</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck15">
-														<label class="form-check-label">Debt Validation</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck16">
-														<label class="form-check-label">Identity Concerns</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck17">
-														<label class="form-check-label">Judgements</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck18">
-														<label class="form-check-label">Loan Preparation</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck19">
-														<label class="form-check-label">Mortgages</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck20">
-														<label class="form-check-label">Rapid Rescore</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck21">
-														<label class="form-check-label">Statute of Limitation</label>
-													</div>
-												</div>
-												<div class="form-group">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="gridCheck22">
-														<label class="form-check-label">Student Loans</label>
-													</div>
-												</div>
+												<?php 
+													foreach($areas_of_specialty as $areasOfSpecialty){
+														?>
+															<div class="form-group">
+																<div class="form-check">
+																	<input class="form-check-input" type="checkbox" name="areas_of_speciality[]" value="<?= $areasOfSpecialty->id ?>" id="areas_of_speciality_<?= $areasOfSpecialty->id ?>">
+																	<label class="form-check-label"><?= $areasOfSpecialty->name ?></label>
+																</div>
+															</div>			
+														<?php
+													}
+												?>
 											</div>
 											<div class="col-md-10">
 												<div class="form-group">
 													<label>Website URL</label>
-													<input type="text" class="form-control" id="inputAnswer6">
+													<input type="url" class="form-control" id="website_url" name="website_url">
 												</div>
 												<div class="form-group">
 													<label>Scheduling URL</label>
-													<input type="text" class="form-control" id="inputAnswer7">
+													<input type="url" class="form-control" id="scheduling_url" name="scheduling_url">
 												</div>
 												<div class="form-group">
 													<label>Facebook URL</label>
-													<input type="text" class="form-control" id="inputAnswer8">
+													<input type="text" class="form-control" id="facebook_url" name="facebook_url">
 												</div>
 												<div class="form-group">
 													<label>Twitter URL</label>
-													<input type="text" class="form-control" id="inputAnswer9">
+													<input type="text" class="form-control" id="twitter_url" name="twitter_url">
 												</div>
 												<div class="form-group">
 													<label>YouTube URL</label>
-													<input type="text" class="form-control" id="inputAnswer10">
+													<input type="text" class="form-control" id="youtube_url" name="youtube_url">
 												</div>
 												<div class="form-group">
 													<label>LinkedIn URL</label>
-													<input type="text" class="form-control" id="inputAnswer11">
+													<input type="text" class="form-control" id="linkedin_url">
 												</div>
 												<div class="form-group">
 													<label>Instagram URL</label>
-													<input type="text" class="form-control" id="inputAnswer12">
+													<input type="text" class="form-control" id="instagram_url">
 												</div>
 											</div>
 										</div>
@@ -323,3 +207,8 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			$(document).ready(function() {
+				$('.js-example-basic-multiple').select2();
+			});
+		</script>

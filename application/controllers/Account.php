@@ -10,6 +10,7 @@ class Account extends CI_Controller {
         $this->load->library('session');
         $this->load->database();
 		$this->load->model('Login_model');
+		$this->load->model('Common_model');
 		if(!$this->checkLogin()){
             redirect('/consumer/login');
         } 
@@ -30,7 +31,13 @@ class Account extends CI_Controller {
 	public function my_business_profile()
 	{
 		$data['title']='My Business profile';
+		$data['areas_of_specialty'] = $this->Common_model->loadAreasOfSpecialty();
 		$this->template->load('layout', 'account/business_profile', $data);
+	}
+
+	public function store_business_profile(){
+		print_r($_POST);
+		die();
 	}
 
 	public function change_password()

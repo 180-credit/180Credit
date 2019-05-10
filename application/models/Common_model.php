@@ -9,6 +9,14 @@ class Common_model extends CI_Model {
     public function getUserTable() {
         return $this->users;
     }
+
+
+    public function loadAreasOfSpecialty(){
+        $query = $this->db->query("CALL loadAreasOfSpecialty()");
+        return $query->result();
+    }
+
+
     /**
      * Get secure key
      */
