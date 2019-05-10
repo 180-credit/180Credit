@@ -173,3 +173,360 @@ WHERE
   
 END$$
 DELIMITER ;
+
+-- 10/5/19
+CREATE TABLE `user_areas_of_specialty` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `area_of_specialty_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_areas_of_specialty`
+--
+
+INSERT INTO `user_areas_of_specialty` (`id`, `user_id`, `area_of_specialty_id`) VALUES
+(2, 1, 17),
+(3, 1, 0),
+(5, 1, 22);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `user_areas_of_specialty`
+--
+ALTER TABLE `user_areas_of_specialty`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user_areas_of_specialty`
+--
+ALTER TABLE `user_areas_of_specialty`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+COMMIT;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loadFeeTypes`()
+BEGIN
+ 
+SELECT 
+	`id`, 
+	`feeTypeName` 
+FROM
+	`fee_types` 
+ORDER BY
+	`feeTypeName`;
+  
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUserAreaOfSpecialty`(IN `pUserId` INT(11), IN `pAreaOfSpecialtyId` INT(11), IN `pStatus` INT(1))
+BEGIN
+
+	DECLARE spResult varchar(50);
+	SET spResult = 'No Update Action Taken';
+	
+	IF (NOT EXISTS (SELECT 1 FROM `user_areas_of_specialty` WHERE `user_areas_of_specialty`.`user_id`=`pUserId` AND `user_areas_of_specialty`.`area_of_specialty_id`=`pAreaOfSpecialtyId`) AND pStatus = 1) THEN
+
+		INSERT INTO `user_areas_of_specialty` (
+	   	  `user_id`, 
+		  `area_of_specialty_id`
+		) 
+		VALUES (
+		  `pUserId`, 
+		  `pAreaOfSpecialtyId`
+		);
+
+		SET spResult = 'User Area of Specialty Inserted';
+	
+	END IF;
+
+	IF (EXISTS (SELECT 1 FROM `user_areas_of_specialty` WHERE `user_areas_of_specialty`.`user_id`=`pUserId` AND `user_areas_of_specialty`.`area_of_specialty_id`=`pAreaOfSpecialtyId`) AND pStatus = 0) THEN
+
+		DELETE FROM `user_areas_of_specialty` 
+		WHERE `user_areas_of_specialty`.`user_id`=`pUserId` 
+		  AND `user_areas_of_specialty`.`area_of_specialty_id`=`pAreaOfSpecialtyId`;
+
+		SET spResult = 'User Area of Specialty Deleted';
+	
+   END IF;
+   
+	SELECT spResult as ResultCode;		
+  
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateUserFreeConsultation`(IN `pUserId` INT(11), IN `pStatus` INT (1))
+BEGIN
+
+	DECLARE spResult varchar(50);
+
+	UPDATE 
+	  `user_profiles`
+	SET 
+	  `offersFreeConsultations` = `pStatus`
+	WHERE 
+	  user_id = `pUserId`;
+
+	SET spResult = "Free Consultation Status Updated";
+   
+	SELECT spResult as ResultCode;		
+  
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteUserFee`(IN `pUserFeeId` INT(11))
+BEGIN
+
+DECLARE spResult varchar(50);
+
+DELETE FROM
+	user_fees
+WHERE 
+	id = pUserFeeId;
+
+
+SET spResult = "User Fee Deleted";
+   
+SELECT spResult as ResultCode;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loadBillingTypes`()
+BEGIN
+ 
+SELECT 
+	`id`, 
+	`billingTypeName` 
+FROM
+	`billing_types` 
+ORDER BY
+	`billingTypeName`;
+  
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`credit`@`localhost` PROCEDURE `loadUserAreasOfSpecialty`(IN `pUserId` INT(11))
+BEGIN
+
+SELECT 
+   a.id, 
+   a.name, 
+   u.area_of_specialty_id 
+FROM 
+   areas_of_specialty a
+LEFT JOIN 
+   user_areas_of_specialty u ON u.area_of_specialty_id = a.id 
+   AND u.user_id = pUserId;
+
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserFees`(IN `pUserId` INT(11))
+BEGIN
+
+SELECT
+	f.id,
+	ft.feeTypeName,
+	f.amount,
+	b.billingTypeName,
+	f.displayOrder
+FROM 
+	`user_fees` f 
+LEFT JOIN billing_types b ON b.id = f.billingTypeId
+LEFT JOIN fee_types ft ON ft.id = f.feeTypeId
+ORDER BY 
+	f.displayOrder;
+
+END$$
+DELIMITER ;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserAboutMe`(IN `pUserId` INT(11))
+BEGIN
+ 
+SELECT 
+	`short_description`, 
+	`long_description` 
+FROM
+	`user_profiles` 
+WHERE 
+	`user_id` = `pUserId`;
+  
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `saveUserAboutMe`(IN `pUserId` INT(11), IN `pShortDescription` VARCHAR(255), IN `pLongDescription` text)
+BEGIN
+
+	DECLARE spResult varchar(50);
+ 
+   IF (EXISTS (SELECT 1 FROM `user_profiles` WHERE `user_profiles`.`user_id`=`pUserId`)) THEN
+	   UPDATE 
+		`user_profiles` 
+	   SET
+	    `short_description` = `pShortDescription`,
+		`long_description` = `pLongDescription`,
+		`ModifiedOn` = NOW()
+	   WHERE 
+		`user_id` = `pUserId`;
+
+	SET spResult = 'User Profile Updated';
+	
+   ELSE 
+   
+       INSERT INTO `user_profiles` (
+	   	`user_id`, 
+		`short_description`, 
+		`long_description`,
+		`CreatedOn`
+		) 
+	  VALUES (
+		`pUserId`, 
+		`pShortDescription`, 
+		`pLongDescription`,
+		NOW()
+		);
+		
+	SET spResult = 'User Profile Created';
+	
+   END IF;
+   
+	SELECT spResult as ResultCode;		
+  
+END$$
+DELIMITER ;
+
+
+CREATE TABLE `state` (
+  `id` int(11) NOT NULL,
+  `abbr` varchar(2) NOT NULL,
+  `name` varchar(250) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `state` (`id`, `abbr`, `name`) VALUES
+(1, 'AL', 'Alabama'),
+(2, 'AK', 'Alaska'),
+(3, 'AZ', 'Arizona'),
+(4, 'AR', 'Arkansas'),
+(5, 'CA', 'California'),
+(6, 'CO', 'Colorado'),
+(7, 'CT', 'Connecticut'),
+(8, 'DE', 'Delaware'),
+(9, 'DC', 'District of Columbia'),
+(10, 'FL', 'Florida'),
+(11, 'GA', 'Georgia'),
+(12, 'HI', 'Hawaii'),
+(13, 'ID', 'Idaho'),
+(14, 'IL', 'Illinois'),
+(15, 'IN', 'Indiana'),
+(16, 'IA', 'Iowa'),
+(17, 'KS', 'Kansas'),
+(18, 'KY', 'Kentucky'),
+(19, 'LA', 'Louisiana'),
+(20, 'ME', 'Maine'),
+(21, 'MD', 'Maryland'),
+(22, 'MA', 'Massachusetts'),
+(23, 'MI', 'Michigan'),
+(24, 'MN', 'Minnesota'),
+(25, 'MS', 'Mississippi'),
+(26, 'MO', 'Missouri'),
+(27, 'MT', 'Montana'),
+(28, 'NE', 'Nebraska'),
+(29, 'NV', 'Nevada'),
+(30, 'NH', 'New Hampshire'),
+(31, 'NJ', 'New Jersey'),
+(32, 'NM', 'New Mexico'),
+(33, 'NY', 'New York'),
+(34, 'NC', 'North Carolina'),
+(35, 'ND', 'North Dakota'),
+(36, 'OH', 'Ohio'),
+(37, 'OK', 'Oklahoma'),
+(38, 'OR', 'Oregon'),
+(39, 'PA', 'Pennsylvania'),
+(40, 'RI', 'Rhode Island'),
+(41, 'SC', 'South Carolina'),
+(42, 'SD', 'South Dakota'),
+(43, 'TN', 'Tennessee'),
+(44, 'TX', 'Texas'),
+(45, 'UT', 'Utah'),
+(46, 'VT', 'Vermont'),
+(47, 'VA', 'Virginia'),
+(48, 'WA', 'Washington'),
+(49, 'WV', 'West Virginia'),
+(50, 'WI', 'Wisconsin'),
+(51, 'WY', 'Wyoming');
+
+ALTER TABLE `state`   ADD PRIMARY KEY (`id`);
+ALTER TABLE `state`   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+CREATE TABLE `billing_types` (
+  `id` int(11) NOT NULL,
+  `billingTypeName` varchar(255) NOT NULL,
+  `createdByUserId` int(11) NOT NULL,
+  `createdOn` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+INSERT INTO `billing_types` (`id`, `billingTypeName`, `createdByUserId`, `createdOn`) VALUES
+(1, 'Per hour', 1, '2019-05-10 00:00:00'),
+(2, 'Per item', 1, '2019-05-10 00:00:00'),
+(3, 'Per month', 1, '2019-05-10 00:00:00');
+
+
+
+CREATE TABLE `fee_types` (
+  `id` int(11) NOT NULL,
+  `feeTypeName` varchar(255) NOT NULL,
+  `createdByUserId` int(11) NOT NULL,
+  `createdOn` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `fee_types` (`id`, `feeTypeName`, `createdByUserId`, `createdOn`) VALUES
+(1, 'FREE 30 minute consultation', 1, '2019-05-09 00:00:00'),
+(2, 'One-time application and setup fee', 1, '2019-05-09 00:00:00'),
+(3, 'Dispute per item per bureau', 1, '2019-05-09 00:00:00');
+
+ALTER TABLE `billing_types`   ADD PRIMARY KEY (`id`),  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `fee_types`   ADD PRIMARY KEY (`id`),  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `billing_types`   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+ALTER TABLE `fee_types`   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+CREATE TABLE `user_fees` (
+  `id` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `billingTypeId` int(11) NOT NULL,
+  `feeTypeId` int(11) NOT NULL,
+  `amount` varchar(15) NOT NULL,
+  `displayOrder` int(11) NOT NULL,
+  `createdOn` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+-
+
+INSERT INTO `user_fees` (`id`, `userId`, `billingTypeId`, `feeTypeId`, `amount`, `displayOrder`, `createdOn`) VALUES
+(1, 1, 1, 1, '$ 200', 1, '2019-05-10 00:00:00');
+
+
+ALTER TABLE `user_fees`   ADD PRIMARY KEY (`id`),   ADD UNIQUE KEY `id` (`id`),  ADD KEY `userId` (`userId`);
+
+ALTER TABLE `user_fees`   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
