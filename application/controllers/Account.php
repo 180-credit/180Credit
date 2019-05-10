@@ -31,13 +31,35 @@ class Account extends CI_Controller {
 	public function my_business_profile()
 	{
 		$data['title']='My Business profile';
-		$data['areas_of_specialty'] = $this->Common_model->loadAreasOfSpecialty();
+		$data['areas_of_specialtys'] = $this->Common_model->loadAreasOfSpecialty();
+		$data['load_billing_types'] = $this->Common_model->loadBillingTypes();
+		$data['load_fee_types'] = $this->Common_model->loadFeeTypes();
+		$data['states'] = $this->Common_model->loadStates();
 		$this->template->load('layout', 'account/business_profile', $data);
 	}
 
 	public function store_business_profile(){
-		print_r($_POST);
-		die();
+		$user=$_SESSION['user'];
+		$insert_user_stored_proc = "CALL saveUserCompanyProfile(
+			{$user['userId']}, 
+			'{$this->input->post('company_name')}',
+			 '{$this->input->post('street_address')}',
+			  '{$this->input->post('city')}',
+			  {$this->input->post('state')},
+			  '{$this->input->post('zip_code')}',
+			  '{$this->input->post('phone_number')}',
+			  '{$this->input->post('website_url')}',
+			  '{$this->input->post('scheduling_url')}',
+			  '{$this->input->post('facebook_url')}',
+			  '{$this->input->post('twitter_url')}',
+			  '{$this->input->post('youtube_url')}',
+			  '{$this->input->post('linkedin_url')}',
+			  '{$this->input->post('instagram_url')}')";
+        $result = $this->db->query($insert_user_stored_proc);
+		if ($result !== NULL) {
+            return TRUE;
+        }
+        return FALSE;
 	}
 
 	public function change_password()

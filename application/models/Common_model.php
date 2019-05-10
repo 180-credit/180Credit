@@ -13,6 +13,34 @@ class Common_model extends CI_Model {
 
     public function loadAreasOfSpecialty(){
         $query = $this->db->query("CALL loadAreasOfSpecialty()");
+        $this->db->close(); 
+        return $query->result();
+    }
+
+    public function loadBillingTypes(){
+        $this->db->reconnect();
+        $this->db->reset_query();
+        $this->db->close(); 
+        $query = $this->db->query("CALL loadBillingTypes()");
+        return $query->result();
+    }
+
+    public function loadFeeTypes(){
+        $this->db->reconnect();
+        $this->db->reset_query();
+        $this->db->close(); 
+        $query = $this->db->query("CALL loadFeeTypes()");
+        return $query->result();
+    }
+
+    public function loadUserAboutMe($userId){
+        $query = $this->db->query("CALL loadUserAboutMe($userId)");
+        return $query->result();
+    }
+
+    public function loadStates(){
+        $this->db->reconnect();
+        $query = $this->db->query("select * from state");
         return $query->result();
     }
 

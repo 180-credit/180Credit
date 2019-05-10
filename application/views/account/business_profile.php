@@ -18,7 +18,7 @@
 						<div class="card-body">
 							<div class="tab-content">
 								<div class="tab-pane active" id="tab-eg5-0" role="tabpanel">
-									<form action="<?= base_url(); ?>account/store_business_profile" method="post" >
+									<form action="<?= base_url(); ?>account/store_business_profile" method="post" id='business_profile-edit'>
 										<div class="form-row">
 											<div class="col-md-6">
 												<div class="form-group">
@@ -36,8 +36,14 @@
 												<div class="form-group">
 													<label for="state">State</label>
 													<select id="state" name="state" class="form-control">
-														<option selected>Please Select...</option>
-														<option>...</option>
+														<option disabled selected>Please Select...</option>
+														<?php 
+															foreach($states as $state){
+																?>
+																<option value="<?= $state->id ?>"><?= $state->name ?></option>
+																<?php
+															}
+														?>
 													</select>
 												</div>
 												<div class="form-group">
@@ -52,7 +58,7 @@
 											<div class="col-md-6 pl-md-4 chk-box-block">
 												<label>Areas of Speciality...</label>
 												<?php 
-													foreach($areas_of_specialty as $areasOfSpecialty){
+													foreach($areas_of_specialtys as $areasOfSpecialty){
 														?>
 															<div class="form-group">
 																<div class="form-check">
@@ -87,15 +93,15 @@
 												</div>
 												<div class="form-group">
 													<label>LinkedIn URL</label>
-													<input type="text" class="form-control" id="linkedin_url">
+													<input type="text" class="form-control" id="linkedin_url" name="linkedin_url">
 												</div>
 												<div class="form-group">
 													<label>Instagram URL</label>
-													<input type="text" class="form-control" id="instagram_url">
+													<input type="text" class="form-control" id="instagram_url" name="instagram_url">
 												</div>
 											</div>
 										</div>
-										<button type="submit" class="btn btn-primary">Save</button>
+										<button type="button" id="submit-business_profile" class="btn btn-primary">Save</button>
 										<button type="button" class="btn btn-link">Cancel</button>
 									</form>
 								</div>
@@ -211,4 +217,62 @@
 			$(document).ready(function() {
 				$('.js-example-basic-multiple').select2();
 			});
+			$(document).ready(function(){
+				$("#business_profile-edit").validate({
+					rules: {
+						// simple rule, converted to {required:true}
+						// compound rule
+						company_name:{
+							required: true
+						},
+						street_address:{
+							required: true
+						},
+						city:{
+							required: true
+						},
+						state:{
+							required: true
+						},
+						zip_code:{
+							required: true
+						},
+						phone_number:{
+							required: true
+						},
+						website_url:{
+							required: true
+						},
+						scheduling_url:{
+							required: true
+						},
+						facebook_url:{
+							required: true
+						},
+						twitter_url:{
+							required: true
+						},
+						youtube_url:{
+							required: true
+						},
+						linkedin_url:{
+							required: true
+						},
+						instagram_url:{
+							required: true
+						}
+
+					},
+					messages:{
+						email :{
+							remote : "This email is already exists."
+						}
+					}
+				});
+				$("#submit-business_profile").click(function(){
+					if($("#business_profile-edit").valid()){
+						$("#business_profile-edit").submit();
+					}
+				})
+			})
 		</script>
