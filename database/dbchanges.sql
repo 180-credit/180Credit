@@ -530,3 +530,7 @@ ALTER TABLE `user_fees`   ADD PRIMARY KEY (`id`),   ADD UNIQUE KEY `id` (`id`), 
 
 ALTER TABLE `user_fees`   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
+
+
+-- 13/05/2019
+DROP PROCEDURE `loadUserAreasOfSpecialty`; CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserAreasOfSpecialty`(IN `pUserId` INT(11)) BEGIN SELECT a.id, a.name, u.area_of_specialty_id FROM areas_of_specialty a LEFT JOIN user_areas_of_specialty u ON u.area_of_specialty_id = a.id AND u.user_id = pUserId; END 

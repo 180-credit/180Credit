@@ -23,15 +23,15 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label>Company Name</label>
-													<input type="text" class="form-control" id="company_name" name="company_name">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->company_name) ? $user_company_profile->company_name : '' ?>" id="company_name" name="company_name">
 												</div>
 												<div class="form-group">
 													<label>Street Address</label>
-													<input type="text" class="form-control" id="street_address" name="street_address">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->address1) ? $user_company_profile->address1 : '' ?>" id="street_address" name="street_address">
 												</div>
 												<div class="form-group">
 													<label>City</label>
-													<input type="text" class="form-control" id="city" name="city">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->city) ? $user_company_profile->city : '' ?>" id="city" name="city">
 												</div>
 												<div class="form-group">
 													<label for="state">State</label>
@@ -40,7 +40,7 @@
 														<?php 
 															foreach($states as $state){
 																?>
-																<option value="<?= $state->id ?>"><?= $state->name ?></option>
+																<option value="<?= $state->id ?>" <?= isset($user_company_profile->state_id) && $user_company_profile->state_id == $state->id ? 'selected' : '' ?> ><?= $state->name ?></option>
 																<?php
 															}
 														?>
@@ -48,11 +48,11 @@
 												</div>
 												<div class="form-group">
 													<label>Zip code</label>
-													<input type="text" class="form-control" id="zip_code" name="zip_code">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->zip) ? $user_company_profile->zip : '' ?>" id="zip_code" name="zip_code">
 												</div>
 												<div class="form-group">
 													<label>Phone Number</label>
-													<input type="text" class="form-control" id="phone_number" name="phone_number">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->public_phone) ? $user_company_profile->public_phone : '' ?>" id="phone_number" name="phone_number">
 												</div>
 											</div>
 											<div class="col-md-6 pl-md-4 chk-box-block">
@@ -62,7 +62,7 @@
 														?>
 															<div class="form-group">
 																<div class="form-check">
-																	<input class="form-check-input" type="checkbox" name="areas_of_speciality[]" value="<?= $areasOfSpecialty->id ?>" id="areas_of_speciality_<?= $areasOfSpecialty->id ?>">
+																	<input class="form-check-input areas_of_speciality_save" type="checkbox" <?= isset($areasOfSpecialty->area_of_specialty_id) ? 'checked':'' ?> value="<?= $areasOfSpecialty->id ?>" id="areas_of_speciality_<?= $areasOfSpecialty->id ?>">
 																	<label class="form-check-label"><?= $areasOfSpecialty->name ?></label>
 																</div>
 															</div>			
@@ -73,36 +73,36 @@
 											<div class="col-md-10">
 												<div class="form-group">
 													<label>Website URL</label>
-													<input type="url" class="form-control" id="website_url" name="website_url">
+													<input type="url" class="form-control" value="<?= isset($user_company_profile->zip) ? $user_company_profile->zip : '' ?>" id="website_url" name="website_url">
 												</div>
 												<div class="form-group">
 													<label>Scheduling URL</label>
-													<input type="url" class="form-control" id="scheduling_url" name="scheduling_url">
+													<input type="url" class="form-control" value="<?= isset($user_company_profile->scheduling_url) ? $user_company_profile->scheduling_url : '' ?>" id="scheduling_url" name="scheduling_url">
 												</div>
 												<div class="form-group">
 													<label>Facebook URL</label>
-													<input type="text" class="form-control" id="facebook_url" name="facebook_url">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->facebook_url) ? $user_company_profile->facebook_url : '' ?>" id="facebook_url" name="facebook_url">
 												</div>
 												<div class="form-group">
 													<label>Twitter URL</label>
-													<input type="text" class="form-control" id="twitter_url" name="twitter_url">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->twitter_url) ? $user_company_profile->twitter_url : '' ?>" id="twitter_url" name="twitter_url">
 												</div>
 												<div class="form-group">
 													<label>YouTube URL</label>
-													<input type="text" class="form-control" id="youtube_url" name="youtube_url">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->youtube_url) ? $user_company_profile->youtube_url : '' ?>" id="youtube_url" name="youtube_url">
 												</div>
 												<div class="form-group">
 													<label>LinkedIn URL</label>
-													<input type="text" class="form-control" id="linkedin_url" name="linkedin_url">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->linkedin_url) ? $user_company_profile->linkedin_url : '' ?>" id="linkedin_url" name="linkedin_url">
 												</div>
 												<div class="form-group">
 													<label>Instagram URL</label>
-													<input type="text" class="form-control" id="instagram_url" name="instagram_url">
+													<input type="text" class="form-control" value="<?= isset($user_company_profile->instagram_url) ? $user_company_profile->instagram_url : '' ?>" id="instagram_url" name="instagram_url">
 												</div>
 											</div>
 										</div>
 										<button type="button" id="submit-business_profile" class="btn btn-primary">Save</button>
-										<button type="button" class="btn btn-link">Cancel</button>
+										<!-- <button type="button" class="btn btn-link">Cancel</button> -->
 									</form>
 								</div>
 								<div class="tab-pane" id="tab-eg5-1" role="tabpanel">
@@ -274,5 +274,14 @@
 						$("#business_profile-edit").submit();
 					}
 				})
+
+				$(".areas_of_speciality_save").click(function(){
+					var val = $(this).val();
+					$.post('<?= base_url() ?>/account/save_area_of_speciality',{
+						areas_of_speciality :val
+					},function(data, status){
+						
+					});
+				});
 			})
 		</script>

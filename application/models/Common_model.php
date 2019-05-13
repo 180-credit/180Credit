@@ -12,6 +12,7 @@ class Common_model extends CI_Model {
 
 
     public function loadAreasOfSpecialty(){
+        $this->db->reconnect();
         $query = $this->db->query("CALL loadAreasOfSpecialty()");
         $this->db->close(); 
         return $query->result();
@@ -19,28 +20,43 @@ class Common_model extends CI_Model {
 
     public function loadBillingTypes(){
         $this->db->reconnect();
-        $this->db->reset_query();
-        $this->db->close(); 
         $query = $this->db->query("CALL loadBillingTypes()");
+        $this->db->close(); 
         return $query->result();
     }
 
     public function loadFeeTypes(){
-        $this->db->reconnect();
-        $this->db->reset_query();
-        $this->db->close(); 
+        $this->db->reconnect();       
         $query = $this->db->query("CALL loadFeeTypes()");
+        $this->db->close(); 
         return $query->result();
     }
 
     public function loadUserAboutMe($userId){
+        $this->db->reconnect();
         $query = $this->db->query("CALL loadUserAboutMe($userId)");
+        $this->db->close(); 
+        return $query->result();
+    }
+
+    public function loadUserCompanyProfile($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadUserCompanyProfile($userId)");
+        $this->db->close(); 
+        return $query->row();
+    }
+
+    public function  loadUserAreasOfSpecialty($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadUserAreasOfSpecialty($userId)");
+        $this->db->close(); 
         return $query->result();
     }
 
     public function loadStates(){
         $this->db->reconnect();
         $query = $this->db->query("select * from state");
+        $this->db->close(); 
         return $query->result();
     }
 

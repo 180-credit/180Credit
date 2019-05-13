@@ -31,10 +31,12 @@ class Account extends CI_Controller {
 	public function my_business_profile()
 	{
 		$data['title']='My Business profile';
-		$data['areas_of_specialtys'] = $this->Common_model->loadAreasOfSpecialty();
+		$user= $_SESSION['user'];
 		$data['load_billing_types'] = $this->Common_model->loadBillingTypes();
 		$data['load_fee_types'] = $this->Common_model->loadFeeTypes();
 		$data['states'] = $this->Common_model->loadStates();
+		$data['user_company_profile'] = $this->Common_model->loadUserCompanyProfile($user['userId']);
+		$data['areas_of_specialtys'] = $this->Common_model->loadUserAreasOfSpecialty($user['userId']);
 		$this->template->load('layout', 'account/business_profile', $data);
 	}
 
@@ -56,10 +58,19 @@ class Account extends CI_Controller {
 			  '{$this->input->post('linkedin_url')}',
 			  '{$this->input->post('instagram_url')}')";
         $result = $this->db->query($insert_user_stored_proc);
-		if ($result !== NULL) {
-            return TRUE;
-        }
-        return FALSE;
+		redirect('/my-business-profile');
+	}
+
+	public function save_area_of_speciality(){
+		$areasOfSpeciality=$this->input->post('areas_of_speciality');
+		$user=$_SESSION['user'];
+		$insert_user_stored_proc = "CALL  updateUserAreaOfSpecialty(
+			{$user['userId']}, 
+			{$areasOfSpeciality},
+			 1)";
+        $result = $this->db->query($insert_user_stored_proc);
+		// redirect('/my-business-profile');
+		return true;
 	}
 
 	public function change_password()
