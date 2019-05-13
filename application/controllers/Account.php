@@ -1,4 +1,6 @@
 <?php
+use phpDocumentor\Reflection\Types\Boolean;
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'application/helpers/Authenticate.php';
 
@@ -64,7 +66,6 @@ class Account extends CI_Controller {
 	public function save_area_of_speciality(){
 		$areasOfSpeciality=$this->input->post('areas_of_speciality');
 		$is_checked=$this->input->post('is_checked');
-		$is_checked = $is_checked===true ? 1 :0;
 		$user=$_SESSION['user'];
 		$insert_user_stored_proc = "CALL  updateUserAreaOfSpecialty(
 			{$user['userId']}, 
