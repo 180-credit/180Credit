@@ -73,7 +73,7 @@
 											<div class="col-md-10">
 												<div class="form-group">
 													<label>Website URL</label>
-													<input type="url" class="form-control" value="<?= isset($user_company_profile->zip) ? $user_company_profile->zip : '' ?>" id="website_url" name="website_url">
+													<input type="url" class="form-control" value="<?= isset($user_company_profile->website_url) ? $user_company_profile->website_url : '' ?>" id="website_url" name="website_url">
 												</div>
 												<div class="form-group">
 													<label>Scheduling URL</label>
