@@ -235,10 +235,12 @@
 							required: true
 						},
 						zip_code:{
-							required: true
+							required: true,
+							number: true
 						},
 						phone_number:{
-							required: true
+							required: true,
+							number: true
 						},
 						website_url:{
 							required: true
@@ -277,8 +279,10 @@
 
 				$(".areas_of_speciality_save").click(function(){
 					var val = $(this).val();
+					var is_checked = $(this).prop("checked");
 					$.post('<?= base_url() ?>/account/save_area_of_speciality',{
-						areas_of_speciality :val
+						areas_of_speciality :val,
+						is_checked : is_checked
 					},function(data, status){
 						
 					});

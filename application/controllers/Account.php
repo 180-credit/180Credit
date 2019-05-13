@@ -63,11 +63,13 @@ class Account extends CI_Controller {
 
 	public function save_area_of_speciality(){
 		$areasOfSpeciality=$this->input->post('areas_of_speciality');
+		$is_checked=$this->input->post('is_checked');
+		$is_checked = $is_checked===true ? 1 :0;
 		$user=$_SESSION['user'];
 		$insert_user_stored_proc = "CALL  updateUserAreaOfSpecialty(
 			{$user['userId']}, 
 			{$areasOfSpeciality},
-			 1)";
+			{$is_checked})";
         $result = $this->db->query($insert_user_stored_proc);
 		// redirect('/my-business-profile');
 		return true;
