@@ -39,6 +39,7 @@ class Account extends CI_Controller {
 		$data['states'] = $this->Common_model->loadStates();
 		$data['user_company_profile'] = $this->Common_model->loadUserCompanyProfile($user['userId']);
 		$data['areas_of_specialtys'] = $this->Common_model->loadUserAreasOfSpecialty($user['userId']);
+		$data['user_about_me'] = $this->Common_model->loadUserAboutMe($user['userId']);
 		$this->template->load('layout', 'account/business_profile', $data);
 	}
 
@@ -74,6 +75,18 @@ class Account extends CI_Controller {
         $result = $this->db->query($insert_user_stored_proc);
 		// redirect('/my-business-profile');
 		return true;
+	}
+
+	public function save_about_me(){
+		$sortDescription=$this->input->post('sort_description');
+		$longDescription=$this->input->post('long_description');
+		$user=$_SESSION['user'];
+		$insert_user_stored_proc = "CALL saveUserAboutMe(
+			{$user['userId']}, 
+			'{$sortDescription}',
+			'{$longDescription}')";
+        $result = $this->db->query($insert_user_stored_proc);
+		redirect('/my-business-profile');
 	}
 
 	public function change_password()

@@ -36,7 +36,7 @@ class Common_model extends CI_Model {
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserAboutMe($userId)");
         $this->db->close(); 
-        return $query->result();
+        return $query->row();
     }
 
     public function loadUserCompanyProfile($userId){
