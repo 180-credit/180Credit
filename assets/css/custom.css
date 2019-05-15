@@ -26,12 +26,18 @@ label.error{
 .pull-left{
     float: left;
 }
-.toggle .btn.toggle-on {
+.acc-mail-content .toggle .btn.toggle-on {
     padding: 6px 18px 0 5px;
     background-color: #3ac47d;
     border-color: #3ac47d;
 }
-.toggle .btn.btn-default {
+.toggle .btn.toggle-on{
+    padding: 3px 18px 0 5px;
+}
+.toggle .btn.btn-default{
+    padding: 3px 5px 0 18px;
+}
+.acc-mail-content .toggle .btn.btn-default {
     padding: 6px 5px 0 18px;
 }   
 
@@ -46,4 +52,10 @@ label.error{
 }
 .account-page .col-md-7 .account-content-block .acc-mail-content span.d-block i.fa-times-circle{
     color: #fc0101;
+}
+
+.btn-transparent,button:focus{
+    background: transparent;
+    border: 0;
+    outline: 0px;
 }

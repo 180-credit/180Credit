@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap-toggle-master/css/bootstrap-toggle.css">
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/select2/dist/css/select2.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/awesomplete/awesomplete.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
 <script src="<?php echo base_url(); ?>assets/plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/plugins/select2/dist/js/select2.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/plugins/awesomplete/awesomplete.min.js" async type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js" type="text/javascript"></script>
 <div class="container account-page">
 			<div class="row justify-content-center my-5 py-5">
@@ -136,74 +136,77 @@
 									</div>
 								</div>
 								<div class="tab-pane fee-tab" id="tab-eg5-2" role="tabpanel">
-									<form>
 										<div class="switch-div">
 											<h5 class="d-inline-block">Do you offer free consultations?</h5>
-											<input type="checkbox" checked data-toggle="toggle">
+											<input type="checkbox" id="offer_free_consultations" value="1" <?= isset($user_company_profile->offersFreeConsultations) && $user_company_profile->offersFreeConsultations==1 ? 'checked' : '' ?>  data-toggle="toggle">
 										</div>
 										<h5 class="mt-2">Fee Setup</h5>
 										<h6>Add a new fee to my fee table</h6>
-										<div class="form-row form-top-row">
-											<div class="col-6">
-												<label>Select a fee type</label>
-
-                                        <div class="select2-outer-div">
-                                            <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                                                <option value="AL">Alabama</option>
-                                                <option value="WY">Wyoming</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="col">
-                                        <label>Amount</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col">
-                                        <label>Billing</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                    <div class="col-1 d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-plus-circle mt-4"></i>
-                                    </div>
-                                </div>
-                                <p>NOTE: You can re-arrange the order of the items by dragging</p>
-                                <div class="fee-bottom-block">
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <div class="row no-gutters">
-                                                <div class="col"><label>FREE 30 minute consultation</label></div>
-                                                <div class="col-2"><label>$0</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-1 d-flex align-items-center justify-content-center">
-                                            <i class="fas fa-minus-circle"></i>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <div class="row no-gutters">
-                                                <div class="col"><label>One-time application and setup fee</label></div>
-                                                <div class="col-2"><label>$195</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-1 d-flex align-items-center justify-content-center">
-                                            <i class="fas fa-minus-circle"></i>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col">
-                                            <div class="row no-gutters">
-                                                <div class="col"><label>3 rounds of item disputes</label></div>
-                                                <div class="col-2"><label>$30 Per Item</label></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-1 d-flex align-items-center justify-content-center">
-                                            <i class="fas fa-minus-circle"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+										<form id='consultancy_form' method post>
+											<div class="form-row form-top-row">
+												<div class="col-6">
+													<label>Select a fee type</label>
+													<div class="select2-outer-div">
+														<input class="awesomplete" id='consultancy_fee_type' class="form-control" list="mylist" />
+														<datalist id="mylist">
+															<?php
+																foreach($load_fee_types as $load_fee_type){
+																?>
+																	<option><?= $load_fee_type->feeTypeName ?></option>
+																<?php
+															}
+															?>
+														</datalist>
+													</div>
+												</div>
+												<div class="col">
+													<label>Amount</label>
+													<input type="text" id='consultancy_amount' class="form-control" >
+												</div>
+												<div class="col">
+													<label>Billing</label>
+														<input class="awesomplete" id='consultancy_billing_type' class="form-control" list="mylist2" />
+														<datalist id="mylist2">
+															<?php
+																foreach($load_billing_types as $load_billing_type){
+																?>
+																	<option><?= $load_billing_type->billingTypeName ?></option>
+																<?php
+															}
+															?>
+														</datalist>
+												</div>
+												<div class="col-1 d-flex align-items-center justify-content-center">
+													<button type="button" id="consultancy_submit" class="btn-transparent"><i class="fas fa-plus-circle mt-4" ></i></button>
+												</div>
+											</div>
+										</form>
+								<?php
+								if(count($user_fees)){
+									?>
+									<p>NOTE: You can re-arrange the order of the items by dragging</p>
+										<div class="fee-bottom-block">
+											<?php 
+											foreach($user_fees as $user_fee){
+												?>
+												<div class="form-row">
+													<div class="col">
+														<div class="row no-gutters">
+															<div class="col"><label><?= $user_fee->feeTypeName ?></label></div>
+															<div class="col-3"><label>$<?= $user_fee->amount ?>/<?= $user_fee->billingTypeName ?></label></div>
+														</div>
+													</div>
+													<div class="col-1 d-flex align-items-center justify-content-center">
+														<i class="fas fa-minus-circle"></i>
+													</div>
+												</div>
+												<?php
+											}
+											?>
+										</div>
+									<?php
+								}
+								?>
                         </div>
                     </div>
 
@@ -214,9 +217,6 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-        $('.js-example-basic-multiple').select2();
-    });
     $(document).ready(function () {
         $("#business_profile-edit").validate({
             rules: {
@@ -277,19 +277,45 @@
             }
         })
 
-				$(".areas_of_speciality_save").click(function(){
-					var val = $(this).val();
-					var is_checked = $(this).prop("checked");
-					$.post('<?= base_url() ?>/account/save_area_of_speciality',{
-						areas_of_speciality :val,
-						is_checked : is_checked
-					},function(data, status){
-						
-					});
-				});
+		$("#consultancy_submit").click(function(a){
+			$(a).prop('disabled',true);
+			var consultancy_fee_type= $("#consultancy_fee_type").val();
+			var consultancy_amount= $("#consultancy_amount").val();
+			var consultancy_billing_type= $("#consultancy_billing_type").val();
+			var data={
+				consultancy_fee_type:consultancy_fee_type,
+				consultancy_amount:consultancy_amount,
+				consultancy_billing_type:consultancy_billing_type
+			};
+			$.post('<?= base_url() ?>/account/save_consultancy_fee',data,
+			function(data, status){
+				console.log(data);
+				console.log(status);
+			});
+		});
 
-				$("#submit-business_profile-about_me").click(function(){
-					$('#business_profile-edit-about_me').submit();
-				});
-			})
-		</script>
+		$(".areas_of_speciality_save").click(function(){
+			var val = $(this).val();
+			var is_checked = $(this).prop("checked");
+			$.post('<?= base_url() ?>/account/save_area_of_speciality',{
+				areas_of_speciality :val,
+				is_checked : is_checked
+			},function(data, status){
+				
+			});
+		});
+
+		$("#offer_free_consultations").change(function(){
+			var is_checked = $(this).prop("checked");
+			$.post('<?= base_url() ?>/account/offer_free_consultations',{
+				is_checked : is_checked
+			},function(data, status){
+				
+			});
+		});
+
+		$("#submit-business_profile-about_me").click(function(){
+			$('#business_profile-edit-about_me').submit();
+		});
+	})
+</script>

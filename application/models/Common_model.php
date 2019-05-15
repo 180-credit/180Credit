@@ -52,6 +52,13 @@ class Common_model extends CI_Model {
         $this->db->close(); 
         return $query->result();
     }
+    
+    public function loadUserFees($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadUserFees($userId)");
+        $this->db->close(); 
+        return $query->result();
+    }
 
     public function loadStates(){
         $this->db->reconnect();
@@ -60,6 +67,19 @@ class Common_model extends CI_Model {
         return $query->result();
     }
 
+    public function loadUserFeeFromName($name){
+        $this->db->reconnect();
+        $query = $this->db->query("select * from fee_types where feeTypeName like '{$name}'");
+        $this->db->close(); 
+        return $query->row();
+    }
+
+    public function loadUserBillingFromName($name){
+        $this->db->reconnect();
+        $query = $this->db->query("select * from billing_types where billingTypeName like '{$name}'");
+        $this->db->close(); 
+        return $query->row();
+    }
 
     /**
      * Get secure key

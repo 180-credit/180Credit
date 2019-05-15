@@ -38,6 +38,7 @@ class Account extends CI_Controller {
 		$data['load_fee_types'] = $this->Common_model->loadFeeTypes();
 		$data['states'] = $this->Common_model->loadStates();
 		$data['user_company_profile'] = $this->Common_model->loadUserCompanyProfile($user['userId']);
+		$data['user_fees'] = $this->Common_model->loadUserFees($user['userId']);
 		$data['areas_of_specialtys'] = $this->Common_model->loadUserAreasOfSpecialty($user['userId']);
 		$data['user_about_me'] = $this->Common_model->loadUserAboutMe($user['userId']);
 		$this->template->load('layout', 'account/business_profile', $data);
@@ -68,12 +69,50 @@ class Account extends CI_Controller {
 		$areasOfSpeciality=$this->input->post('areas_of_speciality');
 		$is_checked=$this->input->post('is_checked');
 		$user=$_SESSION['user'];
-		$insert_user_stored_proc = "CALL  updateUserAreaOfSpecialty(
+		$insert_user_stored_proc = "CALL updateUserAreaOfSpecialty(
 			{$user['userId']}, 
 			{$areasOfSpeciality},
 			{$is_checked})";
         $result = $this->db->query($insert_user_stored_proc);
 		// redirect('/my-business-profile');
+		return true;
+	}
+
+	public function offer_free_consultations(){
+		$is_checked=$this->input->post('is_checked');
+		$user=$_SESSION['user'];
+		$insert_user_stored_proc = "CALL  updateUserFreeConsultation(
+			{$user['userId']}, 
+			{$is_checked})";
+        $result = $this->db->query($insert_user_stored_proc);
+		// redirect('/my-business-profile');
+		return true;
+	}
+
+	public function save_consultancy_fee(){
+		$consultancy_fee_type=$this->input->post('consultancy_fee_type');
+		$consultancy_amount=$this->input->post('consultancy_amount');
+		$consultancy_billing_type=$this->input->post('consultancy_billing_type');
+		$user=$_SESSION['user'];
+		$feeTypeId = null;
+		$billingTypeId = null;
+		$userFeeDetail = $this->Common_model->loadUserFeeFromName($consultancy_fee_type);
+		$billingTypeDetail = $this->Common_model->loadUserBillingFromName($consultancy_billing_type);
+		
+		if(isset($userFeeDetail->id)){
+			$feeTypeId = $userFeeDetail->id;
+		}
+
+		if(isset($billingTypeDetail->id)){
+			$billingTypeId = $billingTypeDetail->id;
+		}
+
+		$insert_user_stored_proc = "CALL saveUserFee(
+			{$user['userId']}, 
+			{$billingTypeId},
+			{$feeTypeId},
+			'{$consultancy_amount}')";
+        $result = $this->db->query($insert_user_stored_proc);
 		return true;
 	}
 
