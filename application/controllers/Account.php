@@ -78,10 +78,20 @@ class Account extends CI_Controller {
 		return true;
 	}
 
+
+	public function remove_fees_data(){
+		$fees_id=$this->input->post('fees_id');
+		$insert_user_stored_proc = "CALL deleteUserFee(
+			{$fees_id})";
+        $result = $this->db->query($insert_user_stored_proc);
+		echo 1;
+	}
+
+
 	public function offer_free_consultations(){
 		$is_checked=$this->input->post('is_checked');
 		$user=$_SESSION['user'];
-		$insert_user_stored_proc = "CALL  updateUserFreeConsultation(
+		$insert_user_stored_proc = "CALL updateUserFreeConsultation(
 			{$user['userId']}, 
 			{$is_checked})";
         $result = $this->db->query($insert_user_stored_proc);
@@ -96,15 +106,34 @@ class Account extends CI_Controller {
 		$user=$_SESSION['user'];
 		$feeTypeId = null;
 		$billingTypeId = null;
-		$userFeeDetail = $this->Common_model->loadUserFeeFromName($consultancy_fee_type);
+		$feeTypeDetail = $this->Common_model->loadUserFeeFromName($consultancy_fee_type);
 		$billingTypeDetail = $this->Common_model->loadUserBillingFromName($consultancy_billing_type);
 		
-		if(isset($userFeeDetail->id)){
-			$feeTypeId = $userFeeDetail->id;
+		if(isset($feeTypeDetail->id)){
+			$feeTypeId = $feeTypeDetail->id;
+		}else{
+			$insertFeeType = "INSERT into fee_types SET feeTypeName='{$consultancy_fee_type}', createdByUserId={$user['userId']},createdOn=now()";
+			$this->db->reconnect();
+			$this->db->query($insertFeeType);
+			$this->db->close();
+			$this->db->reconnect();
+			$feeTypeDetailResult=$this->db->query('select * from fee_types ORDER BY id DESC LIMIT 1');
+			$this->db->close();
+			$feeTypeDetail = $feeTypeDetailResult->row();
+			$feeTypeId = $feeTypeDetail->id;
 		}
-
 		if(isset($billingTypeDetail->id)){
 			$billingTypeId = $billingTypeDetail->id;
+		}else{
+			$insertFeeType = "INSERT into billing_types SET billingTypeName='{$consultancy_billing_type}', createdByUserId={$user['userId']},createdOn=now()";
+			$this->db->reconnect();
+			$this->db->query($insertFeeType);
+			$this->db->close();
+			$this->db->reconnect();
+			$billingTypesDetailResult=$this->db->query('select * from billing_types ORDER BY id DESC LIMIT 1');
+			$this->db->close();
+			$billingTypesDetail = $billingTypesDetailResult->row();
+			$billingTypeId = $billingTypesDetail->id;
 		}
 
 		$insert_user_stored_proc = "CALL saveUserFee(
@@ -112,8 +141,31 @@ class Account extends CI_Controller {
 			{$billingTypeId},
 			{$feeTypeId},
 			'{$consultancy_amount}')";
-        $result = $this->db->query($insert_user_stored_proc);
-		return true;
+		$result = $this->db->query($insert_user_stored_proc);
+		$dataUserFees = $this->Common_model->loadUserFees($user['userId']);
+		$html = "";
+		foreach($dataUserFees as $fee){
+			$html .='<div class="form-row draggable-item" data-id="'.$fee->id.'" id="fees_list_'.$fee->id.'">
+			<div class="col">
+				<div class="row no-gutters">
+					<div class="col"><label>'.$fee->feeTypeName.'</label></div>
+					<div class="col-3"><label>$'.$fee->amount.'/'.$fee->billingTypeName.'</label></div>
+				</div>
+			</div>
+			<div class="col-1 d-flex align-items-center justify-content-center">
+				<a data-id="'.$fee->id.'" class="remove_fees_data"><i class="fas fa-minus-circle" ></i></a>
+			</div>
+		</div>';
+		}
+		echo $html;
+	}
+
+	public function update_sequence_fees(){
+		$fees_sequence=$this->input->post('fees_sequence');
+		
+		foreach($fees_sequence as $key => $sequence){
+			$this->Common_model->setUpdatedSequence($sequence,$key+1);
+		}
 	}
 
 	public function save_about_me(){

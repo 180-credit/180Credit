@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap-toggle-master/css/bootstrap-toggle.css">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/awesomplete/awesomplete.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
 <script src="<?php echo base_url(); ?>assets/plugins/bootstrap-toggle-master/js/bootstrap-toggle.min.js" type="text/javascript"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/awesomplete/awesomplete.min.js" async type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js" type="text/javascript"></script>
 <div class="container account-page">
@@ -144,10 +146,10 @@
 										<h6>Add a new fee to my fee table</h6>
 										<form id='consultancy_form' method post>
 											<div class="form-row form-top-row">
-												<div class="col-6">
+												<div class="col-5">
 													<label>Select a fee type</label>
 													<div class="select2-outer-div">
-														<input class="awesomplete" id='consultancy_fee_type' class="form-control" list="mylist" />
+														<input class="awesomplete" id='consultancy_fee_type' name="consultancy_fee_type" class="form-control" list="mylist" />
 														<datalist id="mylist">
 															<?php
 																foreach($load_fee_types as $load_fee_type){
@@ -161,11 +163,11 @@
 												</div>
 												<div class="col">
 													<label>Amount</label>
-													<input type="text" id='consultancy_amount' class="form-control" >
+													<input type="text" id='consultancy_amount' name="consultancy_amount" class="form-control" >
 												</div>
 												<div class="col">
 													<label>Billing</label>
-														<input class="awesomplete" id='consultancy_billing_type' class="form-control" list="mylist2" />
+														<input class="awesomplete" id='consultancy_billing_type' name="consultancy_billing_type" class="form-control" list="mylist2" />
 														<datalist id="mylist2">
 															<?php
 																foreach($load_billing_types as $load_billing_type){
@@ -181,32 +183,28 @@
 												</div>
 											</div>
 										</form>
-								<?php
-								if(count($user_fees)){
-									?>
-									<p>NOTE: You can re-arrange the order of the items by dragging</p>
-										<div class="fee-bottom-block">
-											<?php 
-											foreach($user_fees as $user_fee){
-												?>
-												<div class="form-row">
-													<div class="col">
-														<div class="row no-gutters">
-															<div class="col"><label><?= $user_fee->feeTypeName ?></label></div>
-															<div class="col-3"><label>$<?= $user_fee->amount ?>/<?= $user_fee->billingTypeName ?></label></div>
-														</div>
-													</div>
-													<div class="col-1 d-flex align-items-center justify-content-center">
-														<i class="fas fa-minus-circle"></i>
-													</div>
+							<p>NOTE: You can re-arrange the order of the items by dragging</p>
+							<div class="column">
+								<div class="fee-bottom-block connected-sortable droppable-area1">
+									<?php 
+									foreach($user_fees as $user_fee){
+										?>
+										<div class="form-row draggable-item" data-id="<?= $user_fee->id ?>" id='fees_list_<?= $user_fee->id ?>'>
+											<div class="col">
+												<div class="row no-gutters">
+													<div class="col"><label><?= $user_fee->feeTypeName ?></label></div>
+													<div class="col-3"><label>$<?= $user_fee->amount ?>/<?= $user_fee->billingTypeName ?></label></div>
 												</div>
-												<?php
-											}
-											?>
+											</div>
+											<div class="col-1 d-flex align-items-center justify-content-center">
+												<a data-id='<?= $user_fee->id ?>' class="remove_fees_data"><i class="fas fa-minus-circle" ></i></a>
+											</div>
 										</div>
-									<?php
-								}
-								?>
+										<?php
+									}
+									?>
+								</div>
+							</div>
                         </div>
                     </div>
 
@@ -271,6 +269,23 @@
                 }
             }
         });
+
+		$("#consultancy_form").validate({
+            rules: {
+                // simple rule, converted to {required:true}
+                // compound rule
+                consultancy_fee_type: {
+                    required: true
+                },
+                consultancy_amount: {
+                    required: true,
+					number:true
+                },
+                consultancy_billing_type: {
+                    required: true
+				}
+            }
+        });
         $("#submit-business_profile").click(function () {
             if ($("#business_profile-edit").valid()) {
                 $("#business_profile-edit").submit();
@@ -278,20 +293,33 @@
         })
 
 		$("#consultancy_submit").click(function(a){
-			$(a).prop('disabled',true);
-			var consultancy_fee_type= $("#consultancy_fee_type").val();
-			var consultancy_amount= $("#consultancy_amount").val();
-			var consultancy_billing_type= $("#consultancy_billing_type").val();
-			var data={
-				consultancy_fee_type:consultancy_fee_type,
-				consultancy_amount:consultancy_amount,
-				consultancy_billing_type:consultancy_billing_type
-			};
-			$.post('<?= base_url() ?>/account/save_consultancy_fee',data,
-			function(data, status){
-				console.log(data);
-				console.log(status);
-			});
+			if ($("#consultancy_form").valid()) {
+				$(a).prop('disabled',true);
+				var consultancy_fee_type= $("#consultancy_fee_type").val();
+				var consultancy_amount= $("#consultancy_amount").val();
+				var consultancy_billing_type= $("#consultancy_billing_type").val();
+				var data={
+					consultancy_fee_type:consultancy_fee_type,
+					consultancy_amount:consultancy_amount,
+					consultancy_billing_type:consultancy_billing_type
+				};
+				$.post('<?= base_url() ?>/account/save_consultancy_fee',data,
+				function(data){
+					$('.fee-bottom-block').html(data);
+					$(".remove_fees_data").click(function(){
+						var fees_id = $(this).data("id");
+						$.post('<?= base_url() ?>/account/remove_fees_data',{
+							fees_id : fees_id
+						},function(data){
+							if(data){
+								$('#fees_list_'+fees_id).remove();
+							}
+						});
+					});
+					$("#consultancy_form").trigger('reset');
+					$(a).prop('disabled',false);
+				});
+			}
 		});
 
 		$(".areas_of_speciality_save").click(function(){
@@ -302,6 +330,17 @@
 				is_checked : is_checked
 			},function(data, status){
 				
+			});
+		});
+
+		$(".remove_fees_data").click(function(){
+			var fees_id = $(this).data("id");
+			$.post('<?= base_url() ?>/account/remove_fees_data',{
+				fees_id : fees_id
+			},function(data){
+				if(data){
+					$('#fees_list_'+fees_id).remove();
+				}
 			});
 		});
 
@@ -318,4 +357,22 @@
 			$('#business_profile-edit-about_me').submit();
 		});
 	})
+	$( init );
+	function init() {
+		$( ".droppable-area1, .droppable-area2" ).sortable({
+			connectWith: ".connected-sortable",
+			stack: '.connected-sortable ul',
+			update: function( ) {
+				var idArray = [];
+				$('.draggable-item').each(function () {
+					idArray.push($(this).data('id'));
+				});
+				$.post('<?= base_url() ?>/account/update_sequence_fees',{
+				fees_sequence : idArray
+				},function(data){
+					
+				});
+			}
+		}).disableSelection();
+	}
 </script>

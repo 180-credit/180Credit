@@ -59,12 +59,18 @@ class Common_model extends CI_Model {
         $this->db->close(); 
         return $query->result();
     }
-
+    
     public function loadStates(){
         $this->db->reconnect();
         $query = $this->db->query("select * from state");
         $this->db->close(); 
         return $query->result();
+    }
+
+    public function setUpdatedSequence($id,$value){
+        $this->db->reconnect();
+        $query = $this->db->query("update user_fees set displayOrder={$value} where id=".$id);
+        $this->db->close(); 
     }
 
     public function loadUserFeeFromName($name){
