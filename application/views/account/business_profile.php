@@ -16,7 +16,13 @@
 							<ul class="nav">
 								<li class="nav-item"><a data-toggle="tab" href="#tab-eg5-0" class="active nav-link">My Company</a></li>
 								<li class="nav-item"><a data-toggle="tab" href="#tab-eg5-1" class="nav-link">About Me</a></li>
-								<li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">My Fees</a></li>
+								<?php
+								if(isset($user_company_profile) && !empty($user_company_profile)){
+									?>
+										<li class="nav-item"><a data-toggle="tab" href="#tab-eg5-2" class="nav-link">My Fees</a></li>	
+									<?php
+								}
+								?>
 							</ul>
 						</div>
 						<div class="card-body">

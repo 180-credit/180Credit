@@ -533,4 +533,7 @@ ALTER TABLE `user_fees`   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCR
 
 
 -- 15/5/2019
-DROP PROCEDURE `loadUserCompanyProfile`; CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserCompanyProfile`(IN `pUserId` INT(11)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT `company_name`, `address1`, `city`, `state_id`, `zip`, `public_phone`, `website_url`, `scheduling_url`, `facebook_url`, `twitter_url`, `youtube_url`, `linkedin_url`, `instagram_url`, `offersFreeConsultations` FROM `user_profiles` WHERE `user_id` = `pUserId`; END 
+DROP PROCEDURE `loadUserCompanyProfile`; CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserCompanyProfile`(IN `pUserId` INT(11)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT `company_name`, `address1`, `city`, `state_id`, `zip`, `public_phone`, `website_url`, `scheduling_url`, `facebook_url`, `twitter_url`, `youtube_url`, `linkedin_url`, `instagram_url`, `offersFreeConsultations` FROM `user_profiles` WHERE `user_id` = `pUserId`; END
+
+-- 18/5/2019
+DROP PROCEDURE `loadUserFees`; CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserFees`(IN `pUserId` INT(11)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT f.id, ft.feeTypeName, f.amount, b.billingTypeName, f.displayOrder FROM `user_fees` f LEFT JOIN billing_types b ON b.id = f.billingTypeId LEFT JOIN fee_types ft ON ft.id = f.feeTypeId WHERE f.userId = `pUserId` ORDER BY f.displayOrder; END 
