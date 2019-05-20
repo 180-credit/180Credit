@@ -41,6 +41,12 @@ class Account extends CI_Controller {
 		$data['user_fees'] = $this->Common_model->loadUserFees($user['userId']);
 		$data['areas_of_specialtys'] = $this->Common_model->loadUserAreasOfSpecialty($user['userId']);
 		$data['user_about_me'] = $this->Common_model->loadUserAboutMe($user['userId']);
+		$tags = $this->Common_model->loadUserTags($user['userId']);
+		$tagsList = [];
+		foreach($tags as $tag){
+			$tagsList[] = $tag->tagname;
+		}
+		$data['tags'] = implode(",",$tagsList); 
 		$this->template->load('layout', 'account/business_profile', $data);
 	}
 
@@ -171,13 +177,37 @@ class Account extends CI_Controller {
 	public function save_about_me(){
 		$sortDescription=$this->input->post('sort_description');
 		$longDescription=$this->input->post('long_description');
+		$additionalAttributes=explode(",",$this->input->post('additional_attributes'));
 		$user=$_SESSION['user'];
+		$this->db->reconnect();
 		$insert_user_stored_proc = "CALL saveUserAboutMe(
 			{$user['userId']}, 
 			'{$sortDescription}',
 			'{$longDescription}')";
-        $result = $this->db->query($insert_user_stored_proc);
+		$this->db->query($insert_user_stored_proc);
+		$this->db->close(); 
+		if(!empty($additionalAttributes)){
+			foreach($additionalAttributes as $additionalAttribut){
+				$this->db->reconnect();
+				$insert_user_stored_proc = "CALL saveTag(
+					{$user['userId']}, 
+					'{$additionalAttribut}')";
+				$this->db->query($insert_user_stored_proc);
+				$this->db->close();
+			}
+		} 
 		redirect('/my-business-profile');
+	}
+
+	public function remove_attribute_tags(){
+		$tagName=$this->input->post('tagName');
+		$user=$_SESSION['user'];
+		$this->db->reconnect();
+		$insert_user_stored_proc = "CALL deleteUserTag(
+			{$user['userId']}, 
+			'{$tagName}')";
+		$this->db->query($insert_user_stored_proc);
+		$this->db->close();
 	}
 
 	public function change_password()

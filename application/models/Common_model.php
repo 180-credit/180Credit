@@ -60,6 +60,13 @@ class Common_model extends CI_Model {
         return $query->result();
     }
     
+    public function loadUserTags($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadUserTags($userId)");
+        $this->db->close(); 
+        return $query->result();
+    }
+    
     public function loadStates(){
         $this->db->reconnect();
         $query = $this->db->query("select * from state");
