@@ -166,24 +166,24 @@
 
 <!--  [Script Section] Ends -->
 <script>
-    $('#specialistDetails').on('click change keyup',function () {
+    $('#specialistDetails').on('click change keyup', function () {
         var q = $('#specialistDetails').val();
         $.ajax({
             type: "GET",
-            url: 'home/getSpecialList?q='+q,
-            success: function(data)
+            url: 'home/getSpecialList?q=' + q,
+            success: function (data)
             {
                 $('#specialistDetailsUl').html(data).show();
             }
         });
     });
-    $('#zipCodes').on('click change keyup',function () {
+    $('#zipCodes').on('click change keyup', function () {
         var q = $('#zipCodes').val();
-        if (q.length > 2){
+        if (q.length > 2) {
             $.ajax({
                 type: "GET",
-                url: 'home/getZipCodes?q='+q,
-                success: function(data)
+                url: 'home/getZipCodes?q=' + q,
+                success: function (data)
                 {
                     $('#zipCodesUl').html(data).show();
                 }
@@ -196,12 +196,12 @@
         var container2 = $("#zipCodesUl"); // YOUR CONTAINER SELECTOR
 
         if (!container.is(e.target) // if the target of the click isn't the container...
-            && container.has(e.target).length === 0) // ... nor a descendant of the container
+                && container.has(e.target).length === 0) // ... nor a descendant of the container
         {
             container.hide();
         }
         if (!container2.is(e.target) // if the target of the click isn't the container...
-            && container2.has(e.target).length === 0) // ... nor a descendant of the container
+                && container2.has(e.target).length === 0) // ... nor a descendant of the container
         {
             container2.hide();
         }

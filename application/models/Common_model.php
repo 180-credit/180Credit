@@ -30,11 +30,26 @@ class Common_model extends CI_Model {
         return $query->result();
     }
 
-    public function viewZipCodes($q = null){
-        $this->db->reconnect();
-        $query = $this->db->query("CALL viewZipCodes('$q');");
-        $this->db->close();
-        return $query->result();
+    public function viewZipCodes($q = null, $is_numeric = false){
+        if($is_numeric) {
+            $this->db->reconnect();
+            $query = $this->db->query("CALL viewZipCodesByNum('$q');");
+            $this->db->close();
+            return $query->result();
+        } else {
+            $result = array();
+            $this->db->reconnect();
+            $query = $this->db->query("CALL viewZipCodesCityByText('$q');");
+            $this->db->close();
+            $result['cities'] =  $query->result();
+            
+            $this->db->reconnect();
+            $query1 = $this->db->query("CALL viewZipCodesStateByText('$q');");
+            $this->db->close();
+            $result['states'] =  $query1->result();
+            
+            return $result;
+        }
     }
 
     public function loadBillingTypes(){

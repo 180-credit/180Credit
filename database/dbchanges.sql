@@ -546,6 +546,96 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteUserTag`(IN `pUserId` INT, IN
 
 
 -- 10/06/2019
-CREATE DEFINER=`root`@`localhost` PROCEDURE `viewUserAreasOfSpeciality`(IN `pQuery` VARCHAR(255)) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER BEGIN select `u`.`user_id` as `id`,concat(`ud`.`firstName`,' ',`ud`.`lastName`) AS `name`,`a`.`name` AS `area_name`,`u`.`area_of_specialty_id` AS `area_of_specialty_id` from ((`areas_of_specialty` `a` left join `user_areas_of_specialty` `u` on(`u`.`area_of_specialty_id` = `a`.`id`)) left join `users` `ud` on(`u`.`user_id` = `ud`.`userId`)) where `u`.`user_id` is not null AND (`ud`.`firstName` LIKE CONCAT('%',LOWER(TRIM(`pQuery`)),'%') OR `ud`.`lastName` LIKE CONCAT('%',LOWER(TRIM(`pQuery`)),'%')) GROUP BY `u`.`user_id`; END
+DELIMITER $$
+CREATE DEFINER = `root`@`localhost` 
+PROCEDURE `viewUserAreasOfSpeciality`(IN `pQuery` VARCHAR(255)) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER
+BEGIN
+    SELECT
+        `u`.`user_id` AS `id`,
+        CONCAT(`ud`.`firstName`, ' ', `ud`.`lastName`) AS `name`,
+        `a`.`name` AS `area_name`,
+        `u`.`area_of_specialty_id` AS `area_of_specialty_id`
+    FROM
+        (
+            (
+                `areas_of_specialty` `a`
+            LEFT JOIN `user_areas_of_specialty` `u` ON
+                (`u`.`area_of_specialty_id` = `a`.`id`)
+            )
+        LEFT JOIN `users` `ud` ON
+            (`u`.`user_id` = `ud`.`userId`)
+        )
+    WHERE
+        `u`.`user_id` IS NOT NULL AND(
+            `ud`.`firstName` LIKE CONCAT('%', LOWER(TRIM(`pQuery`)),
+            '%') OR `ud`.`lastName` LIKE CONCAT('%', LOWER(TRIM(`pQuery`)),
+            '%')
+        )
+    GROUP BY
+        `u`.`user_id`;
 
-CREATE DEFINER = `root` @`localhost`  PROCEDURE `viewZipCodes`(IN `pQuery` VARCHAR(255)) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER BEGIN SELECT * FROM (SELECT `zipcodes`.`id`,concat(`zipcodes`.`ZIPCode`,' ',`zipcodes`.`CityName`,', ',`zipcodes`.`StateAbbr`) as name FROM `zipcodes`) as z WHERE `z`.`name` LIKE CONCAT('%',LOWER(TRIM(`pQuery`)),'%'); END
+
+
+
+END$$
+DELIMITER ;
+
+-- DELIMITER $$
+-- CREATE DEFINER = `root` @`localhost` PROCEDURE `viewZipCodesByNum`(IN `pQuery` VARCHAR(255)) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER
+-- BEGIN
+--     SELECT
+--         *
+--     FROM
+--         (
+--         SELECT
+--             `zipcodes`.`id`,
+--             CONCAT(
+--                 `zipcodes`.`ZIPCode`,
+--                 ' ',
+--                 `zipcodes`.`CityName`,
+--                 ', ',
+--                 `zipcodes`.`StateAbbr`
+--             ) AS NAME
+--         FROM
+--             `zipcodes`
+--     ) AS z
+-- WHERE
+--     `z`.`name` LIKE CONCAT('%', LOWER(TRIM(`pQuery`)),
+--     '%');
+-- END$$
+-- DELIMITER ;
+
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `viewZipCodesByNum`(IN `pQuery` VARCHAR(255))
+    NO SQL
+SELECT id, CONCAT(
+                 `zipcodes`.`ZIPCode`,
+                ' ',
+                 `zipcodes`.`CityName`,
+                 ', ',
+                 `zipcodes`.`StateAbbr`
+             ) AS name FROM zipcodes WHERE `ZIPCode` LIKE CONCAT('%', LOWER(TRIM(`pQuery`)), '%')$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `viewZipCodesStateByText`(IN `pQuery` VARCHAR(255))
+    NO SQL
+SELECT id, CONCAT(StateName, ', ', StateAbbr) as name
+FROM 
+zipcodes
+WHERE
+`StateName` LIKE CONCAT('%', LOWER(TRIM('New')), '%')
+GROUP BY StateName$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `viewZipCodesCityByText`(IN `pQuery` VARCHAR(255))
+    NO SQL
+SELECT id, CityName as name
+FROM 
+zipcodes
+WHERE
+`CityName` LIKE CONCAT('%', LOWER(TRIM(`pQuery`)), '%')
+GROUP BY CityName$$
+DELIMITER ;

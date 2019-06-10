@@ -2,16 +2,13 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller
-{
+class Home extends CI_Controller {
 
-    function __construct()
-    {
+    function __construct() {
         parent::__construct();
     }
 
-    public function index()
-    {
+    public function index() {
         $this->load->model('Common_model');
         $data['msg'] = '';
         $data['title'] = 'Home';
@@ -19,57 +16,74 @@ class Home extends CI_Controller
         $areasOfSpecialties = $this->Common_model->loadAreasOfSpecialty();
         $loadUserAreasOfSpecialtySearch = $this->Common_model->loadUserAreasOfSpecialtySearch();
         $data['specialist'] = json_encode(array(
-            'area_of_speciality'=>$areasOfSpecialties,
-            'specialist'=> $loadUserAreasOfSpecialtySearch
+            'area_of_speciality' => $areasOfSpecialties,
+            'specialist' => $loadUserAreasOfSpecialtySearch
         ));
         $this->template->load('layout', 'home', $data);
     }
 
-
-    public function getSpecialList()
-    {
+    public function getSpecialList() {
         $this->load->model('Common_model');
         $q = $this->input->get('q');
         $areasOfSpecialties = $this->Common_model->loadAreasOfSpecialty($q);
         $html = '';
-        foreach ($areasOfSpecialties as $value){
-            if(!empty($q)){
-                $value->name = preg_replace('/\S*('. $q .'\S*)/i', '<b>$1</b>', $value->name);
-            }
-            $html.='<li><a data-id="'.$value->id.'">'.$value->name.'</a></li>';
-        }
-        $specialLists = $this->Common_model->loadUserAreasOfSpecialtySearch($q);
-        if(!empty($specialLists) || !empty($areasOfSpecialties)){
-            $html .='<hr>';
-        }
-        foreach ($specialLists as $value){
-            if(!empty($q)) {
+        foreach ($areasOfSpecialties as $value) {
+            if (!empty($q)) {
                 $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
             }
-            $html.='<li><a data-id="'.$value->id.'">'.$value->name.'</a></li>';
+            $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+        }
+        $specialLists = $this->Common_model->loadUserAreasOfSpecialtySearch($q);
+        if (!empty($specialLists) || !empty($areasOfSpecialties)) {
+            $html .='<hr>';
+        }
+        foreach ($specialLists as $value) {
+            if (!empty($q)) {
+                $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+            }
+            $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
         echo $html;
     }
 
-    public function getZipCodes()
-    {
+    public function getZipCodes() {
         $this->load->model('Common_model');
         $q = $this->input->get('q');
-        $viewZipCodes = $this->Common_model->viewZipCodes($q);
+        $viewZipCodes = $this->Common_model->viewZipCodes($q, is_numeric($q));
         $html = '';
-        foreach ($viewZipCodes as $key => &$value){
-            $value->name = preg_replace('/\S*('. $q .'\S*)/i', '<b>$1</b>', $value->name);
-            if($key > 10){
-                break;
+        if (is_numeric($q)) {
+            if (!empty($viewZipCodes)) {
+                foreach ($viewZipCodes as $key => $value) {
+                    $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+//                if ($key > 10) {
+//                    break;
+//                }
+                    $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                }
             }
-            $html.='<li><a data-id="'.$value->id.'">'.$value->name.'</a></li>';
+        } else {
+            if (isset($viewZipCodes['cities']) && !empty($viewZipCodes['cities'])) {
+                foreach ($viewZipCodes['cities'] as $value) {
+                    if ($value->name != '') {
+                        $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                        $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                    }
+                }
+            }
+            if (!empty($viewZipCodes['cities']) || !empty($viewZipCodes['states'])) {
+                $html .='<hr>';
+            }
+            foreach ($viewZipCodes['states'] as $value) {
+                if ($value->name != '') {
+                    $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                    $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                }
+            }
         }
         echo $html;
     }
 
-
-    public function profile()
-    {
+    public function profile() {
 
         $data['msg'] = '';
         $data['title'] = 'My Business Profile';
@@ -77,8 +91,7 @@ class Home extends CI_Controller
         $this->load->view('content', $data);
     }
 
-    public function edit_profile()
-    {
+    public function edit_profile() {
 
         $data['msg'] = '';
         $data['title'] = 'Account';
@@ -86,8 +99,7 @@ class Home extends CI_Controller
         $this->load->view('content', $data);
     }
 
-    public function passand_security()
-    {
+    public function passand_security() {
 
         $data['msg'] = '';
         $data['title'] = 'Password & Security';
@@ -95,8 +107,7 @@ class Home extends CI_Controller
         $this->load->view('content', $data);
     }
 
-    public function change_password()
-    {
+    public function change_password() {
         if (isset($_POST) && !empty($_POST)) {
             $data = array(
                 'password' => md5($this->input->post('newpassword'))
