@@ -25,7 +25,7 @@ class Common_model extends CI_Model {
 
     public function loadUserAreasOfSpecialtySearch($q = null){
         $this->db->reconnect();
-        $query = $this->db->query('CALL `viewUserAreasOfSpeciality`();');
+        $query = $this->db->query("CALL viewUserAreasOfSpeciality('$q');");
         $this->db->close();
         return $query->result();
     }

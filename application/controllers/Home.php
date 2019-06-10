@@ -18,41 +18,37 @@ class Home extends CI_Controller
         $data['view'] = 'home';
         $areasOfSpecialties = $this->Common_model->loadAreasOfSpecialty();
         $loadUserAreasOfSpecialtySearch = $this->Common_model->loadUserAreasOfSpecialtySearch();
-        $data['area_of_specialist'] = json_encode($areasOfSpecialties);
-        $data['user_areas_of_specialty'] = json_encode($loadUserAreasOfSpecialtySearch);
-        $areasOfSpecialties = json_decode($data['area_of_specialist'],true);
-        $data['defaultArea'] = json_encode(array_column($areasOfSpecialties, 'name'));
-        /*$dataOfSpecialist=array(
-            array(
-                'text'=>'Area of specialist',
-                'children'=>$areasOfSpecialties
-            ),
-            array(
-                'text'=>'Specialist',
-                'children'=>$loadUserAreasOfSpecialtySearch
-            )
-        );*/
+        $data['specialist'] = json_encode(array(
+            'area_of_speciality'=>$areasOfSpecialties,
+            'specialist'=> $loadUserAreasOfSpecialtySearch
+        ));
         $this->template->load('layout', 'home', $data);
     }
 
 
-    public function getSpecialList($type)
+    public function getSpecialList()
     {
         $this->load->model('Common_model');
-        $areasOfSpecialties = $this->Common_model->loadAreasOfSpecialty();
-        if ($type == 'area.json') {
-            $data['items'] = $areasOfSpecialties;
-        }
-        if ($type == 'specialist.json') {
-            $specialLists = $this->Common_model->loadUserAreasOfSpecialtySearch();
-            if (!empty($specialLists)) {
-                $data['items'] = $specialLists;
+        $q = $this->input->get('q');
+        $areasOfSpecialties = $this->Common_model->loadAreasOfSpecialty($q);
+        $html = '';
+        foreach ($areasOfSpecialties as $value){
+            if(!empty($q)){
+                $value->name = preg_replace('/\S*('. $q .'\S*)/i', '<b>$1</b>', $value->name);
             }
+            $html.='<li><a data-id="'.$value->id.'">'.$value->name.'</a></li>';
         }
-        if (!isset($data['items'])) {
-            $data['items'] = array();
+        $specialLists = $this->Common_model->loadUserAreasOfSpecialtySearch($q);
+        if(!empty($specialLists) || !empty($areasOfSpecialties)){
+            $html .='<hr>';
         }
-        echo json_encode($data);
+        foreach ($specialLists as $value){
+            if(!empty($q)) {
+                $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+            }
+            $html.='<li><a data-id="'.$value->id.'">'.$value->name.'</a></li>';
+        }
+        echo $html;
     }
 
     public function getZipCodes()
@@ -60,7 +56,15 @@ class Home extends CI_Controller
         $this->load->model('Common_model');
         $q = $this->input->get('q');
         $viewZipCodes = $this->Common_model->viewZipCodes($q);
-        echo json_encode($viewZipCodes);
+        $html = '';
+        foreach ($viewZipCodes as $key => &$value){
+            $value->name = preg_replace('/\S*('. $q .'\S*)/i', '<b>$1</b>', $value->name);
+            if($key > 10){
+                break;
+            }
+            $html.='<li><a data-id="'.$value->id.'">'.$value->name.'</a></li>';
+        }
+        echo $html;
     }
 
 

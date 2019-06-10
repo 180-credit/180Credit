@@ -1,6 +1,3 @@
-<!--<link href="--><?php //echo base_url(); ?><!--assets/plugins/jquery-typeahead/jquery.typeahead.min.css" rel="stylesheet" media="screen"/>-->
-<script src="<?php echo base_url(); ?>assets/plugins/jquery-typeahead/typeahead.bundle.min.js" type="text/javascript"></script>
-<!-- How Can We Help Block Starts -->
 <section class="main-slider-block position-relative">
     <div class="owl-carousel owl-theme main-slider">
         <div class="item">
@@ -43,19 +40,32 @@
                                             <div class="input-group-addon">
                                                 <i class="fa fa-search"></i>
                                             </div>
-                                            <input class="form-control" id="exampleInputEmail1" name="specialist" type="text" placeholder="Enter topic or specialist name" autocomplete="off">
+                                            <input type="text" class="form-control" id="specialistDetails" placeholder="Enter topic & specialist name" >
+                                            <!--<input class="form-control" id="exampleInputEmail1" name="user_v1"
+                                                   type="search" placeholder="Enter Specialist Name" autocomplete="off">-->
                                             <!--                                             placeholder="Enter Specialist Name"-->
+                                            <div class="set_ul_to_main">
+                                                <ul id="specialistDetailsUl" class="set_ul_to">
+                                                </ul>
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div class="form-group mx-2">
                                         <div class="input-group">
                                             <div class="input-group-addon">
                                                 <i class="fa fa-map-signs"></i>
                                             </div>
-                                            <input class="form-control" id="exampleInputEmail2" name="location-map" type="text" placeholder="Enter city, state or zip code" autocomplete="off">
+                                            <input type="text" class="form-control" id="zipCodes" placeholder="Enter city, state, zip code" />
+
+                                            <div class="set_ul_to_main">
+                                                <ul id="zipCodesUl" class="set_ul_to">
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary text-white">Search</button>
+
                                 </form>
                             </div>
                             <div class="tab-pane advice-tab fade" id="pills-profile" role="tabpanel"
@@ -135,20 +145,8 @@
         </div>
     </div>
 </section>
-<style>
-    .select2-highlighted .movie-synopsis {
-        font-size: .8em;
-        color: #eee;
-    }
-
-    .bigdrop.select2-container .select2-results {
-        max-height: 300px;
-    }
-
-    .bigdrop .select2-results {
-        max-height: 300px;
-    }
-</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- How Can We Help Block Ends -->
 <!--  [Owl Carousel Js] Starts -->
 <script src="<?php echo base_url(); ?>assets/plugins/owlcarousel/owl.carousel.min.js" type="text/javascript"></script>
@@ -168,84 +166,44 @@
 
 <!--  [Script Section] Ends -->
 <script>
-    var areaOfSpecialist = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        identify: function(obj) { return obj.name; },
-        local:<?= $area_of_specialist ?>
-    });
-
-    var specialist = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        identify: function(obj) { return obj.name; },
-        local: <?= $user_areas_of_specialty ?>
-    });
-    function nflTeamsWithDefaults(q, sync) {
-        if (q === '') {
-            sync(areaOfSpecialist.get(<?= $defaultArea ?>));
-        }
-
-        else {
-            areaOfSpecialist.search(q, sync);
-        }
-    }
-
-    $('#exampleInputEmail1').typeahead({
-            minLength: 0,
-            highlight: true
-        },
-        {
-            name: 'specialist',
-            display: 'name',
-            source: nflTeamsWithDefaults,
-            templates: {
-                header: '<h4 class="head-dropdown">Area of specialist</h4>'
-            }
-        },
-        {
-            name: 'specialist',
-            display: 'name',
-            source: specialist,
-            templates: {
-                header: '<h4 class="head-dropdown">Specialist</h4>'
+    $('#specialistDetails').on('click change keyup',function () {
+        var q = $('#specialistDetails').val();
+        $.ajax({
+            type: "GET",
+            url: 'home/getSpecialList?q='+q,
+            success: function(data)
+            {
+                $('#specialistDetailsUl').html(data).show();
             }
         });
-    var zipcodes = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        identify: function(obj) { return obj.name; },
-        remote:{
-            url: 'home/getZipCodes',
-            replace: function(url, query) {
-                return url + "?q=" + query;
-            },
-            ajax : {
-                beforeSend: function(jqXhr, settings){
-                    settings.data = $.param({q: queryInput.val()})
-                },
-                type: "GET"
-
-            }
-            /*filter: function (zipcodes) {
-                // Map the remote source JSON array to a JavaScript object array
-                return $.map(zipcodes.results, function (zipcodes) {
-                    return {
-                        value: zipcodes.name
-                    };
-                });
-            }*/
+    });
+    $('#zipCodes').on('click change keyup',function () {
+        var q = $('#zipCodes').val();
+        if (q.length > 2){
+            $.ajax({
+                type: "GET",
+                url: 'home/getZipCodes?q='+q,
+                success: function(data)
+                {
+                    $('#zipCodesUl').html(data).show();
+                }
+            });
         }
     });
+    $(document).mouseup(function (e)
+    {
+        var container = $("#specialistDetailsUl"); // YOUR CONTAINER SELECTOR
+        var container2 = $("#zipCodesUl"); // YOUR CONTAINER SELECTOR
 
-    // Initialize the Bloodhound suggestion engine
-    zipcodes.initialize();
-    $('#exampleInputEmail2').typeahead({
-            minLength: 3,
-            highlight: true
-        },
+        if (!container.is(e.target) // if the target of the click isn't the container...
+            && container.has(e.target).length === 0) // ... nor a descendant of the container
         {
-            display: 'name',
-            source: zipcodes.ttAdapter()
-        });
+            container.hide();
+        }
+        if (!container2.is(e.target) // if the target of the click isn't the container...
+            && container2.has(e.target).length === 0) // ... nor a descendant of the container
+        {
+            container2.hide();
+        }
+    });
 </script>
