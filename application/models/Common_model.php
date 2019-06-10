@@ -11,10 +11,29 @@ class Common_model extends CI_Model {
     }
 
 
-    public function loadAreasOfSpecialty(){
+    public function loadAreasOfSpecialty($q = null){
         $this->db->reconnect();
-        $query = $this->db->query("CALL loadAreasOfSpecialty()");
+        $sqlQuery = 'SELECT `id`,`name` FROM `areas_of_specialty`';
+        if(isset($q)){
+            $sqlQuery .= " where `name` like '%{$q}%'";
+        }
+        $sqlQuery .= ' ORDER BY `name`;';
+        $query = $this->db->query($sqlQuery);
         $this->db->close(); 
+        return $query->result();
+    }
+
+    public function loadUserAreasOfSpecialtySearch($q = null){
+        $this->db->reconnect();
+        $query = $this->db->query('CALL `viewUserAreasOfSpeciality`();');
+        $this->db->close();
+        return $query->result();
+    }
+
+    public function viewZipCodes($q = null){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL viewZipCodes('$q');");
+        $this->db->close();
         return $query->result();
     }
 
