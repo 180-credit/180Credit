@@ -229,9 +229,9 @@
 
     function getLocation() {
 
-        /*if (navigator.geolocation) {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
-        }*/
+        }
         var zipcodes = getCookie('zipcodes');
         var specialist = getCookie('specialist');
         if(zipcodes && zipcodes != ''){
