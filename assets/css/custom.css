@@ -164,3 +164,10 @@ li.draggable-item.ui-sortable-placeholder {
 .set_ul_to li:hover{
     background: grey;
 }
+
+@media screen and (min-width: 1400px) {
+    .specialist-tab .form-control {
+        width: 15.5rem!important;
+    }
+
+}

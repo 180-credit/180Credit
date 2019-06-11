@@ -189,6 +189,9 @@
                 }
             });
         }
+        else {
+            $('#zipCodesUl').html("").hide();
+        }
     });
     $(document).mouseup(function (e)
     {
