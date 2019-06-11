@@ -61,7 +61,7 @@ class Login extends CI_Controller {
     public function signup_store(){
         $this->load->library('uuid');
         $token = $this->uuid->v4();
-        $data = [
+        $data = array(
             'firstName'=>$this->input->post('first_name'),
             'lastName'=>$this->input->post('last_name'),
             '180creditUserType'=> $this->input->post('user_type'),
@@ -70,7 +70,7 @@ class Login extends CI_Controller {
             'userStatus'=>1,
             'userPassword'=>password_hash($this->input->post('password'),PASSWORD_DEFAULT),
             'verificationToken'=>$token
-        ];
+        );
         $linkToken = base_url().'verify/'.$token;
         $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -144,9 +144,12 @@ class Login extends CI_Controller {
        $url = 'https://api.sendgrid.com/';
        //$user = '180credit';
        //$pass = 'bD8mbh576789k2g';
+        //
+        $user = 'rustyp';
+        $pass = 'M@ddie0218';
 
-       $user = 'chetanakum';
-       $pass = 'nakumajax@92';
+       /*$user = 'chetanakum';
+       $pass = 'nakumajax@92';*/
 
 
         $params = array(
@@ -256,7 +259,7 @@ class Login extends CI_Controller {
                 $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                 $user = (array) $this->Login_model->getDataByCondition('users', $condition, true);
                 if (!empty($user)) {
-                    $data = ['facebookId' => $userDetails['id'],'isEmailVerified' => 1];
+                    $data = array('facebookId' => $userDetails['id'],'isEmailVerified' => 1);
                     $this->db->where('userId', $user['userId']);
                     $this->db->update('users', $data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
@@ -266,7 +269,7 @@ class Login extends CI_Controller {
                     $fileName = $path . '/' . time() . '.jpg';
                     file_put_contents(FCPATH . $fileName, file_get_contents($userDetails['picture']));
                     chmod(FCPATH . $fileName, 0777);
-                    $data = [
+                    $data = array(
                         'firstName' => $userDetails['first_name'],
                         'lastName' => $userDetails['last_name'],
                         '180creditUserType' => $state,
@@ -277,7 +280,7 @@ class Login extends CI_Controller {
                         'userStatus' => 1,
                         'userPassword' => password_hash(rand(100000, 999999), PASSWORD_DEFAULT),
                         'isEmailVerified' => 1
-                    ];
+                    );
                     $data = $this->db->insert('users', $data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                     $user = (array) $this->Login_model->getDataByCondition('users', $condition, true);
@@ -304,7 +307,7 @@ class Login extends CI_Controller {
                 $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                 $user = (array)$this->Login_model->getDataByCondition('users',$condition,true);
                 if(!empty($user)){
-                    $data=['googleId' => $userDetails['id'],'isEmailVerified' => 1];
+                    $data=array('googleId' => $userDetails['id'],'isEmailVerified' => 1);
                     $this->db->where('userId', $user['userId']);
                     $this->db->update('users', $data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
@@ -315,7 +318,7 @@ class Login extends CI_Controller {
                     $fileName = $path.'/'.time().'.'.pathinfo($userDetails['picture'])['extension'];
                     file_put_contents(FCPATH.$fileName, file_get_contents($userDetails['picture']));
                     chmod(FCPATH.$fileName, 0777);
-                    $data = [
+                    $data = array(
                         'firstName'=>isset($name[0]) ? $name[0] : '',
                         'lastName'=>isset($name[1]) ? $name[1] : '',
                         '180creditUserType'=> $state,
@@ -326,7 +329,7 @@ class Login extends CI_Controller {
                         'userStatus'=>1,
                         'userPassword'=>password_hash(rand(100000,999999),PASSWORD_DEFAULT),
                         'isEmailVerified'=>1
-                    ];
+                    );
                     $data = $this->db->insert('users',$data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                     $user = (array)$this->Login_model->getDataByCondition('users',$condition,true); 
