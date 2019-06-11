@@ -28,20 +28,22 @@ class Home extends CI_Controller {
         $areasOfSpecialties = $this->Common_model->loadAreasOfSpecialty($q);
         $html = '';
         foreach ($areasOfSpecialties as $value) {
+            $name = $value->name;
             if (!empty($q)) {
                 $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
             }
-            $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
+            $html.='<li><a href="" data-name="'.$name.'" data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
         $specialLists = $this->Common_model->loadUserAreasOfSpecialtySearch($q);
         if (!empty($specialLists) || !empty($areasOfSpecialties)) {
             $html .='<hr>';
         }
         foreach ($specialLists as $value) {
+            $name = $value->name;
             if (!empty($q)) {
                 $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
             }
-            $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
+            $html.='<li><a href="" data-name="'.$name.'" data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
         echo $html;
     }
@@ -54,19 +56,21 @@ class Home extends CI_Controller {
         if (is_numeric($q)) {
             if (!empty($viewZipCodes)) {
                 foreach ($viewZipCodes as $key => $value) {
+                    $name = $value->name;
                     $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
 //                if ($key > 10) {
 //                    break;
 //                }
-                    $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                    $html.='<li><a href="" data-name="'.$name.'" data-id="' . $value->id . '">' . $value->name . '</a></li>';
                 }
             }
         } else {
             if (isset($viewZipCodes['cities']) && !empty($viewZipCodes['cities'])) {
                 foreach ($viewZipCodes['cities'] as $value) {
+                    $name = $value->name;
                     if ($value->name != '') {
                         $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
-                        $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                        $html.='<li><a href="" data-name="'.$name.'" data-id="' . $value->id . '">' . $value->name . '</a></li>';
                     }
                 }
             }
@@ -74,9 +78,10 @@ class Home extends CI_Controller {
                 $html .='<hr>';
             }
             foreach ($viewZipCodes['states'] as $value) {
+                $name = $value->name;
                 if ($value->name != '') {
                     $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
-                    $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                    $html.='<li><a href="" data-name="'.$name.'" data-id="' . $value->id . '">' . $value->name . '</a></li>';
                 }
             }
         }

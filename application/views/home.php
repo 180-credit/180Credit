@@ -177,8 +177,9 @@
 
                 $('.set_ul_to li').click(function (e) {
                     e.preventDefault();
-                    var val=$(this).find('a').html();
+                    var val=$(this).find('a').data('name');
                     $(this).closest('.input-group').find('.form-control').val(val);
+                    $('#specialistDetailsUl').html("").hide();
                 });
             }
         });
@@ -195,9 +196,10 @@
 
                     $('.set_ul_to li').click(function (e) {
                         e.preventDefault();
-                        var val=$(this).find('a').html();
+                        var val=$(this).find('a').data('name');
 
                         $(this).closest('.input-group').find('.form-control').val(val);
+                        $('#zipCodesUl').html("").hide();
                     });
                 }
             });
@@ -228,14 +230,14 @@
 
 
     function getLocation() {
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        }
         var zipcodes = getCookie('zipcodes');
         var specialist = getCookie('specialist');
         if(zipcodes && zipcodes != ''){
             $('#zipCodes').val(zipcodes);
+        }else {
+            if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }
 
         }
         if(specialist && specialist != ''){
