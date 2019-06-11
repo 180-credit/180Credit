@@ -29,7 +29,7 @@ class Home extends CI_Controller {
         $html = '';
         foreach ($areasOfSpecialties as $value) {
             if (!empty($q)) {
-                $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
             }
             $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
@@ -39,7 +39,7 @@ class Home extends CI_Controller {
         }
         foreach ($specialLists as $value) {
             if (!empty($q)) {
-                $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
             }
             $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
@@ -54,7 +54,7 @@ class Home extends CI_Controller {
         if (is_numeric($q)) {
             if (!empty($viewZipCodes)) {
                 foreach ($viewZipCodes as $key => $value) {
-                    $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                    $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
 //                if ($key > 10) {
 //                    break;
 //                }
@@ -65,7 +65,7 @@ class Home extends CI_Controller {
             if (isset($viewZipCodes['cities']) && !empty($viewZipCodes['cities'])) {
                 foreach ($viewZipCodes['cities'] as $value) {
                     if ($value->name != '') {
-                        $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                        $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
                         $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
                     }
                 }
@@ -75,7 +75,7 @@ class Home extends CI_Controller {
             }
             foreach ($viewZipCodes['states'] as $value) {
                 if ($value->name != '') {
-                    $value->name = preg_replace('/\S*(' . $q . '\S*)/i', '<b>$1</b>', $value->name);
+                    $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
                     $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
                 }
             }
