@@ -31,7 +31,7 @@ class Home extends CI_Controller {
             if (!empty($q)) {
                 $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
             }
-            $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+            $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
         $specialLists = $this->Common_model->loadUserAreasOfSpecialtySearch($q);
         if (!empty($specialLists) || !empty($areasOfSpecialties)) {
@@ -41,7 +41,7 @@ class Home extends CI_Controller {
             if (!empty($q)) {
                 $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
             }
-            $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+            $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
         }
         echo $html;
     }
@@ -58,7 +58,7 @@ class Home extends CI_Controller {
 //                if ($key > 10) {
 //                    break;
 //                }
-                    $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                    $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
                 }
             }
         } else {
@@ -66,7 +66,7 @@ class Home extends CI_Controller {
                 foreach ($viewZipCodes['cities'] as $value) {
                     if ($value->name != '') {
                         $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
-                        $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                        $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
                     }
                 }
             }
@@ -76,7 +76,7 @@ class Home extends CI_Controller {
             foreach ($viewZipCodes['states'] as $value) {
                 if ($value->name != '') {
                     $value->name = preg_replace('/[\s-]*'.$q.'[\'\s-]*/i', '<b>$0</b>', $value->name);
-                    $html.='<li><a data-id="' . $value->id . '">' . $value->name . '</a></li>';
+                    $html.='<li><a href="" data-id="' . $value->id . '">' . $value->name . '</a></li>';
                 }
             }
         }

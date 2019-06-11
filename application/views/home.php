@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary text-white">Search</button>
+                                    <button type="button" id="home-search" class="btn btn-primary text-white">Search</button>
 
                                 </form>
                             </div>
@@ -174,6 +174,12 @@
             success: function (data)
             {
                 $('#specialistDetailsUl').html(data).show();
+
+                $('.set_ul_to li').click(function (e) {
+                    e.preventDefault();
+                    var val=$(this).find('a').html();
+                    $(this).closest('.input-group').find('.form-control').val(val);
+                });
             }
         });
     });
@@ -186,6 +192,13 @@
                 success: function (data)
                 {
                     $('#zipCodesUl').html(data).show();
+
+                    $('.set_ul_to li').click(function (e) {
+                        e.preventDefault();
+                        var val=$(this).find('a').html();
+
+                        $(this).closest('.input-group').find('.form-control').val(val);
+                    });
                 }
             });
         }
@@ -209,4 +222,84 @@
             container2.hide();
         }
     });
+
+
+
+
+
+    function getLocation() {
+
+        /*if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        }*/
+        var zipcodes = getCookie('zipcodes');
+        var specialist = getCookie('specialist');
+        if(zipcodes && zipcodes != ''){
+            $('#zipCodes').val(zipcodes);
+
+        }
+        if(specialist && specialist != ''){
+            $('#specialistDetails').val(specialist);
+        }
+    }
+
+    function showPosition(position) {
+
+        $.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyB-bNe4Ja6029gIBQMc0sCkLzwm-gF1xwQ', {}, function(results) {
+            //$.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=53.555958,-113.7741336&key=AIzaSyDENFVHEg986aK9AGUnKWq0h2eb5W4Gc5U', {}, function(results) {
+
+            results = results.results;
+
+            if (results[0]) {
+                for (var i = 0; i < results[0].address_components.length; i++) {
+                    var types = results[0].address_components[i].types;
+
+                    for (var typeIdx = 0; typeIdx < types.length; typeIdx++) {
+                        if (types[typeIdx] == 'postal_code') {
+                            //console.log(results[0].address_components[i].long_name);
+                            $('#zipCodes').val(results[0].address_components[i].short_name);
+                        }
+                    }
+                }
+
+            }
+            // var index = data.results[1].address_components.length;
+
+            // console.log(data.results);
+        });
+
+    }
+
+    getLocation();
+
+
+    $("#home-search").click(function () {
+        var zipcodes = $('#zipCodes').val();
+        var specialist = $('#specialistDetails').val();
+        setCookie('zipcodes',zipcodes,1);
+        setCookie('specialist',specialist,1);
+    });
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
 </script>

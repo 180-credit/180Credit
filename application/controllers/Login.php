@@ -87,7 +87,7 @@ class Login extends CI_Controller {
                 Thank you,<br> 180Credit.com 
                 </body>
                 </html>';
-        $data = $this->db->insert('users',$data);
+//        $data = $this->db->insert('users',$data);
         $mail_status = $this->SendMail("donotreply@180credit.com", $this->input->post('email'), "Welcome to your 180Credit account", $html);
         /*
         echo $mail_status; exit;
@@ -152,7 +152,29 @@ class Login extends CI_Controller {
        $pass = 'nakumajax@92';*/
 
 
-        $params = array(
+        $config = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'smtp.mailgun.org',
+            'smtp_port' => 587,
+            'smtp_user' => 'rusty@haddonfinancialservices.com',
+            'smtp_pass' => 'm@ddie0218',
+            'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+            'mailtype' => 'html', //plaintext 'text' mails or 'html'
+            'smtp_timeout' => '4', //in seconds
+            'charset' => 'iso-8859-1',
+            'wordwrap' => TRUE
+        );
+        $this->email->initialize($config);
+
+        $this->email->from($from, '180Credit');
+        $this->email->to($email);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        //$this->email->message("TEST email");
+        $this->email->send();
+
+
+        /*$params = array(
                 'api_user' => $user,
                 'api_key' => $pass,
                 'to' => $email,
@@ -180,7 +202,7 @@ class Login extends CI_Controller {
             echo $error_msg = curl_error($session); exit;
         }
         
-        curl_close($session);
+        curl_close($session);*/
                 return true; 
 }
 
