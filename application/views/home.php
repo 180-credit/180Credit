@@ -253,16 +253,21 @@
             results = results.results;
 
             if (results[0]) {
+                var valToDisplay = '';
                 for (var i = 0; i < results[0].address_components.length; i++) {
                     var types = results[0].address_components[i].types;
 
                     for (var typeIdx = 0; typeIdx < types.length; typeIdx++) {
-                        if (types[typeIdx] == 'postal_code') {
-                            //console.log(results[0].address_components[i].long_name);
-                            $('#zipCodes').val(results[0].address_components[i].short_name);
+                        if(types[typeIdx]=='administrative_area_level_2'){
+                            valToDisplay +=results[0].address_components[i].long_name;
+                        }
+                        if(types[typeIdx]=='administrative_area_level_1'){
+                            valToDisplay +=" "+results[0].address_components[i].long_name;
                         }
                     }
                 }
+
+                $('#zipCodes').val(valToDisplay);
 
             }
             // var index = data.results[1].address_components.length;
