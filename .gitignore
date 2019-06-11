@@ -12,6 +12,7 @@ application/cache/*
 
 application/config/database.php
 application/config/config.php
+application/config/constants.php
 
 application/logs/*
 !application/logs/index.html

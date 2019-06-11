@@ -246,8 +246,8 @@
     }
 
     function showPosition(position) {
-
-        $.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyB-bNe4Ja6029gIBQMc0sCkLzwm-gF1xwQ', {}, function(results) {
+        var google_api_key = '<?php echo GOOGLE_API_KEY; ?>';
+        $.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key='+google_api_key, {}, function(results) {
             //$.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=53.555958,-113.7741336&key=AIzaSyDENFVHEg986aK9AGUnKWq0h2eb5W4Gc5U', {}, function(results) {
 
             results = results.results;
