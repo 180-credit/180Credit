@@ -62,6 +62,7 @@ $route['my-business-profile'] = 'account/my_business_profile';
 $route['password-and-security'] = 'account/change_password';
 $route['terms_of_use'] = 'welcome/terms_of_use';
 $route['privacy_policy'] = 'welcome/privacy_policy';
+$route['verify/(:any)'] = 'login/verify_user_email';
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -16,6 +16,7 @@ class Login extends CI_Controller {
         $this->load->database();
         $this->load->helper('url');
         $this->load->model('Login_model');
+        $this->load->model('user_model');
     }
 
     public function login_service_provider() {
@@ -71,9 +72,15 @@ class Login extends CI_Controller {
             'active' => 1,
             'userStatus' => 1,
             'userPassword' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-            'verificationToken' => $token
+                // 'verificationToken' => $token
         );
-        $linkToken = base_url() . 'verify/' . $token;
+
+        $data = $this->db->insert('users', $data);
+
+        $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
+        $user_details = (array) $this->Login_model->getDataByCondition('users', $condition, true);
+
+        $linkToken = base_url() . 'verify/' . $user_details['verificationToken'];
         $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -89,7 +96,7 @@ class Login extends CI_Controller {
                 Thank you,<br> 180Credit.com 
                 </body>
                 </html>';
-        $data = $this->db->insert('users',$data);
+
         $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $this->input->post('email'), "Welcome to your 180Credit account", $html);
         /*
           echo $mail_status; exit;
@@ -160,78 +167,12 @@ class Login extends CI_Controller {
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
-        $result =  curl_exec($curl);
+        $result = curl_exec($curl);
         curl_close($curl);
         // print_r($result);
         // exit;
         return true;
     }
-
-//    function SendMail($from, $email, $subject, $message, $attach = '', $filename = '') {
-//        $url = 'https://api.sendgrid.com/';
-//        //$user = '180credit';
-//        //$pass = 'bD8mbh576789k2g';
-//        //
-//        $user = 'rustyp';
-//        $pass = 'M@ddie0218';
-//
-//        /* $user = 'chetanakum';
-//          $pass = 'nakumajax@92'; */
-//
-//
-//        $config = array(
-//            'protocol' => 'smtp',
-//            'smtp_host' => MAIL_HOST,
-//            'smtp_port' => MAIL_PORT,
-//            'smtp_user' => MAIL_USERNAME,
-//            'smtp_pass' => MAIL_PASSWORD,
-//            'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
-//            'mailtype' => 'html', //plaintext 'text' mails or 'html'
-//            'smtp_timeout' => '10', //in seconds
-//            'charset' => 'iso-8859-1',
-//            'wordwrap' => TRUE
-//        );
-//        $this->email->initialize($config);
-//
-//        $this->email->from($from, '180Credit');
-//        $this->email->to($email);
-//        $this->email->subject($subject);
-//        $this->email->message($message);
-//        //$this->email->message("TEST email");
-//        $this->email->send();
-//
-//
-//        /* $params = array(
-//          'api_user' => $user,
-//          'api_key' => $pass,
-//          'to' => $email,
-//          'fromname' => $from,
-//          'from' => $from,
-//          'subject' => $subject,
-//          'html' => $message);
-//
-//          $request = $url . 'api/mail.send.json';
-//          $session = curl_init($request);
-//          curl_setopt($session, CURLOPT_POST, true);
-//          curl_setopt($session, CURLOPT_POSTFIELDS, $params);
-//          curl_setopt($session, CURLOPT_HEADER, false);
-//          // Tell PHP not to use SSLv3 (instead opting for TLS)
-//          //curl_setopt($session, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
-//          curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-//          curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-//          // obtain response
-//          $response = curl_exec($session);
-//          //echo "<pre>";
-//          //print_r($response);
-//          //exit;
-//
-//          if (curl_error($session)) {
-//          echo $error_msg = curl_error($session); exit;
-//          }
-//
-//          curl_close($session); */
-//        return true;
-//    }
 
     public function logout() {
         if (isset($_SESSION['user'])) {
@@ -249,17 +190,27 @@ class Login extends CI_Controller {
             $this->session->set_flashdata('error', 'User is not registered');
             redirect('/consumer/login');
         }
-        if (isset($result['userPassword']) && password_verify($this->input->post('password'), $result['userPassword'])) {
+        if (isset($result['userPassword']) && password_verify($this->input->post('password'), $result['userPassword']) && $result['isEmailVerified'] == 1) {
             $this->session->set_userdata('user', $result);
             $this->session->set_flashdata('success', 'You are login successfully.');
             redirect('/my-account');
         } else {
             if (isset($result['180creditUserType']) && $result['180creditUserType'] == 1) {
-                $this->session->set_flashdata('error', 'Email and password mismatch.');
-                redirect('/service-provider/login');
+                if ($result['isEmailVerified'] == 0) {
+                    $this->session->set_flashdata('error', 'Please verify your email address');
+                    redirect('/service-provider/login');
+                } else {
+                    $this->session->set_flashdata('error', 'Email and password mismatch.');
+                    redirect('/service-provider/login');
+                }
             } else {
-                $this->session->set_flashdata('error', 'Email and password mismatch.');
-                redirect('/consumer/login');
+                if ($result['isEmailVerified'] == 0) {
+                    $this->session->set_flashdata('error', 'Please verify your email address');
+                    redirect('/consumer/login');
+                } else {
+                    $this->session->set_flashdata('error', 'Email and password mismatch.');
+                    redirect('/consumer/login');
+                }
             }
         }
     }
@@ -418,6 +369,27 @@ class Login extends CI_Controller {
             throw new \Exception('Error : Failed to get user information');
 
         return $data;
+    }
+
+    public function verify_user_email() {
+        $link = $_SERVER['PHP_SELF'];
+        $link_array = explode('/', $link);
+        $verification_token = end($link_array);
+
+        if ($verification_token != '') {
+            $condition = "verificationToken =" . "'" . $verification_token . "'";
+            $user = (array) $this->Login_model->getDataByCondition('users', $condition, true);
+
+            if (!empty($user)) {
+                $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
+                $this->session->set_flashdata('success', 'Email verification successfully');
+                if ($this->input->post('user_type') == "1") {
+                    redirect('/login/login_service_provider');
+                } else {
+                    redirect('/login/login_consumer');
+                }
+            }
+        }
     }
 
 }
