@@ -154,10 +154,10 @@ class Login extends CI_Controller {
 
         $config = array(
             'protocol' => 'smtp',
-            'smtp_host' => 'smtp.mailgun.org',
-            'smtp_port' => 587,
-            'smtp_user' => 'rusty@haddonfinancialservices.com',
-            'smtp_pass' => 'm@ddie0218',
+            'smtp_host' => MAIL_HOST,
+            'smtp_port' => MAIL_PORT,
+            'smtp_user' => MAIL_USERNAME,
+            'smtp_pass' => MAIL_PASSWORD,
             'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
             'smtp_timeout' => '4', //in seconds
