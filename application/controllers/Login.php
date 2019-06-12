@@ -89,7 +89,7 @@ class Login extends CI_Controller {
                 Thank you,<br> 180Credit.com 
                 </body>
                 </html>';
-//        $data = $this->db->insert('users',$data);
+        $data = $this->db->insert('users',$data);
         $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $this->input->post('email'), "Welcome to your 180Credit account", $html);
         /*
           echo $mail_status; exit;
