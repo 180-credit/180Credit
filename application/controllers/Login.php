@@ -152,7 +152,7 @@ class Login extends CI_Controller {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, 'https://api.mailgun.net/v3/m.180credit.com/messages');
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "api:" . MAIL_PASSWORD);
+        curl_setopt($curl, CURLOPT_USERPWD, "api:" . MAIL_API);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
