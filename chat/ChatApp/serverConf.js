@@ -11,7 +11,7 @@ app.createServer=function (app) {
         // certificate paths
         const opt={
             key: fs.readFileSync('/home/credit/ssl/keys/afced_4c51f_bd476b75bba1d99a832cd357dce2329f.key'), //location of private key file.required. extension can be .key
-            cert: fs.readFileSync('/home/credit/ssl/certs/180credit_com_afced_4c51f_1563321599_d3c7cf9818659f4dd9840ef730f959dd.cr'), //location of certificate file.required. extension can be .cert
+            cert: fs.readFileSync('/home/credit/ssl/certs/180credit_com_afced_4c51f_1563321599_d3c7cf9818659f4dd9840ef730f959dd.crt'), //location of certificate file.required. extension can be .cert
             // ca: fs.readFileSync('/etc/chain.pem') // optional
         };
         server = require("https").createServer(opt,app); // https port 8443
