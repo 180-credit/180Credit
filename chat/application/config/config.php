@@ -31,7 +31,7 @@ $root .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME'
 
 $config['purchase_code'] =""; // provide your purchase code.
 $config['base_url']    = "$root";
-$config['socket_url'] = "http://180credit.com:60000"; 
+$config['socket_url'] = "https://180credit.com:60000"; 
 /*
 |--------------------------------------------------------------------------
 | Index File

@@ -3,7 +3,7 @@
  */
 
    // var socket=io.connect("ws://http://180credit.com:8080",{"transports": ['websocket']});
-      var socket=io.connect("ws://180credit.com:60000");
+      var socket=io.connect("wss://180credit.com:60000");
 //var socket=io.connect(location.protocol+"//"+location.hostname,{"transports": ['websocket']});
 
 
