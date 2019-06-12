@@ -383,12 +383,18 @@ class Login extends CI_Controller {
             if (!empty($user)) {
                 $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
                 $this->session->set_flashdata('success', 'Email verification successfully');
-                if ($this->input->post('user_type') == "1") {
+                if ($user['user_type'] == "1") {
                     redirect('/login/login_service_provider');
                 } else {
                     redirect('/login/login_consumer');
                 }
+            } else {
+                $this->session->set_flashdata('error', 'Verification token is expired.');
+                redirect('/consumer/login');
             }
+        } else {
+            $this->session->set_flashdata('error', 'Please enter valid verification token.');
+            redirect('/consumer/login');
         }
     }
 
