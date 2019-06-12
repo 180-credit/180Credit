@@ -158,9 +158,9 @@ class Login extends CI_Controller {
             'smtp_port' => MAIL_PORT,
             'smtp_user' => MAIL_USERNAME,
             'smtp_pass' => MAIL_PASSWORD,
-            'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
+            'smtp_crypto' => 'ssl', //can be 'ssl' or 'tls' for example
             'mailtype' => 'html', //plaintext 'text' mails or 'html'
-            'smtp_timeout' => '4', //in seconds
+            'smtp_timeout' => '10', //in seconds
             'charset' => 'iso-8859-1',
             'wordwrap' => TRUE
         );
