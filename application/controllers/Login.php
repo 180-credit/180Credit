@@ -98,32 +98,7 @@ class Login extends CI_Controller {
                 </html>';
 
         $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $this->input->post('email'), "Welcome to your 180Credit account", $html);
-        /*
-          echo $mail_status; exit;
 
-          $config = array(
-          'protocol' => 'smtp',
-          'smtp_host' => 'smtp.sendgrid.net',
-          'smtp_port' => 587,
-          'smtp_user' => 'chetanakum',
-          'smtp_pass' => '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',
-          'smtp_crypto' => 'tls', //can be 'ssl' or 'tls' for example
-          'mailtype' => 'html', //plaintext 'text' mails or 'html'
-          'smtp_timeout' => '4', //in seconds
-          'charset' => 'iso-8859-1',
-          'wordwrap' => TRUE
-          );
-          $this->email->initialize($config);
-
-          $this->email->from('donotreply@180credit.com', '180Credit');
-          $this->email->to($this->input->post('email'));
-          $this->email->subject('Welcome to your 180Credit account');
-          $this->email->message($html);
-          //$this->email->message("TEST email");
-          $this->email->send();
-          //echo $this->email->print_debugger(); exit;
-
-         */
         if ($this->input->post('keep_login')) {
             /* $insert_id = $this->db->insert_id();
               $condition = "userId =" . "'" . $insert_id . "'";
