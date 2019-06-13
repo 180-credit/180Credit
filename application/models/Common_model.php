@@ -23,6 +23,18 @@ class Common_model extends CI_Model {
         return $query->result();
     }
 
+    public function loadAllTags($q = null){
+        $this->db->reconnect();
+        $sqlQuery = 'SELECT `id`,`tagName` FROM `tags`';
+        if(isset($q)){
+            $sqlQuery .= " where `tagName` like '%{$q}%'";
+        }
+        $sqlQuery .= ' ORDER BY `tagName`;';
+        $query = $this->db->query($sqlQuery);
+        $this->db->close();
+        return $query->result();
+    }
+
     public function loadUserAreasOfSpecialtySearch($q = null){
         $this->db->reconnect();
         $query = $this->db->query("CALL viewUserAreasOfSpeciality('$q');");

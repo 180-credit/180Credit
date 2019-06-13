@@ -63,6 +63,7 @@ $route['password-and-security'] = 'account/change_password';
 $route['terms_of_use'] = 'welcome/terms_of_use';
 $route['privacy_policy'] = 'welcome/privacy_policy';
 $route['verify/(:any)'] = 'login/verify_user_email';
+$route['search'] = 'home/searchDetails';
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

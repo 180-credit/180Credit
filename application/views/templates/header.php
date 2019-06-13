@@ -20,23 +20,23 @@
 	<!-- [Google Fonts Stylesheets] Ends -->
 
 	<!-- [Fontawesome Stylesheets] Starts -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-	<!-- [Fontawesome Stylesheets] Ends -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/fontawesome/css/all.min.css" >
+    <!-- [Fontawesome Stylesheets] Ends -->
 
-	<!-- Required CSS [Bootstrap Stylesheets] Starts -->
-	<link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-	<!-- Required CSS [Bootstrap Stylesheets] Ends -->
-        
-        <!-- [Owl Stylesheets] Starts-->
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/owlcarousel/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/owlcarousel/assets/owl.theme.default.min.css">
-	<!-- [Owl Stylesheets] Ends-->
+    <!-- Required CSS [Bootstrap Stylesheets] Starts -->
+    <link href="<?php echo base_url(); ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+    <!-- Required CSS [Bootstrap Stylesheets] Ends -->
 
-	<!-- [Our Stylesheets] Starts -->
-	<link href="<?php echo base_url(); ?>assets/css/stylesheet.css" rel="stylesheet" media="screen" />
-        <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" media="screen" />
-	<!-- [Our Stylesheets] Ends -->
-		<script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <!-- [Owl Stylesheets] Starts-->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/owlcarousel/assets/owl.theme.default.min.css">
+    <!-- [Owl Stylesheets] Ends-->
+
+    <!-- [Our Stylesheets] Starts -->
+    <link href="<?php echo base_url(); ?>assets/css/stylesheet.css" rel="stylesheet" media="screen" />
+    <link href="<?php echo base_url(); ?>assets/css/custom.css" rel="stylesheet" media="screen" />
+    <!-- [Our Stylesheets] Ends -->
+    <script src="<?php echo base_url(); ?>assets/js/jquery-3.4.1.min.js" type="text/javascript"></script>
 		<!-- <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.slim.min.js" type="text/javascript"></script> -->
 		<script src="<?php echo base_url(); ?>assets/js/jquery.validate.min.js" type="text/javascript"></script>
 		<script src="<?php echo base_url(); ?>assets/js/additional-methods.min.js" type="text/javascript"></script>

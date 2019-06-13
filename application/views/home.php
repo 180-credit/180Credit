@@ -289,6 +289,7 @@
         var specialist = $('#specialistDetails').val();
         setCookie('zipcodes',zipcodes,1);
         setCookie('specialist',specialist,1);
+        window.location.href='search?specialist='+encodeURI(specialist)+'&location='+encodeURI(zipcodes);
     });
 
     function setCookie(cname, cvalue, exdays) {

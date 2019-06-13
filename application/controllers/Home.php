@@ -6,10 +6,10 @@ class Home extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('Common_model');
     }
 
     public function index() {
-        $this->load->model('Common_model');
         $data['msg'] = '';
         $data['title'] = 'Home';
         $data['view'] = 'home';
@@ -20,6 +20,13 @@ class Home extends CI_Controller {
             'specialist' => $loadUserAreasOfSpecialtySearch
         ));
         $this->template->load('layout', 'home', $data);
+    }
+
+    public function searchDetails(){
+        $data['title'] = 'Search Results';
+        $data['areas_of_specialties'] = $this->Common_model->loadAreasOfSpecialty();
+        $data['load_all_tags'] = $this->Common_model->loadAllTags();
+        $this->template->load('layout', 'search_results', $data);
     }
 
     public function getSpecialList() {
