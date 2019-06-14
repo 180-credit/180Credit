@@ -72,6 +72,30 @@ Class User_model extends CI_Model {
         }
     }
 
+
+    public function getPaginationData($input){
+        $this->db->reconnect();
+        $this->queryBuilder($input);
+        $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'RIGHT');
+        $query = $this->db->get();
+        $results['count'] =$query->num_rows();
+        $this->db->close();
+        $this->db->reconnect();
+        $this->queryBuilder($input);
+        $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'RIGHT');
+        $this->db->limit($input['limit'], (($input['page'] - 1) * $input['limit']));
+        $query = $this->db->get();
+        $results['data'] =$query->result();
+        $this->db->close();
+        return $results;
+    }
+
+    private function queryBuilder($input){
+        $this->db->select('*');
+        $this->db->from('users');
+    }
+
+
     function Add($data) {
         // Run query to insert blank row
 

@@ -182,8 +182,8 @@ class Account extends CI_Controller {
 		$this->db->reconnect();
 		$insert_user_stored_proc = "CALL saveUserAboutMe(
 			{$user['userId']}, 
-			'{$sortDescription}',
-			'{$longDescription}')";
+			{$this->db->escape($sortDescription)},
+			{$this->db->escape($longDescription)})";
 		$this->db->query($insert_user_stored_proc);
 		$this->db->close(); 
 		if(!empty($additionalAttributes)){
