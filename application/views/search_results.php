@@ -460,7 +460,7 @@
     var HistoryState = {};
     function showProfileModel(name){
         $('#profilePopup').modal('show');
-        $('#profilePopup .modal-body').load('http://localhost/180Credit/view-specialist-profile/'+encodeURI(name)+'?onlyHtml=true');
+        $('#profilePopup .modal-body').load('<?php echo base_url(); ?>view-specialist-profile/'+encodeURI(name)+'?onlyHtml=true');
         var param = encodeURI(name);
         history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
         //history.replaceState(HistoryState, "User_profile", "<?php //echo base_url(); ?>//user/findlawyersearchresult");
