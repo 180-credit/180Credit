@@ -276,23 +276,25 @@
                                     <div class="search-result-block">
                                         <div class="premium-listing p-2">
                                             <div class="media">
-                                                <?php
-                                                if(isset($user->profile_image)){
-                                                    ?>
-                                                    <img class="round mr-3"  width="136" height="136" src="<?= base_url().$user->profile_image; ?>">
+                                                <a onclick="showProfileModel('<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>')">
                                                     <?php
-                                                }
-                                                else{
+                                                    if(isset($user->profile_image)){
+                                                        ?>
+                                                        <img class="round mr-3"  width="136" height="136" src="<?= base_url().$user->profile_image; ?>">
+                                                        <?php
+                                                    }
+                                                    else{
+                                                        ?>
+                                                        <img class="round mr-3" width="136" height="136" avatar="<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>">
+                                                        <?php
+                                                    }
                                                     ?>
-                                                    <img class="round mr-3" width="136" height="136" avatar="<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>">
-                                                    <?php
-                                                }
-                                                ?>
+                                                </a>
 <!--                                                <img alt="premium user" class="mr-3" src="assets/images/head-shot.png">-->
                                                 <div class="media-body">
                                                     <div class="row">
                                                         <div class="col-md-6 puser-left">
-                                                            <h6><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></h6>
+                                                            <h6><a onclick="showProfileModel("<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>")"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
                                                             <div class="user-address">
                                                                 <h6 class="mb-0"><?= ucfirst($user->company_name) ?></h6>
                                                                 <span><?= ucfirst($user->city) ?>, <?= ucfirst($user->abbr) ?></span>
@@ -434,9 +436,36 @@
             </div>
         </div>
     </div>
+<style>
+
+</style>
+<!-- Modal -->
+<div class="modal fade" id="profilePopup" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 <script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 <script>
     $('#specialities-dropdown').select2();
     $('#tags-dropdown').select2();
+    var currentUrl = window.location.href;
+    var HistoryState = {};
+    function showProfileModel(name){
+        $('#profilePopup').modal('show');
+        $('#profilePopup .modal-body').load('http://localhost/180Credit/view-specialist-profile/'+encodeURI(name)+'?onlyHtml=true');
+        var param = encodeURI(name);
+        history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
+        //history.replaceState(HistoryState, "User_profile", "<?php //echo base_url(); ?>//user/findlawyersearchresult");
+    }
+    $('#profilePopup').on('hidden.bs.modal', function () {
+        history.replaceState(HistoryState, "User_profile", currentUrl);
+    })
 </script>

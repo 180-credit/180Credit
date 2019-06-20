@@ -185,9 +185,21 @@ class Home extends CI_Controller
     {
 
         $data['msg'] = '';
-        $data['title'] = 'My Business Profile';
+        $data['title'] = ' Business Profile';
         $data['view'] = 'profile';
         $this->load->view('content', $data);
+    }
+
+    public function specialistProfile($param)
+    {
+        $data['msg'] = '';
+        $data['title'] = urldecode($param).'\'s Profile';
+        $data['view'] = 'profile';
+        if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] ==true){
+            $this->load->view('viewProfile', $data);
+        }else{
+            $this->template->load('layout','viewProfile', $data);
+        }
     }
 
     public function edit_profile()
@@ -224,5 +236,8 @@ class Home extends CI_Controller
             $this->load->view('content', $data);
         }
     }
+
+
+
 
 }

@@ -187,3 +187,36 @@ li.draggable-item.ui-sortable-placeholder {
 .clr-red{
     color: red !important;
 }
+.sidebar_stop{
+    margin-bottom: 12px;
+}
+.sticky-wrapper #myTab{
+    z-index: 50 !important;
+}
+#sticky_sidebar.is-affixed .stick_150{
+    left: auto !important;
+}
+#myTab .nav-item.active a.nav-link {
+    color: #e57125 !important;
+}
+#myTab li.nav-item.active {
+    background-color: #f3f3f4;
+}
+#myTab li.active > a > span {
+    padding-bottom: 1px;
+    border-bottom: 2px solid #E67F3B;
+}
+
+#profilePopup .modal-dialog.modal-lg {
+    max-width: 80rem;
+}
+
+#profilePopup .specia-pro-view h1 {
+    margin-top: 0px;
+}
+
+#profilePopup .modal-header {
+    padding-bottom: 0px;
+    border-bottom: 0px;
+}
+
