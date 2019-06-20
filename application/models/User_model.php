@@ -76,15 +76,11 @@ Class User_model extends CI_Model {
     public function getPaginationData($input){
         $this->db->reconnect();
         $this->queryBuilder($input);
-        $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'INNER');
-        $this->db->join('state', 'state.id = user_profiles.state_id', 'INNER');
         $query = $this->db->get();
         $results['count'] =$query->num_rows();
         $this->db->close();
         $this->db->reconnect();
         $this->queryBuilder($input);
-        $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'INNER');
-        $this->db->join('state', 'state.id = user_profiles.state_id', 'INNER');
         $this->db->limit($input['limit'], (($input['page'] - 1) * $input['limit']));
         $query = $this->db->get();
         $results['data'] =$query->result();
@@ -95,6 +91,9 @@ Class User_model extends CI_Model {
     private function queryBuilder($input){
         $this->db->select('*');
         $this->db->from('users');
+        $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'INNER');
+        $this->db->join('state', 'state.id = user_profiles.state_id', 'INNER');
+        $this->db->where('180creditUserType',1);
     }
 
 
