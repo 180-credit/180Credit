@@ -276,7 +276,7 @@
                                     <div class="search-result-block">
                                         <div class="premium-listing p-2">
                                             <div class="media">
-                                                <a onclick="showProfileModel('<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>')">
+                                                <a onclick="showProfileModel('<?= $user->firstName.'-'.$user->lastName ?>')">
                                                     <?php
                                                     if(isset($user->profile_image)){
                                                         ?>
@@ -294,7 +294,7 @@
                                                 <div class="media-body">
                                                     <div class="row">
                                                         <div class="col-md-6 puser-left">
-                                                            <h6><a onclick="showProfileModel('<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>')"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
+                                                            <h6><a onclick="showProfileModel('<?= $user->firstName.'-'.$user->lastName ?>')"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
                                                             <div class="user-address">
                                                                 <h6 class="mb-0"><?= ucfirst($user->company_name) ?></h6>
                                                                 <span><?= ucfirst($user->city) ?>, <?= ucfirst($user->abbr) ?></span>
@@ -460,7 +460,24 @@
     var HistoryState = {};
     function showProfileModel(name){
         $('#profilePopup').modal('show');
-        $('#profilePopup .modal-body').load('<?php echo base_url(); ?>view-specialist-profile/'+encodeURI(name)+'?onlyHtml=true');
+        $('#profilePopup .modal-body').load('<?php echo base_url(); ?>view-specialist-profile/'+name+'?onlyHtml=true',function () {
+            // Cache selectors
+            var topMenu = $("#myTab"),
+                topMenuHeight = 245,
+                // All list items
+                menuItems = topMenu.find("a");
+
+            // Bind click handler to menu items
+            // so we can get a fancy scroll animation
+            menuItems.click(function(e){
+                var href = $(this).attr("href"),
+                    offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+                $('#profilePopup .modal-body').stop().animate({
+                    scrollTop: offsetTop
+                }, 850);
+                e.preventDefault();
+            });
+        });
         var param = encodeURI(name);
         history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
         //history.replaceState(HistoryState, "User_profile", "<?php //echo base_url(); ?>//user/findlawyersearchresult");

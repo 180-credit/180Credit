@@ -276,16 +276,17 @@
         </div>
     </div>
 </main>
-<!--<script src="https://code.jquery.com/jquery-migrate-git.min.js" type="text/javascript"></script>
-<script src="<?php /*echo base_url(); */?>assets/js/jquery.sticky.js" type="text/javascript"></script>
-<script src="<?php /*echo base_url(); */?>assets/js/sticky-sidebar.js" type="text/javascript"></script>-->
+<script src="https://code.jquery.com/jquery-migrate-git.min.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
+<script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>-->
 <script>
     <?php
     $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
     ?>
-    /*$(document).ready(function(){
+    if($('#profilePopup').length < 1){
         $("#myTab").sticky({topSpacing:0,bottomSpacing:400});
-    });
+    }
+    //
     // var sidebar=new StickySidebar('#sticky_sidebar', {
     // 	topSpacing: 20,
     // 	bottomSpacing: 30,
@@ -307,7 +308,7 @@
     });
     sidebar.addEventListener('affix.container-bottom.stickySidebar', function (event) {
         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.remove('stick_150');
-    });*/
+    });
     // Cache selectors
     var lastId,
         topMenu = $("#myTab"),
