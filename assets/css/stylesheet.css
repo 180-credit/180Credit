@@ -494,3 +494,88 @@ footer .footer-bottom .social-links ul li a:hover { color: #fff; border-color: #
 /*---------------------- premium_listing.html CSS Ends ----------------------*/
 
 /*# sourceMappingURL=stylesheet.css.map */
+
+
+/*---------------------- message-popup.html CSS Starts ----------------------*/
+.exampleModal .modal-dialog {
+  max-width: 830px; }
+.exampleModal .modal-content {
+  border: 3px solid #e57026;
+  border-radius: 0;
+  position: relative; }
+.exampleModal .modal-content .modal-header .close {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  z-index: 1; }
+@media (max-width: 576px) {
+  .exampleModal .modal-content .modal-body .media {
+    display: block;
+    text-align: center; } }
+@media (max-width: 576px) {
+  .exampleModal .modal-content .modal-body .media .media-body {
+    text-align: left; } }
+.exampleModal .modal-content .img-status {
+  position: relative; }
+@media (max-width: 576px) {
+  .exampleModal .modal-content .img-status {
+    display: inline-block;
+    margin-bottom: 20px; } }
+.exampleModal .modal-content .img-status .status {
+  position: absolute;
+  bottom: 2px;
+  height: 18px;
+  width: 18px;
+  right: 25px;
+  border-radius: 100px;
+  border: 1px solid #ccc; }
+.exampleModal .modal-content .img-status .status.online {
+  background: #01b237; }
+.exampleModal .modal-content .popup-head h5 {
+  font-size: 20px;
+  color: #030303;
+  font-weight: 600; }
+.exampleModal .modal-content .popup-head p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 0; }
+.exampleModal .modal-content form > .form-group label {
+  text-align: right;
+  display: block;
+  margin-bottom: 0; }
+.exampleModal .modal-content form > .form-group .form-control {
+  border: 2px solid #ccc;
+  border-radius: 0; }
+.exampleModal .modal-content form > .form-group.cell-no input {
+  width: 280px; }
+@media (max-width: 576px) {
+  .exampleModal .modal-content form > .form-group.cell-no input {
+    width: 270px; } }
+.exampleModal .modal-content form .best-call {
+  display: flex; }
+@media (max-width: 576px) {
+  .exampleModal .modal-content form .best-call {
+    display: block; } }
+.exampleModal .modal-content form .best-call > label {
+  font-size: 14px;
+  margin-right: 15px; }
+@media (max-width: 576px) {
+  .exampleModal .modal-content form .best-call > label {
+    display: block; } }
+.exampleModal .modal-content form .best-call .custom-checkbox {
+  margin-right: 15px; }
+@media (max-width: 576px) {
+  .exampleModal .modal-content form .best-call .custom-checkbox {
+    display: block; } }
+.exampleModal .modal-content form .best-call .custom-checkbox:last-child {
+  margin-right: 0; }
+.exampleModal .modal-content form .custom-checkbox {
+  margin-bottom: 15px; }
+.exampleModal .modal-content form .custom-checkbox label {
+  font-size: 14px; }
+.exampleModal .modal-content form .custom-checkbox label:before {
+  border-radius: 0;
+  border: 2px solid #ccc; }
+
+/*---------------------- message-popup.html CSS Ends ----------------------*/
+

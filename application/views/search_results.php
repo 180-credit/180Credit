@@ -384,9 +384,12 @@
                                                         </ul>
                                                     </div>
                                                     <div class="button-block">
-                                                        <button class="btn btn-primary" type="button"><i
-                                                                    class="fas fa-envelope"></i>Message
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelPrimium">
+                                                            <i class="fas fa-envelope"></i>Message
                                                         </button>
+                                                        <!--<button class="btn btn-primary" type="button"><i
+                                                                    class="fas fa-envelope"></i>Message
+                                                        </button>-->
                                                     </div>
 
                                                 </div>
@@ -451,6 +454,113 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal exampleModal fade show" id="modelPrimiumSimple" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0 border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="media">
+                    <div class="img-status">
+                        <img src="assets/images/premium-listing.png" class="mr-3" alt="img">
+                        <span class="status online"></span>
+                    </div>
+                    <div class="media-body">
+                        <div class="popup-head">
+                            <h5 class="mt-0">Paul Ajoulang - Send a Message</h5>
+                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">2000</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">I prefer that Paul responds to this message with a phone call. (optional)</label>
+                            </div>
+                            <!-- i am not robot starts  -->
+
+                            <!-- i am not robot ends  -->
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal exampleModal fade show" id="modelPrimium" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0 border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="media">
+                    <div class="img-status">
+                        <img src="assets/images/premium-listing.png" class="mr-3" alt="img">
+                        <span class="status online"></span>
+                    </div>
+                    <div class="media-body">
+                        <div class="popup-head">
+                            <h5 class="mt-0">Paul Ajoulang - Send a Message</h5>
+                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">2000</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            </div>
+
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
+                                <label class="custom-control-label" for="customControlAutosizing1">I prefer that Paul responds to this message with a phone call. (optional)</label>
+                            </div>
+                            <div class="form-group cell-no">
+                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="US phone numbers only">
+                            </div>
+                            <div class="best-call">
+                                <label>Best time to call:</label>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
+                                    <label class="custom-control-label" for="customControlAutosizing2">Morning (9-12) </label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing3">
+                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing4">
+                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>
+                                </div>
+                            </div>
+
+                            <!-- i am not robot starts  -->
+
+                            <!-- i am not robot ends  -->
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-secondary">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </div>
 <script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 <script>
