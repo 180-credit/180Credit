@@ -151,7 +151,7 @@
             <div class="row search-result-bottom mt-2">
                 <div class="col-md-4 left-bottom pr-md-1">
                     <div class="card">
-                        <div class="card-header row">
+                        <div class="card-header">
                             <div class="col-md-7 float-left">
                                 <h3>Filters</h3>
                             </div>
@@ -266,11 +266,7 @@
                                 echo (($page-1) * $limit) + 1;
                             }
                             ?>-<?php
-                            if($page == 1){
-                                echo $limit;
-                            }else{
-                                echo ($page * $limit);
-                            }
+                            echo count($paginationData)
                             ?> of <?= $total ?> specialists found
                         </div>
                         <div class="card-body p-2">
@@ -299,7 +295,7 @@
                                                             <h6><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></h6>
                                                             <div class="user-address">
                                                                 <h6 class="mb-0"><?= ucfirst($user->company_name) ?></h6>
-                                                                <span>Westchester, PA</span>
+                                                                <span><?= ucfirst($user->city) ?>, <?= ucfirst($user->abbr) ?></span>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 puser-right">
@@ -329,77 +325,77 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php
+                                            if ($user->isPremium == 1){
+                                                ?>
+                                                <div class="pre-list-footer">
+                                                    <div class="social-block">
+                                                        <ul class="list-unstyled">
+                                                            <?php
+                                                            if(isset($user->facebook_url)){
+                                                                ?>
+                                                                <li><a class="fb" target="_blank" href="<?= $user->facebook_url ?>"><i class="fab fa-facebook-square"></i></a></li>
+                                                                <?php
+                                                            }
+                                                            if(isset($user->twitter_url)) {
+                                                                ?>
+                                                                <li><a class="twitter" target="_blank"  href="<?= $user->twitter_url ?>"><i
+                                                                                class="fab fa-twitter-square"></i></a></li>
+                                                                <?php
+                                                            }
+                                                            if(isset($user->linkedin_url)) {
+                                                                ?>
+                                                                <li><a class="link" target="_blank"  href="<?= $user->linkedin_url ?>"><i class="fab fa-linkedin"></i></a>
+                                                                </li>
+                                                                <?php
+                                                            }
+                                                            if(isset($user->instagram_url)) {
+                                                                ?>
+                                                                <li><a class="insta" target="_blank"  href="<?= $user->instagram_url ?>"><i class="fab fa-instagram"></i></a>
+                                                                </li>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="appoiment-ul">
+                                                        <ul class="list-unstyled">
+                                                            <?php
+                                                            if(isset($user->scheduling_url)) {
+                                                                ?>
+                                                                <li><a target="_blank"  href="<?= $user->scheduling_url ?>"><i class="fas fa-calendar-alt"></i>Appointment</a>
+                                                                </li>
+                                                                <?php
+                                                            }
+                                                            if(isset($user->public_phone)) {
+                                                                ?>
+                                                                <li><a href="javascript:;"><i class="fas fa-phone"></i>(215) 987-2765</a></li>
+                                                                <?php
+                                                            }
+                                                            if(isset($user->website_url)) {
+                                                                ?>
+                                                                <li><a  target="_blank"  href="<?= $user->website_url ?>"><i class="fas fa-external-link-alt"></i>Website</a>
+                                                                </li>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="button-block">
+                                                        <button class="btn btn-primary" type="button"><i
+                                                                    class="fas fa-envelope"></i>Message
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                 <?php
                             }
                             ?>
-                            <!--<div class="search-result-block">
-                                <div class="premium-listing p-2">
-                                    <div class="media">
-                                        <img alt="premium user" class="mr-3"
-                                             src="assets/images/premium-listing.png">
-                                        <div class="media-body">
-                                            <div class="row">
-                                                <div class="col-md-6 puser-left">
-                                                    <h6>John McDyer</h6>
-                                                    <div class="user-address">
-                                                        <h6 class="mb-0">Credit Savers, LLC</h6>
-                                                        <span>Westchester, PA</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 puser-right">
-                                                    <div class="puser-right-left">
-                                                        <div class="rating no-rating"><span>Not yet reviewed</span>
-                                                        </div>
-                                                        <span><i class="fas fa-check-circle"></i>Free consultations</span>
-                                                    </div>
-                                                    <div class="puser-right-right fill-heart">
-                                                        <i class="fas fa-heart"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 description">
-                                                    <p>Let the Philly Credit Mechanic help improve your credit
-                                                        scores. Our credit repair services can help you get in the
-                                                        <b>700 Club</b>.</p>
-                                                    <span>Contact us today to learn more.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="pre-list-footer">
-                                        <div class="social-block">
-                                            <ul class="list-unstyled">
-                                                <li><a class="fb" href="#"><i
-                                                                class="fab fa-facebook-square"></i></a></li>
-                                                <li><a class="twitter" href="#"><i
-                                                                class="fab fa-twitter-square"></i></a></li>
-                                                <li><a class="link" href="#"><i class="fab fa-linkedin"></i></a>
-                                                </li>
-                                                <li><a class="insta" href="#"><i class="fab fa-instagram"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="appoiment-ul">
-                                            <ul class="list-unstyled">
-                                                <li><a href="#"><i class="fas fa-calendar-alt"></i>Appointment</a>
-                                                </li>
-                                                <li><a href="#"><i class="fas fa-phone"></i>(215) 987-2765</a></li>
-                                                <li><a href="#"><i class="fas fa-external-link-alt"></i>Website</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="button-block">
-                                            <button class="btn btn-primary" type="button"><i
-                                                        class="fas fa-envelope"></i>Message
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>-->
                         </div>
                         <?php
 

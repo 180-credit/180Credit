@@ -77,12 +77,14 @@ Class User_model extends CI_Model {
         $this->db->reconnect();
         $this->queryBuilder($input);
         $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'RIGHT');
+        $this->db->join('state', 'state.id = user_profiles.state_id', 'INNER');
         $query = $this->db->get();
         $results['count'] =$query->num_rows();
         $this->db->close();
         $this->db->reconnect();
         $this->queryBuilder($input);
         $this->db->join('user_profiles', 'user_profiles.user_id = users.userId', 'RIGHT');
+        $this->db->join('state', 'state.id = user_profiles.state_id', 'INNER');
         $this->db->limit($input['limit'], (($input['page'] - 1) * $input['limit']));
         $query = $this->db->get();
         $results['data'] =$query->result();
