@@ -294,7 +294,7 @@
                                                 <div class="media-body">
                                                     <div class="row">
                                                         <div class="col-md-6 puser-left">
-                                                            <h6><a onclick="showProfileModel("<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>")"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
+                                                            <h6><a onclick="showProfileModel('<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>')"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
                                                             <div class="user-address">
                                                                 <h6 class="mb-0"><?= ucfirst($user->company_name) ?></h6>
                                                                 <span><?= ucfirst($user->city) ?>, <?= ucfirst($user->abbr) ?></span>
