@@ -224,3 +224,22 @@ li.draggable-item.ui-sortable-placeholder {
 .media a {
     cursor: pointer;
 }
+
+#loginModel .modal-dialog {
+    max-width: 500px;
+}
+
+#loginModel .modal-content form > .form-group label {
+ text-align: left;
+}
+
+button.btn:focus {
+    background: #4a5566;
+    border: 0;
+    outline: 0px;
+}
+
+#loginModel .modal-content form > .form-group .form-control {
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}

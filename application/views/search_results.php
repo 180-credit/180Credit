@@ -20,6 +20,24 @@
             </ul>
         </div>
         <div class="col-md-12">
+            <?php
+            if(isset($error)){
+                ?>
+                <div class="alert alert-danger alert-dismissible mt-3">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <?= $error ?>
+                </div>
+                <?php
+            }
+            if(isset($success)){
+                ?>
+                <div class="alert alert-success alert-dismissible mt-3">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <?= $success ?>
+                </div>
+                <?php
+            }
+            ?>
             <h1>Searching Credit Repair</h1>
             <div class="sponsored-ad-block">
                 <div class="row">
@@ -384,12 +402,9 @@
                                                         </ul>
                                                     </div>
                                                     <div class="button-block">
-                                                        <button type="button" class="btn btn-primary modelPrimiumBtn" data-toggle="modal" data-target="#modelPrimium">
+                                                        <button type="button" class="btn btn-primary modelPrimiumBtn">
                                                             <i class="fas fa-envelope"></i>Message
                                                         </button>
-                                                        <!--<button class="btn btn-primary" type="button"><i
-                                                                    class="fas fa-envelope"></i>Message
-                                                        </button>-->
                                                     </div>
 
                                                 </div>
@@ -443,7 +458,7 @@
 
 </style>
 <!-- Modal -->
-<div class="modal fade" id="profilePopup" role="dialog">
+<div class="modal  exampleModal fade" id="profilePopup" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -455,8 +470,7 @@
     </div>
 </div>
 
-
-<div class="modal exampleModal fade show" id="modelPrimiumSimple" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+<div class="modal exampleModal fade" id="modelPrimium" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header p-0 border-0">
@@ -465,41 +479,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="media">
-                    <div class="img-status">
-                        <img src="assets/images/premium-listing.png" class="mr-3" alt="img">
-                        <span class="status online"></span>
-                    </div>
-                    <div class="media-body">
-                        <div class="popup-head">
-                            <h5 class="mt-0">Paul Ajoulang - Send a Message</h5>
-                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>
-                        </div>
-                        <form>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">2000</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
 
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
-                                <label class="custom-control-label" for="customControlAutosizing">I prefer that Paul responds to this message with a phone call. (optional)</label>
-                            </div>
-                            <!-- i am not robot starts  -->
-
-                            <!-- i am not robot ends  -->
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
-                        </form>
-                    </div>
-                </div>
             </div>
 
         </div>
     </div>
 </div>
 
-<div class="modal exampleModal fade show" id="modelPrimium" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+<div class="modal exampleModal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header p-0 border-0">
@@ -508,55 +495,65 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="media">
-                    <div class="img-status">
-                        <img src="assets/images/premium-listing.png" class="mr-3" alt="img">
-                        <span class="status online"></span>
-                    </div>
-                    <div class="media-body">
-                        <div class="popup-head">
-                            <h5 class="mt-0">Paul Ajoulang - Send a Message</h5>
-                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>
+                <div id="login_form">
+                    <div class="row justify-content-center my-3 py-3">
+                        <div class="col-md-12">
+                            <h4 class="text-center mb-3">Consumer access</h4>
+                            <a onclick="return modalHandler.showRegistration();" class="btn btn-primary btn-block btn-icon envelope-btn position-relative btn-anchor"><i class="far fa-envelope"></i>Sign up with email</a>
+                            <h6 class="text-center mt-3">or</h6>
+                            <h5 class="text-center mb-4">Log in with email</h5>
+                            <form autocomplete="off" id='consumer_form' method="post" action="<?= base_url(); ?>login/login_post" >
+                                <input type="hidden" name="redirection_url" value="<?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" ?>">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="email address">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="password">
+                                </div>
+                                <button type="button" id='submit-consumer' class="btn btn-primary btn-block">Login</button>
+                            </form>
                         </div>
-                        <form>
-                            <div class="form-group">
-                                <label for="exampleFormControlTextarea1">2000</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
-
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">
-                                <label class="custom-control-label" for="customControlAutosizing1">I prefer that Paul responds to this message with a phone call. (optional)</label>
-                            </div>
-                            <div class="form-group cell-no">
-                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="US phone numbers only">
-                            </div>
-                            <div class="best-call">
-                                <label>Best time to call:</label>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">
-                                    <label class="custom-control-label" for="customControlAutosizing2">Morning (9-12) </label>
+                    </div>
+                </div>
+                <div id="register_form">
+                    <div class="row justify-content-center my-3 py-3">
+                        <div class="col-md-12">
+                            <h4 class="mb-3">Create a consumer account</h4>
+                            <p>Already have an account? <a href="javascript:;" onclick="return modalHandler.showLogin();" >Log in</a>.</p>
+                            <form id="consumer_register_form" autocomplete="off" method="post" action="<?= base_url(); ?>login/signup_store">
+                                <input type="hidden" name="redirection_url" value="<?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}" ?>">
+                                <input type="hidden" name="user_type" value="2">
+                                <div class="form-group">
+                                    <label for="email">Enter your email</label>
+                                    <input type="email" class="form-control" name="email" id="email">
                                 </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing3">
-                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>
+                                <div class="form-row mt-4 mb-3">
+                                    <div class="form-group col-md-6">
+                                        <label for="password">Create a password</label>
+                                        <input type="password" class="form-control" name="password" id="password" placeholder="At least 8 charcters long">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="conf-password">Confirm password</label>
+                                        <input type="password" class="form-control" name="conf_password" id="conf-password">
+                                    </div>
+                                    <label class="col-md-12 mt-3">Your Name</label>
+                                    <div class="form-group col-md-6">
+                                        <input type="text" class="form-control" name="first_name" id="inputAddress1" placeholder="First Name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <input type="text" class="form-control"  name="last_name" id="inputAddress2" placeholder="Last Name">
+                                    </div>
                                 </div>
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing4">
-                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="termscheck" class="form-check-input"  id="termscheck">
+                                    <label class="form-check-label" for="termscheck">I have read and accept 180Credit’s <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></label>
                                 </div>
-                            </div>
-
-                            <!-- i am not robot starts  -->
-
-                            <!-- i am not robot ends  -->
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-secondary">Cancel</button>
-                        </form>
+                                <button type="button" id="submit-consumer_register" class="btn btn-primary btn-block">Save and continue</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -566,88 +563,208 @@
 <script>
     $('#specialities-dropdown').select2();
     $('#tags-dropdown').select2();
+    <?php
+        if(isset($_SESSION['user'])){
+            $user = json_encode($_SESSION['user']);
+            echo 'var user = JSON.parse(\''.$user.'\');';
+        }
+        else{
+            echo 'var user = {};';
+        }
+    ?>
     var currentUrl = window.location.href;
     var HistoryState = {};
     function showProfileModel(name){
-        $('#profilePopup').modal('show');
-        $('#profilePopup .modal-body').load('<?php echo base_url(); ?>view-specialist-profile/'+name+'?onlyHtml=true',function () {
-            // Cache selectors
-            var topMenu = $("#myTab"),
-                topMenuHeight = 245,
-                // All list items
-                menuItems = topMenu.find("a");
+        if(user.userId){
+            $('#profilePopup').modal('show');
+            $('#profilePopup .modal-body').load('<?php echo base_url(); ?>view-specialist-profile/'+name+'?onlyHtml=true',function () {
+                // Cache selectors
+                var topMenu = $("#myTab"),
+                    topMenuHeight = 245,
+                    // All list items
+                    menuItems = topMenu.find("a");
 
-            // Bind click handler to menu items
-            // so we can get a fancy scroll animation
-            menuItems.click(function(e){
-                var href = $(this).attr("href"),
-                    offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
-                $('#profilePopup .modal-body').stop().animate({
-                    scrollTop: offsetTop
-                }, 850);
-                e.preventDefault();
+                // Bind click handler to menu items
+                // so we can get a fancy scroll animation
+                menuItems.click(function(e){
+                    var href = $(this).attr("href"),
+                        offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+                    $('#profilePopup .modal-body').stop().animate({
+                        scrollTop: offsetTop
+                    }, 850);
+                    e.preventDefault();
+                });
             });
-        });
-        var param = encodeURI(name);
-        history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
-        //history.replaceState(HistoryState, "User_profile", "<?php //echo base_url(); ?>//user/findlawyersearchresult");
+            var param = encodeURI(name);
+            history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
+        }
+        else {
+            modalHandler.showLogin();
+        }
     }
     $('#profilePopup').on('hidden.bs.modal', function () {
         history.replaceState(HistoryState, "User_profile", currentUrl);
     })
 
-    $('.modelPrimiumBtn').click(function () {
-        var parentNode = $($(this).parents('.premium-listing.p-2'));
-        var img = $(parentNode).find('.round.mr-3').attr('src');
-        var name = $(parentNode).find('.media-body .puser-left a.user_name').text();
-        var html = '<div class="media">\n' +
-            '                    <div class="img-status">\n' +
-            '                        <img src="'+ img +'" class="round mr-3" alt="img">\n' +
-            '                        <span class="status online"></span>\n' +
-            '                    </div>\n' +
-            '                    <div class="media-body">\n' +
-            '                        <div class="popup-head">\n' +
-            '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
-            '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
-            '                        </div>\n' +
-            '                        <form>\n' +
-            '                            <div class="form-group">\n' +
-            '                                <label for="exampleFormControlTextarea1">2000</label>\n' +
-            '                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>\n' +
-            '                            </div>\n' +
-            '\n' +
-            '                            <div class="custom-control custom-checkbox">\n' +
-            '                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">\n' +
-            '                                <label class="custom-control-label" for="customControlAutosizing1">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
-            '                            </div>\n' +
-            '                            <div class="form-group cell-no">\n' +
-            '                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="US phone numbers only">\n' +
-            '                            </div>\n' +
-            '                            <div class="best-call">\n' +
-            '                                <label>Best time to call:</label>\n' +
-            '                                <div class="custom-control custom-checkbox">\n' +
-            '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">\n' +
-            '                                    <label class="custom-control-label" for="customControlAutosizing2">Morning (9-12) </label>\n' +
-            '                                </div>\n' +
-            '                                <div class="custom-control custom-checkbox">\n' +
-            '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing3">\n' +
-            '                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>\n' +
-            '                                </div>\n' +
-            '                                <div class="custom-control custom-checkbox">\n' +
-            '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing4">\n' +
-            '                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>\n' +
-            '                                </div>\n' +
-            '                            </div>\n' +
-            '\n' +
-            '                            <!-- i am not robot starts  -->\n' +
-            '\n' +
-            '                            <!-- i am not robot ends  -->\n' +
-            '                            <button type="submit" class="btn btn-primary">Save</button>\n' +
-            '                            <button type="button" class="btn btn-secondary">Cancel</button>\n' +
-            '                        </form>\n' +
-            '                    </div>\n' +
-            '                </div>';
+    $('.modelPrimiumBtn').click(function (a) {
+        if(user.userId){
+            modalHandler.showPrimumButton(this);
+        }else {
+            modalHandler.showLogin();
+        }
+    });
+
+    var modalHandler = {
+        showLogin : function () {
+            $('#loginModel').modal('show')
+            $('#login_form').show();
+            $('#register_form').hide();
+            $("#consumer_form").trigger("reset");
+            $("#consumer_form").trigger("reset");
+            var validator = $("#consumer_form").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password:{
+                        required: true,
+                        minlength:8
+                    }
+
+                }
+            });
+            validator.resetForm();
+            $("#submit-consumer").click(function(){
+                if($("#consumer_form").valid()){
+                    $("#consumer_form").submit();
+                }
+            })
+
+            $('#consumer_form input').keypress(function (e) {
+                if (e.which == 13) {
+                    if($("#consumer_form").valid()){
+                        $("#consumer_form").submit();
+                    }
+                    return false;
+                }
+            });
+        },
+        showRegistration:function () {
+            $('#login_form').hide();
+            $('#register_form').show();
+            $("#consumer_register_form").trigger("reset");
+            var validator = $("#consumer_register_form").validate({
+                rules: {
+                    // simple rule, converted to {required:true}
+                    // compound rule
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "<?= base_url(); ?>login/user_exists",
+                            type: "post",
+                            data: {
+                                email: function()
+                                {
+                                    return $('#email').val();
+                                }
+                            }
+                        }
+                    },
+                    password:{
+                        required: true,
+                        minlength:8
+                    },
+                    conf_password: {
+                        equalTo: "#password"
+                    },
+                    first_name: {
+                        required: true,
+                    },
+                    last_name: {
+                        required: true,
+                    },
+                    termscheck: {
+                        required: true,
+                    }
+
+                },
+                messages:{
+                    email :{
+                        remote : "This email is already exists."
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("type") == "checkbox") {
+                        console.log($(element).parent("div").find("label"));
+                        $($(element).parent("div").find("label")).append(error);
+                    }else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            validator.resetForm();
+            $("#submit-consumer_register").click(function(){
+                if($("#consumer_register_form").valid()){
+                    $("#consumer_register_form").submit();
+                }
+            })
+        },
+        showPrimumButton:function (a) {
+            var parentNode = $($(a).parents('.premium-listing.p-2'));
+            var img = $(parentNode).find('.round.mr-3').attr('src');
+            var name = $(parentNode).find('.media-body .puser-left a.user_name').text();
+            var html = '<div class="media">\n' +
+                '                    <div class="img-status">\n' +
+                '                        <img src="'+ img +'" class="round mr-3" alt="img">\n' +
+                '                        <span class="status online"></span>\n' +
+                '                    </div>\n' +
+                '                    <div class="media-body">\n' +
+                '                        <div class="popup-head">\n' +
+                '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
+                '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
+                '                        </div>\n' +
+                '                        <form>\n' +
+                '                            <div class="form-group">\n' +
+                '                                <label for="exampleFormControlTextarea1">2000</label>\n' +
+                '                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>\n' +
+                '                            </div>\n' +
+                '\n' +
+                '                            <div class="custom-control custom-checkbox">\n' +
+                '                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">\n' +
+                '                                <label class="custom-control-label" for="customControlAutosizing1">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
+                '                            </div>\n' +
+                '                            <div class="form-group cell-no">\n' +
+                '                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="US phone numbers only">\n' +
+                '                            </div>\n' +
+                '                            <div class="best-call">\n' +
+                '                                <label>Best time to call:</label>\n' +
+                '                                <div class="custom-control custom-checkbox">\n' +
+                '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">\n' +
+                '                                    <label class="custom-control-label" for="customControlAutosizing2">Morning (9-12) </label>\n' +
+                '                                </div>\n' +
+                '                                <div class="custom-control custom-checkbox">\n' +
+                '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing3">\n' +
+                '                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>\n' +
+                '                                </div>\n' +
+                '                                <div class="custom-control custom-checkbox">\n' +
+                '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing4">\n' +
+                '                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '\n' +
+                '                            <!-- i am not robot starts  -->\n' +
+                '\n' +
+                '                            <!-- i am not robot ends  -->\n' +
+                '                            <button type="submit" class="btn btn-primary">Save</button>\n' +
+                '                            <button type="button" class="btn btn-secondary">Cancel</button>\n' +
+                '                        </form>\n' +
+                '                    </div>\n' +
+                '                </div>';
+
             $('#modelPrimium').find('.modal-body').html(html);
-            // console.log($('#modelPrimium').find('.modal-body'));
-    })
+            $('#modelPrimium').modal('show');
+        }
+    }
 </script>

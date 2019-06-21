@@ -28,6 +28,8 @@ class Home extends CI_Controller
     public function searchDetails()
     {
         $data['title'] = 'Search Results';
+        $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
+        $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
         $input = $this->input->get();
         $paginationUrl = array();
         $this->load->model('User_model');

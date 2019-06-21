@@ -100,18 +100,6 @@ class Login extends CI_Controller {
         $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $this->input->post('email'), "Welcome to your 180Credit account", $html);
 
         if ($this->input->post('keep_login')) {
-            /* $insert_id = $this->db->insert_id();
-              $condition = "userId =" . "'" . $insert_id . "'";
-              $this->db->select('*');
-              $this->db->from('users');
-              $this->db->where($condition);
-              $this->db->limit(1);
-              $result = $this->db->get()->row();
-              $session_data = array(
-              'username' => $result->userEmail,
-              'email' => $result->userEmail,
-              );
-              $this->session->set_userdata('logged_in', $session_data) */
             $this->session->set_flashdata('success', 'An verification mail has been sent to your mail, please verify your account.');
         } else {
             $this->session->set_flashdata('success', 'An verification mail has been sent to your mail, please verify your account.');
@@ -119,7 +107,12 @@ class Login extends CI_Controller {
         if ($this->input->post('user_type') == "1") {
             redirect('/login/login_service_provider');
         } else {
-            redirect('/login/login_consumer');
+            if(isset($_POST['redirection_url'])){
+                redirect($_POST['redirection_url']);
+            }
+            else{
+                redirect('/login/login_consumer');
+            }
         }
     }
 
@@ -163,12 +156,22 @@ class Login extends CI_Controller {
         $result = (array) $this->Login_model->getDataByCondition('users', $condition, true);
         if (!isset($result['userPassword']) && isset($result['userEmail'])) {
             $this->session->set_flashdata('error', 'User is not registered');
-            redirect('/consumer/login');
+            if(isset($_POST['redirection_url'])){
+                redirect($_POST['redirection_url']);
+            }
+            else{
+                redirect('/consumer/login');
+            }
         }
         if (isset($result['userPassword']) && password_verify($this->input->post('password'), $result['userPassword']) && $result['isEmailVerified'] == 1) {
             $this->session->set_userdata('user', $result);
             $this->session->set_flashdata('success', 'You are login successfully.');
-            redirect('/my-account');
+            if(isset($_POST['redirection_url'])){
+                redirect($_POST['redirection_url']);
+            }
+            else{
+                redirect('/my-account');
+            }
         } else {
             if (isset($result['180creditUserType']) && $result['180creditUserType'] == 1) {
                 if ($result['isEmailVerified'] == 0) {
@@ -181,10 +184,20 @@ class Login extends CI_Controller {
             } else {
                 if ($result['isEmailVerified'] == 0) {
                     $this->session->set_flashdata('error', 'Please verify your email address');
-                    redirect('/consumer/login');
+                    if(isset($_POST['redirection_url'])){
+                        redirect($_POST['redirection_url']);
+                    }
+                    else{
+                        redirect('/consumer/login');
+                    }
                 } else {
                     $this->session->set_flashdata('error', 'Email and password mismatch.');
-                    redirect('/consumer/login');
+                    if(isset($_POST['redirection_url'])){
+                        redirect($_POST['redirection_url']);
+                    }
+                    else{
+                        redirect('/consumer/login');
+                    }
                 }
             }
         }

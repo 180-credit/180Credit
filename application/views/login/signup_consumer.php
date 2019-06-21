@@ -94,7 +94,6 @@
             }
         });
         $("#submit-consumer").click(function(){
-            console.log($("#consumer_form").valid());
             if($("#consumer_form").valid()){
                 $("#consumer_form").submit();
             }
