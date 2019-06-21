@@ -241,7 +241,7 @@
                                                     <div class="row">
                                                         <div class="col-md-3 endorsements-left endorsements-inner-block">
                                                             <div>
-                                                                <img src="assets/images/head-shot.jpg" class="align-self-start mr-3" alt="...">
+                                                                <img src="<?php echo base_url(); ?>assets/images/head-shot.jpg" class="align-self-start mr-3" alt="...">
                                                             </div>
                                                         </div>
                                                         <div class="col-md-9 endorsements-right endorsements-inner-block">
@@ -285,6 +285,23 @@
     ?>
     if($('#profilePopup').length < 1){
         $("#myTab").sticky({topSpacing:0,bottomSpacing:400});
+        var sidebar = document.getElementById('sticky_sidebar');
+
+        var stickySidebar = new StickySidebar(sidebar);
+
+        sidebar.addEventListener('affix.top.stickySidebar', function (event) {
+            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+        });
+        sidebar.addEventListener('affixed.top.stickySidebar', function (event) {
+            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+        });
+
+        sidebar.addEventListener('affixed.bottom.stickySidebar', function (event) {
+            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+        });
+        sidebar.addEventListener('affix.container-bottom.stickySidebar', function (event) {
+            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.remove('stick_150');
+        });
     }
     //
     // var sidebar=new StickySidebar('#sticky_sidebar', {
@@ -292,23 +309,7 @@
     // 	bottomSpacing: 30,
     // 	containerSelector: '.sidebar_stop'
     // });
-    var sidebar = document.getElementById('sticky_sidebar');
 
-    var stickySidebar = new StickySidebar(sidebar);
-
-    sidebar.addEventListener('affix.top.stickySidebar', function (event) {
-        document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
-    });
-    sidebar.addEventListener('affixed.top.stickySidebar', function (event) {
-        document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
-    });
-
-    sidebar.addEventListener('affixed.bottom.stickySidebar', function (event) {
-        document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
-    });
-    sidebar.addEventListener('affix.container-bottom.stickySidebar', function (event) {
-        document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.remove('stick_150');
-    });
     // Cache selectors
     var lastId,
         topMenu = $("#myTab"),

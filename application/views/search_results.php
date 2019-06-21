@@ -294,7 +294,7 @@
                                                 <div class="media-body">
                                                     <div class="row">
                                                         <div class="col-md-6 puser-left">
-                                                            <h6><a onclick="showProfileModel('<?= $user->firstName.'-'.$user->lastName ?>')"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
+                                                            <h6><a  class="user_name" onclick="showProfileModel('<?= $user->firstName.'-'.$user->lastName ?>')"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
                                                             <div class="user-address">
                                                                 <h6 class="mb-0"><?= ucfirst($user->company_name) ?></h6>
                                                                 <span><?= ucfirst($user->city) ?>, <?= ucfirst($user->abbr) ?></span>
@@ -384,7 +384,7 @@
                                                         </ul>
                                                     </div>
                                                     <div class="button-block">
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelPrimium">
+                                                        <button type="button" class="btn btn-primary modelPrimiumBtn" data-toggle="modal" data-target="#modelPrimium">
                                                             <i class="fas fa-envelope"></i>Message
                                                         </button>
                                                         <!--<button class="btn btn-primary" type="button"><i
@@ -594,5 +594,60 @@
     }
     $('#profilePopup').on('hidden.bs.modal', function () {
         history.replaceState(HistoryState, "User_profile", currentUrl);
+    })
+
+    $('.modelPrimiumBtn').click(function () {
+        var parentNode = $($(this).parents('.premium-listing.p-2'));
+        var img = $(parentNode).find('.round.mr-3').attr('src');
+        var name = $(parentNode).find('.media-body .puser-left a.user_name').text();
+        var html = '<div class="media">\n' +
+            '                    <div class="img-status">\n' +
+            '                        <img src="'+ img +'" class="round mr-3" alt="img">\n' +
+            '                        <span class="status online"></span>\n' +
+            '                    </div>\n' +
+            '                    <div class="media-body">\n' +
+            '                        <div class="popup-head">\n' +
+            '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
+            '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
+            '                        </div>\n' +
+            '                        <form>\n' +
+            '                            <div class="form-group">\n' +
+            '                                <label for="exampleFormControlTextarea1">2000</label>\n' +
+            '                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>\n' +
+            '                            </div>\n' +
+            '\n' +
+            '                            <div class="custom-control custom-checkbox">\n' +
+            '                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">\n' +
+            '                                <label class="custom-control-label" for="customControlAutosizing1">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
+            '                            </div>\n' +
+            '                            <div class="form-group cell-no">\n' +
+            '                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="US phone numbers only">\n' +
+            '                            </div>\n' +
+            '                            <div class="best-call">\n' +
+            '                                <label>Best time to call:</label>\n' +
+            '                                <div class="custom-control custom-checkbox">\n' +
+            '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">\n' +
+            '                                    <label class="custom-control-label" for="customControlAutosizing2">Morning (9-12) </label>\n' +
+            '                                </div>\n' +
+            '                                <div class="custom-control custom-checkbox">\n' +
+            '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing3">\n' +
+            '                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>\n' +
+            '                                </div>\n' +
+            '                                <div class="custom-control custom-checkbox">\n' +
+            '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing4">\n' +
+            '                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>\n' +
+            '                                </div>\n' +
+            '                            </div>\n' +
+            '\n' +
+            '                            <!-- i am not robot starts  -->\n' +
+            '\n' +
+            '                            <!-- i am not robot ends  -->\n' +
+            '                            <button type="submit" class="btn btn-primary">Save</button>\n' +
+            '                            <button type="button" class="btn btn-secondary">Cancel</button>\n' +
+            '                        </form>\n' +
+            '                    </div>\n' +
+            '                </div>';
+            $('#modelPrimium').find('.modal-body').html(html);
+            // console.log($('#modelPrimium').find('.modal-body'));
     })
 </script>
