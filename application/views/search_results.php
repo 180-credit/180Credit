@@ -575,7 +575,7 @@
     var currentUrl = window.location.href;
     var HistoryState = {};
     function showProfileModel(name){
-        if(user.userId){
+        // if(user.userId){
             $('#profilePopup').modal('show');
             $('#profilePopup .modal-body').load('<?php echo base_url(); ?>view-specialist-profile/'+name+'?onlyHtml=true',function () {
                 // Cache selectors
@@ -597,10 +597,10 @@
             });
             var param = encodeURI(name);
             history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
-        }
+        /*}
         else {
             modalHandler.showLogin();
-        }
+        }*/
     }
     $('#profilePopup').on('hidden.bs.modal', function () {
         history.replaceState(HistoryState, "User_profile", currentUrl);
