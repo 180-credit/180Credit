@@ -30,60 +30,30 @@ class Home extends CI_Controller
         $data['title'] = 'Search Results';
         $data['error'] = isset($_SESSION['error']) ? $_SESSION['error'] : null;
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
-        $input = $this->input->get();
-        $paginationUrl = array();
         $this->load->model('User_model');
-        if (isset($input['specialities'])) {
-            $data['specialities'] = $input['specialities'];
-            $paginationUrl[] = 'specialities=' . urlencode(implode(',',$data['specialities']));
-        } else {
-            $data['specialities'] = null;
-        }
-        if (isset($input['amenities'])) {
-            $data['amenities'] = $input['amenities'];
-            $paginationUrl[] = 'amenities=' . urlencode(implode(',',$data['amenities']));
-        } else {
-            $data['amenities'] = null;
-        }
-        if (isset($input['location'])) {
-            $data['location'] = $input['location'];
-            $paginationUrl[] = 'location=' . urlencode($data['location']);
+        if (isset($_COOKIE['zipcodes'])) {
+            $data['location'] = $_COOKIE['zipcodes'];
         } else {
             $data['location'] = null;
         }
-        if (isset($input['search'])) {
-            $data['search'] = $input['search'];
-            $paginationUrl[] = 'search=' . urlencode($data['search']);
+        if (isset($_COOKIE['specialist']) && $_COOKIE['specialist'] != '') {
+            $data['search'] = $_COOKIE['specialist'];
         } else {
             $data['search'] = null;
         }
-        if (isset($input['is_online'])) {
-            $data['is_online'] = $input['is_online'];
-            $paginationUrl[] = 'is_online=' . urlencode($data['is_online']);
-        } else {
-            $data['is_online'] = null;
-        }
-        if (isset($input['offer_free_consultations'])) {
-            $data['offer_free_consultations'] = $input['offer_free_consultations'];
-            $paginationUrl[] = 'offer_free_consultations=' . urlencode($data['offer_free_consultations']);
-        } else {
-            $data['offer_free_consultations'] = null;
-        }
+        $data['limit'] = 20;
+        $data['areas_of_specialties'] = $this->Common_model->loadAreasOfSpecialty();
+        $data['load_all_tags'] = $this->Common_model->loadAllTags();
+        $this->template->load('layout', 'search_results', $data);
+    }
 
-
-        $pageLimit = array(2,20, 50, 100, 500);
-        if (isset($input['limit']) && in_array($input['limit'], $pageLimit)) {
-            $data['limit'] = $input['limit'];
-            $paginationUrl[] = 'limit=' . urlencode($data['limit']);
-        } else {
-            $data['limit'] = 20;
-        }
-        $paginationUrl = implode('&', $paginationUrl);
-        $data['pagination_url'] = 'search?'.$paginationUrl;
-        $data['page'] = isset($input['page']) ? $input['page'] : 1;
-
-
-        $usersData = $this->User_model->getPaginationData($data);
+    public function searchList()
+    {
+        $input = $this->input->post();
+        $this->load->model('User_model');
+        $usersData = $this->User_model->getPaginationData($input);
+        $data['page'] = $input['page'];
+        $data['limit'] = $input['limit'];
         $data['paginationData'] = isset($usersData['data']) ? $usersData['data'] : array();
         $total_pages = round($usersData['count']/$data['limit']);
 
@@ -107,12 +77,7 @@ class Home extends CI_Controller
                 $data['end'] = (1 + ($adjacents * 2));
             }
         }
-        $data['areas_of_specialties'] = $this->Common_model->loadAreasOfSpecialty();
-        $data['load_all_tags'] = $this->Common_model->loadAllTags();
-
-
-
-        $this->template->load('layout', 'search_results', $data);
+        echo json_encode($data);
     }
 
     public function getSpecialList()

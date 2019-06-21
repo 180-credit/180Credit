@@ -248,10 +248,7 @@
     function showPosition(position) {
         var google_api_key = '<?php echo GOOGLE_API_KEY; ?>';
         $.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + position.coords.latitude + ',' + position.coords.longitude + '&key='+google_api_key, {}, function(results) {
-            //$.post('https://maps.googleapis.com/maps/api/geocode/json?latlng=53.555958,-113.7741336&key=AIzaSyDENFVHEg986aK9AGUnKWq0h2eb5W4Gc5U', {}, function(results) {
-
             results = results.results;
-
             if (results[0]) {
                 var post_code = '';
                 var valToDisplay = '';
@@ -270,26 +267,20 @@
                         }
                     }
                 }
-
                 $('#zipCodes').val(post_code+' '+valToDisplay);
-
             }
-            // var index = data.results[1].address_components.length;
-
-            // console.log(data.results);
         });
 
     }
 
     getLocation();
 
-
     $("#home-search").click(function () {
         var zipcodes = $('#zipCodes').val();
         var specialist = $('#specialistDetails').val();
         setCookie('zipcodes',zipcodes,1);
         setCookie('specialist',specialist,1);
-        window.location.href='search?specialist='+encodeURI(specialist)+'&location='+encodeURI(zipcodes);
+        window.location.href='search';
     });
 
     function setCookie(cname, cvalue, exdays) {

@@ -186,7 +186,7 @@
 
                         <div class="card-body">
                             <div class="filter-content">
-                                <form method="get" action="<?php echo base_url(); ?>search" >
+                                <form id="filterForm">
                                     <div class="card-body">
                                         <div class="form-group">
                                             <h6 class="title">Specialities</h6>
@@ -264,7 +264,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <button type="submit" id="apply-filters" class="btn btn-primary text-white">Apply
+                                            <button type="button" onclick="filterManagement.applyFilterData(1);" id="apply-filters" class="btn btn-primary text-white">Apply
                                                 Filters
                                             </button>
                                         </div>
@@ -275,179 +275,16 @@
                     </div>
                 </div>
                 <div class="col-md-8 right-bottom pl-md-1">
-                    <div class="card">
+                    <div class="card main_data_block">
                         <div class="card-header px-3">
-                            Displaying <?php
-                            if($page == 1){
-                                echo 1;
-                            }else{
-                                echo (($page-1) * $limit) + 1;
-                            }
-                            ?>-<?php
-                            echo count($paginationData)
-                            ?> of <?= $total ?> specialists found
+
                         </div>
-                        <div class="card-body p-2">
-                            <?php
-                            foreach ($paginationData as $user){
-                                ?>
-                                    <div class="search-result-block">
-                                        <div class="premium-listing p-2">
-                                            <div class="media">
-                                                <a onclick="showProfileModel('<?= $user->firstName.'-'.$user->lastName ?>')">
-                                                    <?php
-                                                    if(isset($user->profile_image)){
-                                                        ?>
-                                                        <img class="round mr-3"  width="136" height="136" src="<?= base_url().$user->profile_image; ?>">
-                                                        <?php
-                                                    }
-                                                    else{
-                                                        ?>
-                                                        <img class="round mr-3" width="136" height="136" avatar="<?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?>">
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </a>
-<!--                                                <img alt="premium user" class="mr-3" src="assets/images/head-shot.png">-->
-                                                <div class="media-body">
-                                                    <div class="row">
-                                                        <div class="col-md-6 puser-left">
-                                                            <h6><a  class="user_name" onclick="showProfileModel('<?= $user->firstName.'-'.$user->lastName ?>')"><?= ucfirst($user->firstName).' '.ucfirst($user->lastName) ?></a></h6>
-                                                            <div class="user-address">
-                                                                <h6 class="mb-0"><?= ucfirst($user->company_name) ?></h6>
-                                                                <span><?= ucfirst($user->city) ?>, <?= ucfirst($user->abbr) ?></span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 puser-right">
-                                                            <div class="puser-right-left">
-                                                                <div class="rating no-rating">
-                                                                        <span class="stars">
-                                                                            <ul class="list-unstyled">
-                                                                                <li><i class="fas fa-star"></i></li>
-                                                                                <li><i class="fas fa-star"></i></li>
-                                                                                <li><i class="fas fa-star"></i></li>
-                                                                                <li><i class="fas fa-star"></i></li>
-                                                                                <li><i class="fas fa-star"></i></li>
-                                                                            </ul>
-                                                                        </span>
-                                                                    <span>32 reviewes</span>
-                                                                </div>
-                                                                <span><i class="fas fa-<?= $user->offersFreeConsultations == 1 ? 'check-circle' : 'times-circle clr-red' ?>"></i>Free consultations</span>
-                                                            </div>
-                                                            <div class="puser-right-right">
-                                                                <i class="far fa-heart"></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 description">
-                                                            <p><?= $user->short_description  ?></p>
+                        <div class="card-body p-2 main_data">
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <?php
-                                            if ($user->isPremium == 1){
-                                                ?>
-                                                <div class="pre-list-footer">
-                                                    <div class="social-block">
-                                                        <ul class="list-unstyled">
-                                                            <?php
-                                                            if(isset($user->facebook_url)){
-                                                                ?>
-                                                                <li><a class="fb" target="_blank" href="<?= $user->facebook_url ?>"><i class="fab fa-facebook-square"></i></a></li>
-                                                                <?php
-                                                            }
-                                                            if(isset($user->twitter_url)) {
-                                                                ?>
-                                                                <li><a class="twitter" target="_blank"  href="<?= $user->twitter_url ?>"><i
-                                                                                class="fab fa-twitter-square"></i></a></li>
-                                                                <?php
-                                                            }
-                                                            if(isset($user->linkedin_url)) {
-                                                                ?>
-                                                                <li><a class="link" target="_blank"  href="<?= $user->linkedin_url ?>"><i class="fab fa-linkedin"></i></a>
-                                                                </li>
-                                                                <?php
-                                                            }
-                                                            if(isset($user->instagram_url)) {
-                                                                ?>
-                                                                <li><a class="insta" target="_blank"  href="<?= $user->instagram_url ?>"><i class="fab fa-instagram"></i></a>
-                                                                </li>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="appoiment-ul">
-                                                        <ul class="list-unstyled">
-                                                            <?php
-                                                            if(isset($user->scheduling_url)) {
-                                                                ?>
-                                                                <li><a target="_blank"  href="<?= $user->scheduling_url ?>"><i class="fas fa-calendar-alt"></i>Appointment</a>
-                                                                </li>
-                                                                <?php
-                                                            }
-                                                            if(isset($user->public_phone)) {
-                                                                ?>
-                                                                <li><a href="javascript:;"><i class="fas fa-phone"></i>(215) 987-2765</a></li>
-                                                                <?php
-                                                            }
-                                                            if(isset($user->website_url)) {
-                                                                ?>
-                                                                <li><a  target="_blank"  href="<?= $user->website_url ?>"><i class="fas fa-external-link-alt"></i>Website</a>
-                                                                </li>
-                                                                <?php
-                                                            }
-                                                            ?>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="button-block">
-                                                        <button type="button" class="btn btn-primary modelPrimiumBtn">
-                                                            <i class="fas fa-envelope"></i>Message
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                                <?php
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                <?php
-                            }
-                            ?>
                         </div>
-                        <?php
+                        <div class="pagination_block">
 
-
-                        if($total_pages > 1) { ?>
-                            <ul class="pagination pagination-sm justify-content-center">
-                                <!-- Link of the first page -->
-                                <li class='page-item <?php ($page <= 1 ? print 'disabled' : '')?>'>
-                                    <a class='page-link' href='<?= $pagination_url ?>&page=1'><<</a>
-                                </li>
-                                <!-- Link of the previous page -->
-                                <li class='page-item <?php ($page <= 1 ? print 'disabled' : '')?>'>
-                                    <a class='page-link' href='<?= $pagination_url ?>&page=<?php ($page>1 ? print($page-1) : print 1)?>'><</a>
-                                </li>
-                                <!-- Links of the pages with page number -->
-                                <?php for($i=$start; $i<=$end; $i++) {
-                                    ?>
-                                    <li class='page-item <?php ($i == $page ? print 'active' : '')?>'>
-                                        <a class='page-link' href='<?= $pagination_url ?>&page=<?php echo $i;?>'><?php echo $i;?></a>
-                                    </li>
-                                <?php } ?>
-                                <!-- Link of the next page -->
-                                <li class='page-item <?php ($page >= $total_pages ? print 'disabled' : '')?>'>
-                                    <a class='page-link' href='<?= $pagination_url ?>&page=<?php ($page < $total_pages ? print($page+1) : print $total_pages)?>'>></a>
-                                </li>
-                                <!-- Link of the last page -->
-                                <li class='page-item <?php ($page >= $total_pages ? print 'disabled' : '')?>'>
-                                    <a class='page-link' href='<?= $pagination_url ?>&page=<?php echo $total_pages;?>'>>>
-                                    </a>
-                                </li>
-                            </ul>
-                        <?php } ?>
+                        </div>
                     </div>
                     </div>
                 </div>
@@ -614,6 +451,170 @@
         }
     });
 
+    function jsUcfirst(string)
+    {
+        return string.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+            return letter.toUpperCase();
+        });
+    }
+    var filterManagement ={
+        applyCardHeader : function(data){
+            let html = 'Displaying ';
+            if(data.page == 1){
+                html += '1-';
+            }else {
+                console.log(data.page,data.limit);
+                html += (((data.page - 1) * data.limit) + 1)+'-';
+            }
+            html += (((data.page - 1) * data.limit) + data.paginationData.length )+' of '+data.total+' specialists found';
+            return html;
+        },
+        applyHtmlData : function (data) {
+            let html = '';
+            if(data.paginationData.length){
+                $.each(data.paginationData,function (k,v) {
+                    html +='<div class="search-result-block">\n' +
+                        '    <div class="premium-listing p-2">\n' +
+                        '        <div class="media">\n' +
+                        '            <a onclick="showProfileModel('+ ("'"+v.firstName+'-'+v.lastName+"'") + ')">';
+                        if(v.profile_image){
+                            html += '                <img class="round mr-3"  width="136" height="136" src="<?= base_url(); ?>'+v.profile_image+'">';
+                        } else {
+                            html += '                <img class="round mr-3" width="136" height="136" avatar="'+(jsUcfirst(v.firstName)+' '+jsUcfirst(v.lastName))+'">';
+                        }
+                    html += '            </a>\n' +
+                        '            <div class="media-body">\n' +
+                        '                <div class="row">\n' +
+                        '                    <div class="col-md-6 puser-left">\n' +
+                        '                        <h6><a  class="user_name" onclick="showProfileModel('+ ("'"+v.firstName+'-'+v.lastName+"'") + ')">'+(jsUcfirst(v.firstName)+' '+jsUcfirst(v.lastName))+'</a></h6>\n' +
+                        '                        <div class="user-address">\n' +
+                        '                            <h6 class="mb-0">'+jsUcfirst(v.company_name)+'</h6>\n' +
+                        '                            <span>'+jsUcfirst(v.city)+', '+jsUcfirst(v.abbr)+'</span>\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="col-md-6 puser-right">\n' +
+                        '                        <div class="puser-right-left">\n' +
+                        '                            <div class="rating no-rating">\n' +
+                        '                                    <span class="stars">\n' +
+                        '                                        <ul class="list-unstyled">\n' +
+                        '                                            <li><i class="fas fa-star"></i></li>\n' +
+                        '                                            <li><i class="fas fa-star"></i></li>\n' +
+                        '                                            <li><i class="fas fa-star"></i></li>\n' +
+                        '                                            <li><i class="fas fa-star"></i></li>\n' +
+                        '                                            <li><i class="fas fa-star"></i></li>\n' +
+                        '                                        </ul>\n' +
+                        '                                    </span>\n' +
+                        '                                <span>32 reviewes</span>\n' +
+                        '                            </div>\n' +
+                        '                            <span><i class="fas fa-'+(v.offersFreeConsultations == 1 ? 'check-circle' : 'times-circle clr-red')+'"></i>Free consultations</span>\n' +
+                        '                        </div>\n' +
+                        '                        <div class="puser-right-right">\n' +
+                        '                            <i class="far fa-heart"></i>\n' +
+                        '                        </div>\n' +
+                        '                    </div>\n' +
+                        '                    <div class="col-md-12 description">\n' +
+                        '                        <p>'+v.short_description+'</p>\n' +
+                        '                    </div>\n' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '        </div>';
+                        if (v.isPremium == 1){
+                            html += '        <div class="pre-list-footer">\n' +
+                                '                <div class="social-block">\n' +
+                                '                    <ul class="list-unstyled">';
+                            if(v.facebook_url && v.facebook_url != ''){
+                                html +='<li><a class="fb" target="_blank" href="'+v.facebook_url+'"><i class="fab fa-facebook-square"></i></a></li>';
+                            }
+                            if(v.twitter_url && v.twitter_url != ''){
+                                html +='<li><a class="twitter" target="_blank"  href="'+v.twitter_url+'"><i class="fab fa-twitter-square"></i></a></li>';
+                            }
+                            if(v.linkedin_url && v.linkedin_url != ''){
+                                html +='<li><a class="link" target="_blank"  href="'+v.linkedin_url+'"><i class="fab fa-linkedin"></i></a></li>';
+                            }
+                            if(v.instagram_url && v.instagram_url != ''){
+                                html +='<li><a class="insta" target="_blank"  href="'+v.instagram_url+'"><i class="fab fa-instagram"></i></a></li>';
+                            }
+                            html +='</ul>\n' +
+                                '                </div>\n' +
+                                '                <div class="appoiment-ul">\n' +
+                                '                    <ul class="list-unstyled">';
+                            if(v.scheduling_url && v.scheduling_url != '') {
+                                html += '<li><a target="_blank"  href="'+v.scheduling_url+'"><i class="fas fa-calendar-alt"></i>Appointment</a></li>';
+                            }
+                            if(v.public_phone && v.public_phone != '') {
+                                html += '<li><a href="javascript:;"><i class="fas fa-phone"></i>'+v.public_phone+'</a></li>';
+                            }
+                            if(v.website_url && v.website_url != '') {
+                                html += '<li><a  target="_blank"  href="'+v.website_url+'"><i class="fas fa-external-link-alt"></i>Website</a></li>';
+                            }
+                            html +='</ul>\n' +
+                                '                </div>\n' +
+                                '                <div class="button-block">\n' +
+                                '                    <button type="button" class="btn btn-primary modelPrimiumBtn">\n' +
+                                '                        <i class="fas fa-envelope"></i>Message\n' +
+                                '                    </button>\n' +
+                                '                </div>\n' +
+                                '            </div>';
+                        }
+                        html += '    </div>\n' +
+                        '</div>';
+                });
+            }
+            return html;
+        },
+        applyHtmlPagination : function (data) {
+            let html = '<ul class="pagination pagination-sm justify-content-center">\n' +
+                '    <li class="page-item '+ (data.page <= 1 ? 'disabled' : '' ) +'">\n' +
+                '        <a onclick="filterManagement.applyFilterData(1);" class="page-link" href="javascript:;"><<</a>\n' +
+                '    </li>\n' +
+                '    <li class="page-item '+ (data.page <= 1 ? 'disabled' : '' ) +'">\n' +
+                '        <a onclick="filterManagement.applyFilterData(1);" class="page-link" href="javascript:;"><</a>\n' +
+                '    </li>';
+                let i = data.start;
+                for (i; i <= data.end; i++ ){
+                    html += '<li class="page-item '+ (i == data.page ? 'active' : '') +'">\n' +
+                        '<a '+ (i != data.page ? 'onclick="filterManagement.applyFilterData('+i+');"' : '') +' class="page-link" href="javascript:;">'+i+'</a>\n' +
+                        '</li>\n';
+                }
+                html +='    <li class="page-item '+(data.page >= data.total_pages ? 'disabled' : '')+'">\n' +
+                '        <a class="page-link" onclick="filterManagement.applyFilterData('+(parseInt(data.page) + 1)+');" href="javascript:;">></a>\n' +
+                '    </li>\n' +
+                '    <li class="page-item '+(data.page >= data.total_pages ? 'disabled' : '')+'">\n' +
+                '        <a class="page-link" onclick="filterManagement.applyFilterData('+data.end +');" href="javascript:;">>></a>\n' +
+                '    </li>\n' +
+                '</ul>';
+
+                return html;
+
+        },
+        applyFilterData : function (page) {
+            var filterData = $('#filterForm').serialize();
+            filterData=filterData+'&page='+page;
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url(); ?>home/searchList',
+                dataType: 'json',
+                data:filterData,
+                success: function(data)
+                {
+                    $('.main_data_block .card-header').html(filterManagement.applyCardHeader(data));
+                    $('.main_data').html(filterManagement.applyHtmlData(data));
+                    if(data.end != 0) {
+                        $('.pagination_block').html(filterManagement.applyHtmlPagination(data));
+                    } else {
+                        $('.pagination_block').html('');
+                    }
+                    LetterAvatar.transform();
+
+                },
+                error: function(e)
+                {
+                    alert(e.message);
+                }
+            });
+        }
+    };
+
     var modalHandler = {
         showLogin : function () {
             $('#loginModel').modal('show')
@@ -767,4 +768,8 @@
             $('#modelPrimium').modal('show');
         }
     }
+
+    $(document).ready(function () {
+        filterManagement.applyFilterData(1);
+    })
 </script>
