@@ -182,7 +182,7 @@ class Login extends CI_Controller {
                     redirect('/service-provider/login');
                 }
             } else {
-                if ($result['isEmailVerified'] == 0) {
+                if (isset($result['isEmailVerified']) && $result['isEmailVerified'] == 0) {
                     $this->session->set_flashdata('error', 'Please verify your email address');
                     if(isset($_POST['redirection_url'])){
                         redirect($_POST['redirection_url']);
