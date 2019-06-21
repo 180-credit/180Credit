@@ -174,7 +174,7 @@ class Login extends CI_Controller {
             }
         } else {
             if (isset($result['180creditUserType']) && $result['180creditUserType'] == 1) {
-                if ($result['isEmailVerified'] == 0) {
+                if (isset($result['isEmailVerified']) && $result['isEmailVerified'] == 0) {
                     $this->session->set_flashdata('error', 'Please verify your email address');
                     redirect('/service-provider/login');
                 } else {
