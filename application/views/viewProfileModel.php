@@ -1,3 +1,29 @@
+<style>
+
+    .fixed_class{
+        position: fixed;
+        top:0;
+    }
+    .maincontent_fixed_class{
+        position: fixed;
+        top:0;
+        right: 0;
+    }
+    .relative_class{
+        position: relative;
+    }
+
+    .maincontent_relative_class{
+        position: relative;
+    }
+    .height_100{
+        /*height: 100vh;*/
+    }
+    .height_auto{
+        /*height: auto;*/
+    }
+</style>
+
 <main class="specia-pro-view">
     <div class="container">
         <div class="row">
@@ -60,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 right-col-block mb-5" >
+                    <div class="col-md-8 right-col-block mb-5" id="sticky_sidebar_maincontent">
                         <div class="card border-0 shadow_card bg-light" id="sticky_main_panel">
                             <div class="card-body p-0">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -283,26 +309,28 @@
     <?php
     $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
     ?>
+    jQuery('#profilePopup').css('overflow-y','auto');
+    console.log(jQuery('.modal-body').height());
     console.log($('#profilePopup').length +'<'+ 1);
     //if($('#profilePopup').length < 1){
-        $("#myTab").sticky({topSpacing:0,bottomSpacing:400});
-        var sidebar = document.getElementById('sticky_sidebar');
-
-        var stickySidebar = new StickySidebar(sidebar);
-
-        sidebar.addEventListener('affix.top.stickySidebar', function (event) {
-            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
-        });
-        sidebar.addEventListener('affixed.top.stickySidebar', function (event) {
-            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
-        });
-
-        sidebar.addEventListener('affixed.bottom.stickySidebar', function (event) {
-            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
-        });
-        sidebar.addEventListener('affix.container-bottom.stickySidebar', function (event) {
-            document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.remove('stick_150');
-        });
+    //     $("#myTab").sticky({topSpacing:0,bottomSpacing:400});
+    //     var sidebar = document.getElementById('sticky_sidebar');
+    //
+    //     var stickySidebar = new StickySidebar(sidebar);
+    //
+    //     sidebar.addEventListener('affix.top.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+    //     });
+    //     sidebar.addEventListener('affixed.top.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+    //     });
+    //
+    //     sidebar.addEventListener('affixed.bottom.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+    //     });
+    //     sidebar.addEventListener('affix.container-bottom.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.remove('stick_150');
+    //     });
     //}
     //
     // var sidebar=new StickySidebar('#sticky_sidebar', {
@@ -334,9 +362,72 @@
         e.preventDefault();
     });
 
+
+    var distance = $('#sticky_sidebar').offset().top,
+        $window = $(window);
+
+    $window.scroll(function() {
+        if ( $window.scrollTop() >= distance ) {
+            console.log("erer");
+        }
+    });
+
     // Bind to scroll
+    $('#profilePopup .modal-content').scroll(function(){
+        var distance = $('#profilePopup .modal-content').offset().top;
+        if ( $(window).scrollTop() >= distance ) {
+            console.log("here");
+        }else{
+            console.log("there");
+        }
+    });
+    jQuery('#profilePopup .modal-content').css('height',jQuery('.specia-pro-view').height());
+    // jQuery(document).on('scroll','#myTabContent',function(){
+    //     console.log("here");
+    // });
+    $('#myTabContent').on('scroll', function () {
+        console.log($("#home").position().top - jQuery('#myTab').height() -24);
+        if($("#home").position().top - jQuery('#myTab').height() -24 <= 0){
+
+            jQuery('#profilePopup').css('overflow-y','auto');
+            jQuery('#myTabContent').css('height','auto');
+            jQuery('#myTabContent').css('overflow','hidden');
+
+            jQuery('#sticky_sidebar').removeClass('fixed_class');
+            jQuery('#sticky_sidebar').addClass('relative_class');
+
+            jQuery('#sticky_sidebar_maincontent').removeClass('maincontent_fixed_class');
+            jQuery('#sticky_sidebar_maincontent').addClass('maincontent_relative_class');
+            $('#myTabContent').off('scroll');
+        }
+    });
     $('.modal').scroll(function(){
-        console.log("Inn");
+        var distance = $('#sticky_sidebar').offset().top;
+        if ( $(window).scrollTop() >= distance ) {
+            jQuery('#sticky_sidebar').removeClass('relative_class');
+            jQuery('#sticky_sidebar').addClass('fixed_class');
+
+            jQuery('#sticky_sidebar_maincontent').removeClass('maincontent_relative_class');
+            jQuery('#sticky_sidebar_maincontent').addClass('maincontent_fixed_class');
+
+            // jQuery('.modal-body').removeClass('height_auto');
+            // jQuery('.modal-body').addClass('height_100');
+            jQuery('#profilePopup').css('overflow','hidden');
+            jQuery('#myTabContent').css('height','92vh');
+            jQuery('#myTabContent').css('overflow','auto');
+            // $('#myTabContent').bind('scroll');
+
+        } else {
+            jQuery('#sticky_sidebar').removeClass('fixed_class');
+            jQuery('#sticky_sidebar').addClass('relative_class');
+
+            jQuery('#sticky_sidebar_maincontent').removeClass('maincontent_fixed_class');
+            jQuery('#sticky_sidebar_maincontent').addClass('maincontent_relative_class');
+
+            jQuery('.modal-body').removeClass('height_100');
+            jQuery('.modal-body').addClass('height_auto');
+        }
+        // console.log("Inn");
         // Get container scroll position
         var div = $(this);
         var fromTop = $(this).scrollTop()+topMenuHeight;
@@ -364,5 +455,7 @@
                 .end().filter("[href='#home-tab']").parent().addClass("active");
         }
     });
+    setTimeout(function(){ jQuery('#profilePopup .modal-content').css('height',jQuery('.modal-body').height() + 50); }, 100);
+
 </script>
 <!--  [Script Section] Ends -->
