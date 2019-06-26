@@ -162,8 +162,8 @@ class Home extends CI_Controller
         $data['msg'] = '';
         $data['title'] = urldecode($param).'\'s Profile';
         $data['view'] = 'profile';
-        if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] ==true){
-            $this->load->view('viewProfile', $data);
+        if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] == true){
+            $this->load->view('viewProfileModel', $data);
         }else{
             $this->template->load('layout','viewProfile', $data);
         }

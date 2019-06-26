@@ -295,7 +295,7 @@
 
 </style>
 <!-- Modal -->
-<div class="modal  exampleModal fade" id="profilePopup" role="dialog">
+<div class="modal exampleModal fade" id="profilePopup" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
