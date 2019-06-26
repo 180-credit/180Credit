@@ -254,3 +254,9 @@ button.btn:focus {
 .form-style-fake{position:absolute;top:0px;padding-left:2rem;text-overflow: ellipsis;}
 .form-style-base{position:absolute;top:0px;z-index: 999;opacity: 0;}
 .input-place{position: absolute;top: 0.7rem;left: 0.8rem;font-size: 15px;color: gray;}
+.exampleModal .modal-content form > .form-group label.error{
+    text-align: left;
+}
+label.custom-control-label.customControlAutosizing2 {
+    width: 10rem;
+}

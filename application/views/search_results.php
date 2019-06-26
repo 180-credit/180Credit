@@ -443,19 +443,14 @@
         history.replaceState(HistoryState, "User_profile", currentUrl);
     })
 
-    $('.modelPrimiumBtn').click(function (a) {
-        if(user.userId){
-            modalHandler.showPrimumButton(this);
-        }else {
-            modalHandler.showLogin();
-        }
-    });
-
     function jsUcfirst(string)
     {
         return string.toLowerCase().replace(/\b[a-z]/g, function(letter) {
             return letter.toUpperCase();
         });
+    }
+    function countChars(obj){
+        document.getElementById("exampleFormControlTextarea1").innerHTML = obj.value.length+' characters';
     }
     var filterManagement ={
         applyCardHeader : function(data){
@@ -604,6 +599,13 @@
                     } else {
                         $('.pagination_block').html('');
                     }
+                    $('.modelPrimiumBtn').click(function (a) {
+                        if(user.userId){
+                            modalHandler.showPrimumButton(this);
+                        }else {
+                            modalHandler.showLogin();
+                        }
+                    });
                     LetterAvatar.transform();
 
                 },
@@ -726,31 +728,31 @@
                 '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
                 '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
                 '                        </div>\n' +
-                '                        <form>\n' +
+                '                        <form id="message_form">\n' +
                 '                            <div class="form-group">\n' +
-                '                                <label for="exampleFormControlTextarea1">2000</label>\n' +
-                '                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>\n' +
+                '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
+                '                                <textarea class="form-control" id="contact_message" name="contact_message" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
                 '                            </div>\n' +
                 '\n' +
                 '                            <div class="custom-control custom-checkbox">\n' +
-                '                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing1">\n' +
-                '                                <label class="custom-control-label" for="customControlAutosizing1">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
+                '                                <input type="checkbox" class="custom-control-input" id="prefer_on_phone" checked name="prefer_on_phone">\n' +
+                '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
                 '                            </div>\n' +
-                '                            <div class="form-group cell-no">\n' +
-                '                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="US phone numbers only">\n' +
+                '                            <div class="form-group cell-no show">\n' +
+                '                                <input type="text" class="form-control" id="phone_no_message" name="phone_no_message" placeholder="US phone numbers only">\n' +
                 '                            </div>\n' +
-                '                            <div class="best-call">\n' +
+                '                            <div class="best-call show">\n' +
                 '                                <label>Best time to call:</label>\n' +
                 '                                <div class="custom-control custom-checkbox">\n' +
-                '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing2">\n' +
-                '                                    <label class="custom-control-label" for="customControlAutosizing2">Morning (9-12) </label>\n' +
+                '                                    <input type="checkbox" class="custom-control-input " name="time_slot_message" id="customControlAutosizing2">\n' +
+                '                                    <label class="custom-control-label customControlAutosizing2" for="customControlAutosizing2">Morning (9-12) </label>\n' +
                 '                                </div>\n' +
                 '                                <div class="custom-control custom-checkbox">\n' +
-                '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing3">\n' +
+                '                                    <input type="checkbox" class="custom-control-input" name="time_slot_message" id="customControlAutosizing3">\n' +
                 '                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>\n' +
                 '                                </div>\n' +
                 '                                <div class="custom-control custom-checkbox">\n' +
-                '                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing4">\n' +
+                '                                    <input type="checkbox" class="custom-control-input" name="time_slot_message" id="customControlAutosizing4">\n' +
                 '                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>\n' +
                 '                                </div>\n' +
                 '                            </div>\n' +
@@ -758,7 +760,7 @@
                 '                            <!-- i am not robot starts  -->\n' +
                 '\n' +
                 '                            <!-- i am not robot ends  -->\n' +
-                '                            <button type="submit" class="btn btn-primary">Save</button>\n' +
+                '                            <button type="submit" id="submit-message_form" class="btn btn-primary">Save</button>\n' +
                 '                            <button type="button" class="btn btn-secondary">Cancel</button>\n' +
                 '                        </form>\n' +
                 '                    </div>\n' +
@@ -766,7 +768,64 @@
 
             $('#modelPrimium').find('.modal-body').html(html);
             $('#modelPrimium').modal('show');
+            
+            $('#prefer_on_phone').click(function () {
+                if($(this).prop('checked') ==true){
+                    $(".cell-no").show();
+                    $(".best-call").show();
+                }
+                else
+                {
+                    $(".cell-no").hide();
+                    $(".best-call").hide();
+                }
+            });
+            $("#message_form").validate({
+                rules: {
+                    // simple rule, converted to {required:true}
+                    // compound rule
+                    contact_message: {
+                        required: true
+                    },
+                    phone_no_message: {
+                        required: function (element) {
+                            if ($("#prefer_on_phone").is(':checked')) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    },
+                    time_slot_message: {
+                        required: function (element) {
+                            if ($("#prefer_on_phone").is(':checked')) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("type") == "checkbox") {
+                        $($(element).parent("div").find("label")).append(error);
+                    }else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+            $("#submit-message_form").click(function(){
+                if($("#message_form").valid()){
+                    console.log("done");
+                    return false;
+                    // $("#consumer_form").submit();
+                }
+            })
         }
+    }
+    function countTextWord(a){
+        var txtlennospace = 2000 - $(a).val().replace(/\s+/g, '').length;
+        $('#contact_message_lable').text(txtlennospace);
     }
 
     $(document).ready(function () {
