@@ -86,7 +86,6 @@
             },
             errorPlacement: function (error, element) {
                 if (element.attr("type") == "checkbox") {
-                    console.log($(element).parent("div").find("label"));
                     $($(element).parent("div").find("label")).append(error);
                 }else {
                     error.insertAfter(element);

@@ -32,8 +32,8 @@
 										</div>
 										<div class="form-group">
                                             <div class="full-width">
-                                                <input type="file" id="profile-input" class="form-control form-input form-style-base">
-                                                <input type="text" id="fake-input" class="form-control form-input form-style-fake" placeholder="Choose your File" readonly>
+                                                <input type="file" id="profile-input" accept="image/*" name='profile_image' class="form-control form-input form-style-base">
+                                                <input type="text" id="fake-input" accept="image/*" class="form-control form-input form-style-fake" placeholder="Choose your File" readonly>
                                                 <span class="fa fa-upload input-place"></span>
                                             </div>
 <!--											<input type="file" accept="image/*" name='profile_image'  class="form-control-file" id="profile-input">-->
@@ -136,6 +136,13 @@
 			messages:{
                 email :{
                     remote : "This email is already exists."
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "file") {
+                    $($(element).parent("div").parent("div")).append(error);
+                }else {
+                    error.insertAfter(element);
                 }
             }
         });
