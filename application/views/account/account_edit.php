@@ -9,29 +9,34 @@
 						<div class="card-header bg-transparent">
 							<h5 class="mb-0">My Account</h5>
 						</div>
-						<?php 
+						<?php
 							$user = $_SESSION['user'];
 						?>
 						<div class="card-body">
 							<div class="row">
 								<form id="account-edit" enctype="multipart/form-data" method="post" action="<?= base_url(); ?>account/store_user">
 									<div class="col-md-4 pull-left">
-										<div class="form-group">
-											<?php 
+										<div class="form-group text-center">
+											<?php
 												if(isset($user['profile_image'])){
 													?>
-														<img class="round" id='profile-image' width="120" height="120" src="<?= base_url().$user['profile_image']; ?>">
+														<img class="round" id='profile-image' width="150" height="150" src="<?= base_url().$user['profile_image']; ?>">
 													<?php
 												}
 												else{
 													?>
-														<img class="round" id='profile-image' width="120" height="120" avatar="<?= ucfirst($user['firstName']).' '.ucfirst($user['lastName']) ?>">
-													<?php	
+														<img class="round" id='profile-image' width="150" height="150" avatar="<?= ucfirst($user['firstName']).' '.ucfirst($user['lastName']) ?>">
+													<?php
 												}
 											?>
 										</div>
 										<div class="form-group">
-											<input type="file" accept="image/*" name='profile_image'  class="form-control-file" id="profile-input">
+                                            <div class="full-width">
+                                                <input type="file" id="profile-input" class="form-control form-input form-style-base">
+                                                <input type="text" id="fake-input" class="form-control form-input form-style-fake" placeholder="Choose your File" readonly>
+                                                <span class="fa fa-upload input-place"></span>
+                                            </div>
+<!--											<input type="file" accept="image/*" name='profile_image'  class="form-control-file" id="profile-input">-->
 										</div>
 									</div>
 									<input type="hidden" name="user_id" value="<?= $user['userId'] ?>">
@@ -49,16 +54,30 @@
 												<label for="email">Email address</label><?= $user['isEmailVerified'] == 1 ? '<span class="ml-2 verified-span"><i class="fas fa-check-circle mx-1"></i>verified</span>' :'<span class="ml-2 unverified-span"><i class="fas fa-times-circle mx-1"></i>Unverified</span>' ?>
 												<input type="email" class="form-control" name="email" id="email" value="<?= $user['userEmail'] ?>" placeholder="Email address">
 											</div>
-											<div class="form-group col-md-12 acc-mail-content">
+                                            <?php
+                                            if(isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] == '1') {
+                                                ?>
+                                                <div class="form-group col-md-12 acc-mail-content">
 												<span class="d-block">Do you offer credit repair services?
-													<input type="checkbox" name="isCreditRepairService" value="1" <?= (isset($user['isCreditRepairService']) && $user['isCreditRepairService'] == 1  ? 'checked' : '') ?>  data-toggle="toggle">
+													<input type="checkbox" name="isCreditRepairService"
+                                                           value="1" <?= (isset($user['isCreditRepairService']) && $user['isCreditRepairService'] == 1 ? 'checked' : '') ?>  data-toggle="toggle">
 												</span>
-												<span class="d-block">Do you offer services to the credit repair industry?
-													<input type="checkbox" name="isCreditRepairIndustry" value="1" <?= (isset($user['isCreditRepairIndustry']) && $user['isCreditRepairIndustry'] == 1  ? 'checked' : '') ?>  data-toggle="toggle"></span>
-											</div>
+                                                    <span class="d-block">Do you offer services to the credit repair industry?
+													<input type="checkbox" name="isCreditRepairIndustry"
+                                                           value="1" <?= (isset($user['isCreditRepairIndustry']) && $user['isCreditRepairIndustry'] == 1 ? 'checked' : '') ?>  data-toggle="toggle"></span>
+                                                </div>
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <input type="hidden" name="isCreditRepairService" value="0" />
+                                                <input type="hidden" name="isCreditRepairIndustry" value="0" />
+                                                <?php
+                                            }
+                                            ?>
 										</div>
 										<button type="button" id="submit-account" class="btn btn-primary">Save</button>
-										<a class="btn  btn-link" href="<?= base_url(); ?>my-account">Cancel</button>
+										<a class="btn  btn btn-secondary" href="<?= base_url(); ?>my-account">Cancel</a>
 									</div>
 								</form>
 							</div>
@@ -77,7 +96,9 @@
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-
+    $('input[id=profile-input]').change(function() {
+        $('#fake-input').val($(this).val().replace("C:\\fakepath\\", ""));
+    });
 	$("#profile-input").change(function() {
 		readURL(this);
 	});

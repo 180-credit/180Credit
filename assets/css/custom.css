@@ -243,3 +243,14 @@ button.btn:focus {
     border: 1px solid #ced4da;
     border-radius: .25rem;
 }
+.account-page aside .card-body ul li:hover {
+    background: #34495E;
+    border-radius: 5px;
+}
+
+.full-width{
+    float:left;width:100%;min-height:100px;position:relative;
+}
+.form-style-fake{position:absolute;top:0px;padding-left:2rem;text-overflow: ellipsis;}
+.form-style-base{position:absolute;top:0px;z-index: 999;opacity: 0;}
+.input-place{position: absolute;top: 0.7rem;left: 0.8rem;font-size: 15px;color: gray;}
