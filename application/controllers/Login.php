@@ -371,7 +371,7 @@ class Login extends CI_Controller {
             if (!empty($user)) {
                 $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
                 $this->session->set_flashdata('success', 'Email verification successfully');
-                if ($user['user_type'] == "1") {
+                if (isset($user['180creditUserType']) && $user['180creditUserType'] == "1") {
                     redirect('/login/login_service_provider');
                 } else {
                     redirect('/login/login_consumer');
