@@ -27,6 +27,7 @@
                     <?php
                 }
                 ?>
+                <input type="hidden" name="180creditUserType" value="1">
                 <div class="form-group">
                     <input type="email" class="form-control" name='email' id="exampleInputEmail1" placeholder="email address">
                 </div>

@@ -164,16 +164,27 @@ class Login extends CI_Controller {
             }
         }
         if (isset($result['userPassword']) && password_verify($this->input->post('password'), $result['userPassword']) && $result['isEmailVerified'] == 1) {
-            $this->session->set_userdata('user', $result);
-            $this->session->set_flashdata('success', 'You are login successfully.');
-            if(isset($_POST['redirection_url'])){
-                redirect($_POST['redirection_url']);
-            }
-            else{
-                redirect('/my-account');
+            if(isset($result['180creditUserType'])&& $result['180creditUserType']== $this->input->post('180creditUserType') || isset($_POST['redirection_url'])){
+                $this->session->set_userdata('user', $result);
+                $this->session->set_flashdata('success', 'You are login successfully.');
+                if(isset($_POST['redirection_url'])){
+                    redirect($_POST['redirection_url']);
+                }
+                else{
+                    redirect('/my-account');
+                }
+            }else{
+                if($this->input->post('180creditUserType') == 1){
+                    $this->session->set_flashdata('error', 'You have registered as consumer, Please login as consumer.');
+                    redirect('/service-provider/login');
+                }
+                else{
+                    $this->session->set_flashdata('error', 'You have registered as service provider, Please login as service provider.');
+                    redirect('/consumer/login');
+                }
             }
         } else {
-            if (isset($result['180creditUserType']) && $result['180creditUserType'] == 1) {
+            if ($this->input->post('180creditUserType') == 1) {
                 if (isset($result['isEmailVerified']) && $result['isEmailVerified'] == 0) {
                     $this->session->set_flashdata('error', 'Please verify your email address');
                     redirect('/service-provider/login');
