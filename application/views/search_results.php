@@ -834,6 +834,7 @@
         }
         else {
             $('.contact_message_lable_error').text('');
+            $('#submit-message_form').prop('disabled',false);
             $('#contact_message_lable').text(txtlennospace);
         }
     }
