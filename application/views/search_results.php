@@ -732,16 +732,17 @@
                 '                            <div class="form-group">\n' +
                 '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
                 '                                <textarea class="form-control" id="contact_message" name="contact_message" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
+                '<div class="error contact_message_lable_error clr-red"></div>' +
                 '                            </div>\n' +
                 '\n' +
                 '                            <div class="custom-control custom-checkbox">\n' +
-                '                                <input type="checkbox" class="custom-control-input" id="prefer_on_phone" checked name="prefer_on_phone">\n' +
+                '                                <input type="checkbox" class="custom-control-input" id="prefer_on_phone" name="prefer_on_phone">\n' +
                 '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
                 '                            </div>\n' +
-                '                            <div class="form-group cell-no show">\n' +
+                '                            <div class="form-group cell-no" style="display: none;">\n' +
                 '                                <input type="text" class="form-control" id="phone_no_message" name="phone_no_message" placeholder="US phone numbers only">\n' +
                 '                            </div>\n' +
-                '                            <div class="best-call show">\n' +
+                '                            <div class="best-call" style="display: none;">\n' +
                 '                                <label>Best time to call:</label>\n' +
                 '                                <div class="custom-control custom-checkbox">\n' +
                 '                                    <input type="checkbox" class="custom-control-input " name="time_slot_message" id="customControlAutosizing2">\n' +
@@ -794,7 +795,8 @@
                             } else {
                                 return false;
                             }
-                        }
+                        },
+                        number:true
                     },
                     time_slot_message: {
                         required: function (element) {
@@ -825,7 +827,15 @@
     }
     function countTextWord(a){
         var txtlennospace = 2000 - $(a).val().replace(/\s+/g, '').length;
-        $('#contact_message_lable').text(txtlennospace);
+        if(txtlennospace < 0){
+            $('.contact_message_lable_error').text('Max length '+2000+' characters only!');
+            $('#submit-message_form').prop('disabled','disabled');
+            $('#contact_message_lable').text(0);
+        }
+        else {
+            $('.contact_message_lable_error').text('');
+            $('#contact_message_lable').text(txtlennospace);
+        }
     }
 
     $(document).ready(function () {
