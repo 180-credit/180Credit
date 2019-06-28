@@ -382,6 +382,7 @@ class Login extends CI_Controller
                 $contact->lists[]=$listType;
                 $contact->first_name = $userData['firstName'];
                 $contact->last_name = $userData['lastName'];
+                $contact->status = 'ACTIVE';
                 $returnContact = $this->cc->contactService->addContact(CONSTANT_CONTACT_ACCESS_TOKEN, $contact);
             } else {
                 $contact = $response->results[0];
@@ -389,6 +390,7 @@ class Login extends CI_Controller
 //                    $contact->lists[]=$listType;
                     $contact->first_name = $userData['firstName'];
                     $contact->last_name = $userData['lastName'];
+                    $contact->status = 'ACTIVE';
                     $returnContact = $this->cc->contactService->updateContact(CONSTANT_CONTACT_ACCESS_TOKEN, $contact);
                 } else {
                     $e = new CtctException();
