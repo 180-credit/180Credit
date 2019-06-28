@@ -386,7 +386,7 @@ class Login extends CI_Controller
             } else {
                 $contact = $response->results[0];
                 if ($contact instanceof \Ctct\Components\Contacts\Contact) {
-                    $contact->lists[]=$listType;
+//                    $contact->lists[]=$listType;
                     $contact->first_name = $userData['firstName'];
                     $contact->last_name = $userData['lastName'];
                     $returnContact = $this->cc->contactService->updateContact(CONSTANT_CONTACT_ACCESS_TOKEN, $contact);
