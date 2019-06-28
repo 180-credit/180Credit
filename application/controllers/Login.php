@@ -294,7 +294,7 @@ class Login extends CI_Controller
                         'userPassword' => password_hash(rand(100000, 999999), PASSWORD_DEFAULT),
                         'isEmailVerified' => 1
                     );
-                    $data = $this->db->insert('users', $data);
+                    $this->db->insert('users', $data);
                     $this->addOrUpdateCCData($data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                     $user = (array)$this->Login_model->getDataByCondition('users', $condition, true);
@@ -330,9 +330,9 @@ class Login extends CI_Controller
                         '180creditUserType' => $state,
                         'userEmail' => $userDetails['email']
                     );
-                    $this->addOrUpdateCCData($userData);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                     $user = (array)$this->Login_model->getDataByCondition('users', $condition, true);
+                    $this->addOrUpdateCCData($userData);
                 } else {
                     $path = 'assets/profile_images';
                     $fileName = $path . '/' . time() . '.' . pathinfo($userDetails['picture'])['extension'];
@@ -350,7 +350,7 @@ class Login extends CI_Controller
                         'userPassword' => password_hash(rand(100000, 999999), PASSWORD_DEFAULT),
                         'isEmailVerified' => 1
                     );
-                    $data = $this->db->insert('users', $data);
+                    $this->db->insert('users', $data);
                     $this->addOrUpdateCCData($data);
                     $condition = "userEmail =" . "'" . $userDetails['email'] . "'";
                     $user = (array)$this->Login_model->getDataByCondition('users', $condition, true);
@@ -368,28 +368,25 @@ class Login extends CI_Controller
     private function addOrUpdateCCData($userData){
         $this->cc = new ConstantContact(CONSTANT_CONTACT_APIKEY);
         try {
-
             // check to see if a contact with the email address already exists in the account
             $response = $this->cc->contactService->getContacts(CONSTANT_CONTACT_ACCESS_TOKEN, array("email" => $userData['userEmail']));
             if(isset($userData['180creditUserType']) && $userData['180creditUserType']==1){
-                $listType = CONSTANT_CONTACT_PROVIDER_LIST;
+                $listType = $this->cc->listService->getList(CONSTANT_CONTACT_ACCESS_TOKEN,CONSTANT_CONTACT_PROVIDER_LIST);
             }else{
-                $listType = CONSTANT_CONTACT_CONSUMER_LIST;
+                $listType = $this->cc->listService->getList(CONSTANT_CONTACT_ACCESS_TOKEN,CONSTANT_CONTACT_CONSUMER_LIST);
             }
             // create a new contact if one does not exist
             if (empty($response->results)) {
-                $action = "Creating Contact";
                 $contact = new \Ctct\Components\Contacts\Contact();
                 $contact->addEmail($userData['userEmail']);
-                $contact->addList($listType);
+                $contact->lists[]=$listType;
                 $contact->first_name = $userData['firstName'];
                 $contact->last_name = $userData['lastName'];
                 $returnContact = $this->cc->contactService->addContact(CONSTANT_CONTACT_ACCESS_TOKEN, $contact);
             } else {
-                $action = "Updating Contact";
                 $contact = $response->results[0];
                 if ($contact instanceof \Ctct\Components\Contacts\Contact) {
-                    $contact->addList($listType);
+                    $contact->lists[]=$listType;
                     $contact->first_name = $userData['firstName'];
                     $contact->last_name = $userData['lastName'];
                     $returnContact = $this->cc->contactService->updateContact(CONSTANT_CONTACT_ACCESS_TOKEN, $contact);
@@ -400,7 +397,6 @@ class Login extends CI_Controller
                 }
             }
         } catch (CtctException $ex) {
-
         }
     }
 
