@@ -291,7 +291,7 @@ class Login extends CI_Controller
                         'active' => 1,
                         'facebookId' => $userDetails['id'],
                         'userStatus' => 1,
-                        'userPassword' => password_hash(rand(100000, 999999), PASSWORD_DEFAULT),
+                        'userPassword' => '',
                         'isEmailVerified' => 1
                     );
                     $this->db->insert('users', $data);
@@ -347,7 +347,7 @@ class Login extends CI_Controller
                         'active' => 1,
                         'googleId' => $userDetails['id'],
                         'userStatus' => 1,
-                        'userPassword' => password_hash(rand(100000, 999999), PASSWORD_DEFAULT),
+                        'userPassword' => '',
                         'isEmailVerified' => 1
                     );
                     $this->db->insert('users', $data);

@@ -28,7 +28,7 @@
                                                 }
                                                 ?>
                                                 <div class="media-body">
-                                                    <h6>Password has been set</h6>
+                                                    <h6>Password has <?= empty($_SESSION['user']['userPassword']) ?  'not':'' ?> been set</h6>
                                                     <p>Choose a strong, unique password that’s at least 8 characters
                                                         long.</p>
                                                 </div>
@@ -50,7 +50,7 @@
                                                         }
                                                         ?>
                                                         <div class="media-body">
-                                                            <h6>Security question has not been enabled</h6>
+                                                            <h6>Security question has <?= !isset($_SESSION['user']['question']) || empty($_SESSION['user']['question']) ?  'not':'' ?> been enabled</h6>
                                                             <p>Confirm your identity with a question only you know the
                                                                 answer to..</p>
                                                         </div>
