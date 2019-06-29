@@ -644,3 +644,8 @@ DELIMITER ;
 
 -- 14/06/2019
 DROP PROCEDURE `saveTag`; CREATE DEFINER=`root`@`localhost` PROCEDURE `saveTag`(IN `pUserId` INT(11), IN `pTagName` VARCHAR(255)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN DECLARE `pTagId` Int(11); IF (NOT EXISTS ( SELECT 1 FROM `tags` WHERE `tags`.`tagName`=`pTagName`)) THEN INSERT INTO `tags` ( `tagName`, `createdByUserId`, `createdOn`) VALUES ( `pTagName`, `pUserId`, NOW()); END IF; SET `pTagId` = (SELECT `id`FROM tags WHERE `tagName` = `pTagName`); IF (NOT EXISTS ( SELECT 1 FROM `user_tags` WHERE `user_tags`.`tagId`=`pTagId` AND `user_tags`.`userId` = `pUserId`) ) THEN INSERT INTO `user_tags` ( `tagId`, `userId`, `createdOn`) VALUES ( `pTagId`, `pUserId`, NOW()); END IF; SELECT `id`, `tagName`, `createdByUserId` FROM tags WHERE `tagName` = `pTagName` AND `createdByUserId` = `pUserId`; END
+
+
+
+-- 28/06/2019
+ALTER TABLE `users` ADD `question` VARCHAR(255) NOT NULL AFTER `facebookId`, ADD `answer` VARCHAR(500) NOT NULL AFTER `question`;

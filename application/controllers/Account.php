@@ -216,6 +216,57 @@ class Account extends CI_Controller {
 		$this->template->load('layout', 'account/pwd_change', $data);
 	}
 
+	public function change_password_edit()
+	{
+		$data['title']='Password & Security';
+		$this->template->load('layout', 'account/pwd_change_edit', $data);
+	}
+
+	public function change_password_change()
+	{
+        $data = array(
+            'userPassword' => password_hash($this->input->post('new_password'), PASSWORD_DEFAULT)
+        );
+        $this->db->where('userId', $_SESSION['user']['userId']);
+        $this->db->update('users', $data);
+        $condition = "userId =" . "'" . $_SESSION['user']['userId'] . "'";
+        $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
+        $this->session->set_userdata('user', $result);
+        redirect('/password-and-security');
+	}
+
+	public function change_password_change_question()
+	{
+        $data = array(
+            'question' => $this->input->post('question'),
+            'answer' => $this->input->post('question_answer')
+        );
+        $this->db->where('userId', $_SESSION['user']['userId']);
+        $this->db->update('users', $data);
+        $condition = "userId =" . "'" . $_SESSION['user']['userId'] . "'";
+        $result = (array)$this->Login_model->getDataByCondition('users',$condition,true);
+        $this->session->set_userdata('user', $result);
+        redirect('/password-and-security');
+	}
+
+	public function checkPassword(){
+        $currentPassword = $this->input->post('current_password');
+	    if(empty($_SESSION['user']['userPassword']) || password_verify($currentPassword, $_SESSION['user']['userPassword'])){
+            echo 'true';
+        }else{
+            echo 'false';
+        }
+    }
+
+	public function checkOldAnswer(){
+        $oldAnswer = $this->input->post('old_answer');
+	    if(strtolower($_SESSION['user']['answer']) ==  strtolower($oldAnswer)){
+            echo 'true';
+        }else{
+            echo 'false';
+        }
+    }
+
 	public function store_user()
 	{
 		$data=[

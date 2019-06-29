@@ -60,6 +60,7 @@ $route['my-account'] = 'account';
 $route['my-account/edit'] = 'account/edit_profile';
 $route['my-business-profile'] = 'account/my_business_profile';
 $route['password-and-security'] = 'account/change_password';
+$route['password-and-security/edit'] = 'account/change_password_edit';
 $route['terms_of_use'] = 'welcome/terms_of_use';
 $route['privacy_policy'] = 'welcome/privacy_policy';
 $route['verify/(:any)'] = 'login/verify_user_email';

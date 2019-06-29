@@ -11,7 +11,7 @@
                     <?php
                 }
                 ?>
-                <li class="list-group-item my-1 border-0 <?= isset($_SERVER['PATH_INFO']) && ($_SERVER['PATH_INFO'] == '/password-and-security') ? 'active' : ''  ?>"><a href="<?= base_url()."password-and-security"; ?>"><i class="fas fa-lock"></i>Password and Security</a></li>
+                <li class="list-group-item my-1 border-0 <?= isset($_SERVER['PATH_INFO']) && ($_SERVER['PATH_INFO'] == '/password-and-security' || $_SERVER['PATH_INFO'] == '/password-and-security/edit') ? 'active' : ''  ?>"><a href="<?= base_url()."password-and-security"; ?>"><i class="fas fa-lock"></i>Password and Security</a></li>
             </ul>
         </div>
         </div>
