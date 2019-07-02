@@ -1,12 +1,26 @@
 <style>
-    .fixed_modal {
+
+    .fixed_class{
         position: fixed;
-        top: -17%;
-        left: 7%;
+        top:0;
     }
-    .tab-content.scroll-div {
-        overflow-y: auto;
-        height: 90vh;
+    .maincontent_fixed_class{
+        position: fixed;
+        top:0;
+        right: 0;
+    }
+    .relative_class{
+        position: relative;
+    }
+
+    .maincontent_relative_class{
+        position: relative;
+    }
+    .height_100{
+        /*height: 100vh;*/
+    }
+    .height_auto{
+        /*height: auto;*/
     }
 </style>
 
@@ -69,24 +83,30 @@
                         <div class="card border-0 shadow_card bg-light" id="sticky_main_panel">
                             <div class="card-body p-0">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item home_tab active">
-                                        <a class="nav-link" href="#About"  aria-selected="true"><span>About</span></a>
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="#home-tab"  aria-selected="true"><span>About</span></a>
                                     </li>
-                                    <li class="nav-item fees_tab">
-                                        <a class="nav-link" href="#Fees"  aria-selected="false"><span>Fees</span></a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#contact-tab"  aria-selected="false"><span>Fees</span></a>
                                     </li>
-                                    <li class="nav-item contact_tab">
-                                        <a class="nav-link" href="#Contact" aria-selected="false"><span>Contact</span></a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#contact-tab2" aria-selected="false"><span>Contact</span></a>
                                     </li>
-                                    <li class="nav-item review_tab">
-                                        <a class="nav-link" href="#Reviews" aria-selected="false"><span>Reviews</span></a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#contact-tab3" aria-selected="false"><span>Reviews</span></a>
                                     </li>
-                                    <li class="nav-item qa_tab">
-                                        <a class="nav-link" href="#QA" aria-selected="false"><span>Q&A</span></a>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#contact-tab4" aria-selected="false"><span>Q&A</span></a>
                                     </li>
+                                    <!-- <li class="nav-item">
+                                        <a class="nav-link" href="#contact-tab3" aria-selected="false">Articles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#contact-tab4" aria-selected="false">Services</a>
+                                    </li> -->
                                 </ul>
                                 <div class="tab-content bg-light p-4" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="About">
+                                    <div class="tab-pane fade show active" id="home" >
                                         <div class="card about-block">
                                             <div class="card-body p-3 block-right-one" id="home-tab">
                                                 <h5>About Pauline</h5>
@@ -123,7 +143,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mt-3 fee-payments-block" id="Fees">
+                                        <div class="card mt-3 fee-payments-block">
                                             <div class="card-body p-3" id="contact-tab">
                                                 <div class="row">
                                                     <div class="col-md-11 head-top d-flex justify-content-between">
@@ -138,7 +158,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mt-3 map-block" id="Contact">
+                                        <div class="card mt-3 map-block">
                                             <div class="card-body" id="contact-tab2">
                                                 <div class="col-md-12 p-0">
                                                     <h5>Contact Pauline</h5>
@@ -178,7 +198,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mt-3 review-block" id="Reviews">
+                                        <div class="card mt-3 review-block">
                                             <div class="card-body" id="contact-tab3">
                                                 <div class="col-md-12 review-block-top d-block d-sm-flex justify-content-between align-items-center">
                                                     <div class="d-block d-sm-flex align-items-center">
@@ -225,7 +245,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mt-3 endorsements-block" id="QA">
+                                        <div class="card mt-3 endorsements-block">
                                             <div class="card-body" id="contact-tab4">
                                                 <div class="col-md-12 top-block d-block d-sm-flex justify-content-between align-items-center p-0">
                                                     <h5 class="m-0">Professional endorsements</h5>
@@ -259,9 +279,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                    <div class="tab-pane fade" id="contact1" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                    <div class="tab-pane fade" id="contact2" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                    <div class="tab-pane fade" id="contact3" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                                    <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab">...</div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -272,72 +299,160 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
 <script>
+<?php
+$actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+?>
+    jQuery('#profilePopup').css('overflow-y', 'auto');
+    console.log(jQuery('.modal-body').height());
+    console.log($('#profilePopup').length + '<' + 1);
+    //if($('#profilePopup').length < 1){
+    //     $("#myTab").sticky({topSpacing:0,bottomSpacing:400});
+    //     var sidebar = document.getElementById('sticky_sidebar');
+    //
+    //     var stickySidebar = new StickySidebar(sidebar);
+    //
+    //     sidebar.addEventListener('affix.top.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+    //     });
+    //     sidebar.addEventListener('affixed.top.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+    //     });
+    //
+    //     sidebar.addEventListener('affixed.bottom.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.add('stick_150');
+    //     });
+    //     sidebar.addEventListener('affix.container-bottom.stickySidebar', function (event) {
+    //         document.querySelector("#sticky_sidebar.is-affixed .inner-wrapper-sticky").classList.remove('stick_150');
+    //     });
+    //}
+    //
+    // var sidebar=new StickySidebar('#sticky_sidebar', {
+    // 	topSpacing: 20,
+    // 	bottomSpacing: 30,
+    // 	containerSelector: '.sidebar_stop'
+    // });
+
+    // Cache selectors
+//    var lastId,
+//            topMenu = $("#myTab"),
+//            topMenuHeight = 265,
+//            // All list items
+//            menuItems = topMenu.find("a"),
+//            // Anchors corresponding to menu items
+//            scrollItems = menuItems.map(function () {
+//                var item = $($(this).attr("href"));
+//                if (item.length) {
+//                    return item;
+//                }
+//            });
+//
+//    // Bind click handler to menu items
+//    // so we can get a fancy scroll animation
+//    menuItems.click(function (e) {
+//        var href = $(this).attr("href"),
+//                offsetTop = href === "#" ? 0 : $(href).offset().top - topMenuHeight + 1;
+//        $('html, body').stop().animate({
+//            scrollTop: offsetTop
+//        }, 850);
+//        e.preventDefault();
+//    });
+
+
+    var distance = $('#sticky_sidebar').offset().top,
+            $window = $(window);
+
+    $window.scroll(function () {
+        if ($window.scrollTop() >= distance) {
+            console.log("erer");
+        }
+    });
+
+    // Bind to scroll
+    $('#profilePopup .modal-content').scroll(function () {
+        var distance = $('#profilePopup .modal-content').offset().top;
+        if ($(window).scrollTop() >= distance) {
+            console.log("here");
+        } else {
+            console.log("there");
+        }
+    });
+    jQuery('#profilePopup .modal-content').css('height', jQuery('.specia-pro-view').height());
+    // jQuery(document).on('scroll','#myTabContent',function(){
+    //     console.log("here");
+    // });
+    $('#myTabContent').on('scroll', function () {
+        console.log($("#home").position().top - jQuery('#myTab').height() - 24);
+        if ($("#home").position().top - jQuery('#myTab').height() - 24 <= 0) {
+
+            jQuery('#profilePopup').css('overflow-y', 'auto');
+            jQuery('#myTabContent').css('height', 'auto');
+            jQuery('#myTabContent').css('overflow', 'hidden');
+
+            jQuery('#sticky_sidebar').removeClass('fixed_class');
+            jQuery('#sticky_sidebar').addClass('relative_class');
+
+            jQuery('#sticky_sidebar_maincontent').removeClass('maincontent_fixed_class');
+            jQuery('#sticky_sidebar_maincontent').addClass('maincontent_relative_class');
+            $('#myTabContent').off('scroll');
+        }
+    });
     $('.modal').scroll(function () {
-        var sideBarHeight = $('#sticky_sidebar').offset();
-        if (sideBarHeight.top < 250) {
-            $('.modal-dialog').addClass('fixed_modal');
-            $('.tab-content').addClass('scroll-div');
-        } 
+        var distance = $('#sticky_sidebar').offset().top;
+        if ($(window).scrollTop() >= distance) {
+            jQuery('#sticky_sidebar').removeClass('relative_class');
+            jQuery('#sticky_sidebar').addClass('fixed_class');
+
+            jQuery('#sticky_sidebar_maincontent').removeClass('maincontent_relative_class');
+            jQuery('#sticky_sidebar_maincontent').addClass('maincontent_fixed_class');
+
+            // jQuery('.modal-body').removeClass('height_auto');
+            // jQuery('.modal-body').addClass('height_100');
+            // jQuery('#profilePopup').css('overflow', 'hidden');
+            jQuery('#myTabContent').css('height', '92vh');
+            jQuery('#myTabContent').css('overflow', 'auto');
+            // $('#myTabContent').bind('scroll');
+
+        } else {
+            jQuery('#sticky_sidebar').removeClass('fixed_class');
+            jQuery('#sticky_sidebar').addClass('relative_class');
+
+            jQuery('#sticky_sidebar_maincontent').removeClass('maincontent_fixed_class');
+            jQuery('#sticky_sidebar_maincontent').addClass('maincontent_relative_class');
+
+            jQuery('.modal-body').removeClass('height_100');
+            jQuery('.modal-body').addClass('height_auto');
+        }
+        // console.log("Inn");
+        // Get container scroll position
+        var div = $(this);
+        var fromTop = $(this).scrollTop() + topMenuHeight;
+
+        // Get id of current scroll item
+        var cur = scrollItems.map(function () {
+            if ($(this).offset().top < fromTop)
+                return this;
+        });
+        // Get the id of the current element
+        cur = cur[cur.length - 1];
+        var id = cur && cur.length ? cur[0].id : "";
+
+        if (lastId !== id) {
+            lastId = id;
+            // Set/remove active class
+            menuItems
+                    .parent().removeClass("active")
+                    .end().filter("[href='#" + id + "']").parent().addClass("active");
+        }
+
+        if (div.scrollTop() === 0) {
+            menuItems
+                    .parent().removeClass("active")
+                    .end().filter("[href='#home-tab']").parent().addClass("active");
+        }
     });
-    var scrollPos = $(document).scrollTop();
-    $('#myTab a').each(function () {
-        var currLink = $(this);
-        var refElement = $(currLink.attr("href"));
-        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-            $('#myTab ul li a').removeClass("active");
-            currLink.addClass("active");
-        }
-        else{
-            currLink.removeClass("active");
-        }
-    });
-    $('.tab-content').scroll(function () {
-        var tabContentHeight = $(".about-block").offset();
-        if(tabContentHeight.top > 365) {
-            $('.modal-dialog').removeClass('fixed_modal');
-            $('.tab-content').removeClass('scroll-div');
-        }
-        
-        var feepaymentHeight = $(".fee-payments-block").offset();
-        console.log('fee', feepaymentHeight.top);
-        if(feepaymentHeight.top < 350) {
-            $('.nav-item.active').each(function() {
-               $(this).removeClass('active');
-            });
-            $('.fees_tab').addClass('active');
-            
-        }
-//        
-//        var mapHeight = $(".map-block").offset();
-//        console.log('map', mapHeight.top);
-//        if(mapHeight.top < 350) {
-//            $('.nav-item.active').each(function() {
-//               $(this).removeClass('active');
-//            });
-//            $('.contact_tab').addClass('active');
-//            
-//        }
-//        
-//        var reviewHeight = $(".review-block").offset();
-//        console.log('review', reviewHeight.top);
-//        if(reviewHeight.top < 350) {
-//            $('.nav-item.active').each(function() {
-//               $(this).removeClass('active');
-//            });
-//            $('.review_tab').addClass('active');
-//            
-//        }
-//        
-//        var qaHeight = $(".endorsements-block").offset();
-//        console.log('endorsements', qaHeight.top);
-//        if(qaHeight.top < 350) {
-//            $('.nav-item.active').each(function() {
-//               $(this).removeClass('active');
-//            });
-//            $('.qa_tab').addClass('active');
-//            
-//        }
-        
-        
-    });
+    setTimeout(function () {
+        jQuery('#profilePopup .modal-content').css('height', jQuery('.modal-body').height() + 50);
+    }, 100);
+
 </script>
+<!--  [Script Section] Ends -->
