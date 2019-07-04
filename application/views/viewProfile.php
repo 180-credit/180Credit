@@ -36,8 +36,8 @@
                                                 <span class="review-txt">32 Reviews</span>
                                             </div>
                                             <div class="profile-add mt-2">
-                                                <h6 class="mb-1"><?= $userCompanyProfile->company_name ?></h6>
-                                                <p><?= $userCompanyProfile->city ?></p>
+                                                <h6 class="mb-1"><?= isset($userCompanyProfile->company_name) ? $userCompanyProfile->company_name : '' ?></h6>
+                                                <p><?= isset($userCompanyProfile->city) ? $userCompanyProfile->city:'' ?></p>
                                             </div>
                                             <button type="button" class="btn btn-primary"><i class="fas fa-envelope"></i>Send a Message</button>
                                         </div>
@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="prof-midd-right">
                                                 <ul class="list-unstyled mb-0">
-                                                    <li><?= $userCompanyProfile->offersFreeConsultations== 1 ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle clr-red"></i>' ?>Free consultations</li>
+                                                    <li><?= isset($userCompanyProfile->offersFreeConsultations) && $userCompanyProfile->offersFreeConsultations== 1 ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle clr-red"></i>' ?>Free consultations</li>
                                                     <?php
                                                         if(!empty($userCompanyProfile->scheduling_url)){
                                                             ?>
@@ -124,8 +124,8 @@
                                         <div class="card about-block">
                                             <div class="card-body p-3 block-right-one" id="home-tab">
                                                 <h5>About <?= ucfirst($user['firstName']) ?></h5>
-                                                <h6 class="mb-3 mt-4"><?= $userAboutMe->short_description ?></h6>
-                                                <p><?= $userAboutMe->long_description ?></p>
+                                                <h6 class="mb-3 mt-4"><?= isset($userAboutMe->short_description) ? $userAboutMe->short_description : '' ?></h6>
+                                                <p><?= isset($userAboutMe->long_description) ? $userAboutMe->long_description : '' ?></p>
                                                 <h6 class="font-italic">Areas of expertise...</h6>
                                                 <div class="d-inline-block area-of-expertise-block">
                                                     <ul class="list-unstyled mb-0">
@@ -194,9 +194,9 @@
                                                         </div>
                                                         <div class="col-md-6 map-right-block">
                                                             <div class="addres-block">
-                                                                <label><?= $userCompanyProfile->address1 ?></label>
-                                                                <label><?= $userCompanyProfile->city ?>, <?= $userCompanyProfile->zip ?></label>
-                                                                <label><b><?= $userCompanyProfile->public_phone ?></b></label>
+                                                                <?= isset($userCompanyProfile->address1) ? "<label>{$userCompanyProfile->address1}</label>":'' ?>
+                                                                <?= isset($userCompanyProfile->city) ? "<label>{$userCompanyProfile->city}</label>":'' ?>
+                                                                <?= isset($userCompanyProfile->public_phone) ? "<label><b>{$userCompanyProfile->public_phone}</b></label>":'' ?>
                                                             </div>
                                                             <div class="social-block">
                                                                 <ul class="list-unstyled mb-0">
