@@ -260,3 +260,10 @@ button.btn:focus {
 label.custom-control-label.customControlAutosizing2 {
     width: 10rem;
 }
+
+.area-of-expertise-block.d-inline-block ul{
+    display: inline-flex;
+}
+.area-of-expertise-block.d-inline-block ul li{
+    margin-right: 10rem;
+}

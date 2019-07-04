@@ -162,6 +162,20 @@ class Home extends CI_Controller
         $data['msg'] = '';
         $data['title'] = urldecode($param).'\'s Profile';
         $data['view'] = 'profile';
+        $this->load->model('Common_model');
+        $this->load->model('Login_model');
+        $userName = explode('-',urldecode($param));
+        $condition = "firstName =" . "'" . $userName[0] . "' and lastName='". (isset($userName[1]) ? $userName[1] : '')."'";
+        $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
+        $data['userCompanyProfile'] = $this->Common_model->loadUserCompanyProfile($data['user']['userId']);
+        $data['userAboutMe'] = $this->Common_model->loadUserAboutMe($data['user']['userId']);
+        $data['userAreasOfSpecialty'] = $this->Common_model->loadUserAreasOfSpecialty($data['user']['userId']);
+        $data['userFees'] = $this->Common_model->loadUserFees($data['user']['userId']);
+        $data['userTags'] = $this->Common_model->loadUserTags($data['user']['userId']);
+        /*echo "<pre>";
+        print_r ($data);
+        echo "</pre>";
+        die();*/
         if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] == true){
             $this->load->view('viewProfileModel', $data);
         }else{

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="mb-3">Pennsylvania - Philadelphia - Pauline Ajlouny</h1>
+                <h1 class="mb-3">Pennsylvania - Philadelphia - <?= $user['firstName']." ".$user['lastName'] ?></h1>
                 <div class="row sidebar_stop">
                     <div class="col-md-4 left-col-block" id="sticky_sidebar">
                         <div class="sidebar__inner">
@@ -10,9 +10,21 @@
                                 <div class="card-body p-2">
                                     <div class="media">
                                         <div class="profile-user-img">
-                                            <img src="<?php echo base_url(); ?>assets/images/head-shot.jpg" class="align-self-start mr-3" alt="..."></div>
+                                            <?php
+                                            if(isset($user['profile_image'])){
+                                                ?>
+                                                <img class="round align-self-start mr-3" id='profile-image' width="136" height="136" src="<?= base_url().$user['profile_image']; ?>">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="round align-self-start mr-3" id='profile-image' width="136" height="136" avatar="<?= ucfirst($user['firstName']).' '.ucfirst($user['lastName']) ?>">
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
                                         <div class="media-body">
-                                            <h5 class="mt-0">Pauline Ajlouny</h5>
+                                            <h5 class="mt-0"><?= $user['firstName']." ".$user['lastName'] ?></h5>
                                             <div class="review-block">
 															<span class="rating-block">
 																<i class="fas fa-star"></i>
@@ -24,8 +36,8 @@
                                                 <span class="review-txt">32 Reviews</span>
                                             </div>
                                             <div class="profile-add mt-2">
-                                                <h6 class="mb-1">Philadelphia Credit Rescue</h6>
-                                                <p>Philadelphia, PA</p>
+                                                <h6 class="mb-1"><?= $userCompanyProfile->company_name ?></h6>
+                                                <p><?= $userCompanyProfile->city ?></p>
                                             </div>
                                             <button type="button" class="btn btn-primary"><i class="fas fa-envelope"></i>Send a Message</button>
                                         </div>
@@ -40,19 +52,40 @@
                                             </div>
                                             <div class="prof-midd-right">
                                                 <ul class="list-unstyled mb-0">
-                                                    <li><i class="fas fa-check-circle"></i>Free consultations</li>
-                                                    <li><i class="far fa-calendar-alt"></i>Schedule an appointment</li>
-                                                    <li><i class="fas fa-phone"></i>(855) 385-1771</li>
-                                                    <li><i class="fas fa-external-link-alt"></i>Website</li>
+                                                    <li><?= $userCompanyProfile->offersFreeConsultations== 1 ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle clr-red"></i>' ?>Free consultations</li>
+                                                    <?php
+                                                        if(!empty($userCompanyProfile->scheduling_url)){
+                                                            ?>
+                                                                <li><a href="<?php echo $userCompanyProfile->scheduling_url; ?>"><i class="far fa-calendar-alt"></i>Schedule an appointment</a></li>
+                                                            <?php
+                                                        }
+                                                        if(!empty($userCompanyProfile->public_phone)){
+                                                            ?>
+                                                            <li><i class="fas fa-phone"></i><?= $userCompanyProfile->public_phone ?></li>
+                                                            <?php
+                                                        }
+                                                        if(!empty($userCompanyProfile->website_url)){
+                                                            ?>
+                                                            <li><a href="<?php echo $userCompanyProfile->website_url; ?>"><i class="fas fa-external-link-alt"></i>Website</a></li>
+                                                            <?php
+                                                        }
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="profile-bot-botom mt-3">
                                             <ul class="list-unstyled mb-0">
-                                                <li>Weekend Appointments</li>
+                                                <?php
+                                                    foreach ($userTags as $userTag){
+                                                        ?>
+                                                            <li><?= $userTag->tagname ?></li>
+                                                        <?php
+                                                    }
+                                                ?>
+                                                <!--<li>Weekend Appointments</li>
                                                 <li>Free Parking</li>
                                                 <li class="mb-0">Accepts PayPal</li>
-                                                <li class="mb-0">Payment plans</li>
+                                                <li class="mb-0">Payment plans</li>-->
                                             </ul>
                                         </div>
                                     </div>
@@ -90,19 +123,30 @@
                                     <div class="tab-pane fade show active" id="home" >
                                         <div class="card about-block">
                                             <div class="card-body p-3 block-right-one" id="home-tab">
-                                                <h5>About Pauline</h5>
-                                                <h6 class="mb-3 mt-4">Credit repair specialist with over 15 years of experience, specializing in Student Loan and Bankruptcy</h6>
-                                                <p>Philly Credit Mechanic is the highest rated credit repair company in the tri-state area. We have helped
-                                                    hundreds of clients increase their credit scores from 75-200 points within a short timeframe.</p>
-                                                <p>We specialize in helping people to achieve their goals. We take the time to learn about you and what
-                                                    really maters to you. We know that people are typically motivated to improve their score because they
-                                                    essentially want better for themselves, their families, and their legacy.</p>
-                                                <p>A credit score is just a number and a credit report is just a piece of paper but the freedom that the
-                                                    score and report gives access to is the only important thing.</p>
-                                                <p>We can only truly help you when we know what fuels your 700 credit score dreams. Once we are
-                                                    invested then you now have a partner and you don’t have to go at it alone.</p>
+                                                <h5>About <?= ucfirst($user['firstName']) ?></h5>
+                                                <h6 class="mb-3 mt-4"><?= $userAboutMe->short_description ?></h6>
+                                                <p><?= $userAboutMe->long_description ?></p>
                                                 <h6 class="font-italic">Areas of expertise...</h6>
-                                                <div class="d-inline-block">
+                                                <div class="d-inline-block area-of-expertise-block">
+                                                    <ul class="list-unstyled mb-0">
+                                                        <?php
+                                                        foreach ($userAreasOfSpecialty as $userArea){
+                                                            if(!empty($userArea->area_of_specialty_id) && $userArea->area_of_specialty_id != ""){
+                                                                ?>
+                                                                <li><i class="fas fa-circle"></i><?= $userArea->name ?></li>
+                                                                <?php
+                                                            }
+                                                        }
+                                                        ?>
+                                                        <!--<li><i class="fas fa-circle"></i>Credit Repair</li>
+                                                        <li><i class="fas fa-circle"></i>Student Loans</li>
+                                                        <li><i class="fas fa-circle"></i>Debt Consolidation</li>
+                                                        <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
+                                                        <li><i class="fas fa-circle"></i>Collections</li>
+                                                        <li><i class="fas fa-circle"></i>Charge Offs</li>-->
+                                                    </ul>
+                                                </div>
+                                                <!--<div class="d-inline-block">
                                                     <ul class="list-unstyled mb-0">
                                                         <li><i class="fas fa-circle"></i>Credit Repair</li>
                                                         <li><i class="fas fa-circle"></i>Student Loans</li>
@@ -111,17 +155,7 @@
                                                         <li><i class="fas fa-circle"></i>Collections</li>
                                                         <li><i class="fas fa-circle"></i>Charge Offs</li>
                                                     </ul>
-                                                </div>
-                                                <div class="d-inline-block">
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li><i class="fas fa-circle"></i>Credit Repair</li>
-                                                        <li><i class="fas fa-circle"></i>Student Loans</li>
-                                                        <li><i class="fas fa-circle"></i>Debt Consolidation</li>
-                                                        <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
-                                                        <li><i class="fas fa-circle"></i>Collections</li>
-                                                        <li><i class="fas fa-circle"></i>Charge Offs</li>
-                                                    </ul>
-                                                </div>
+                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="card mt-3 fee-payments-block">
@@ -132,9 +166,15 @@
                                                         <div><span>Accepts:</span>Cash, Check, Visa, Mastercard and Discover</div>
                                                     </div>
                                                     <div class="col-md-10 payments-block-bottom">
-                                                        <div class="d-flex justify-content-between"><label>Credit Analysis / 30 Minute Consultation</label> <span>Free</span></div>
-                                                        <div class="d-flex justify-content-between"><label>Signup and audit fee</label> <span>$129.00</span></div>
-                                                        <div class="d-flex justify-content-between"><label>Collections: Per item - Per bureau</label> <span>$50.00</span></div>
+                                                        <?php
+                                                            foreach ($userFees as $userFee){
+                                                                ?>
+                                                                <div class="d-flex justify-content-between"><label><?= $userFee->feeTypeName ?> / <?= $userFee->billingTypeName ?></label> <span>$<?= $userFee->amount ?></span></div>
+                                                                <?php
+                                                            }
+                                                        ?>
+                                                        <!--<div class="d-flex justify-content-between"><label>Credit Analysis / 30 Minute Consultation</label> <span>Free</span></div>-->
+                                                        <!--<div class="d-flex justify-content-between"><label>Collections: Per item - Per bureau</label> <span>$50.00</span></div>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,26 +194,54 @@
                                                         </div>
                                                         <div class="col-md-6 map-right-block">
                                                             <div class="addres-block">
-                                                                <label>1800 West Chapel Avenue</label>
-                                                                <label>Cherry Hill, NJ 08034</label>
-                                                                <label><b>(856) 397-0098</b></label>
+                                                                <label><?= $userCompanyProfile->address1 ?></label>
+                                                                <label><?= $userCompanyProfile->city ?>, <?= $userCompanyProfile->zip ?></label>
+                                                                <label><b><?= $userCompanyProfile->public_phone ?></b></label>
                                                             </div>
                                                             <div class="social-block">
                                                                 <ul class="list-unstyled mb-0">
-                                                                    <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-                                                                    <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
-                                                                    <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                                                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                                    <?php
+                                                                        if(!empty($userCompanyProfile->facebook_url) || $userCompanyProfile->facebook_url != ""){
+                                                                            ?>
+                                                                            <li><a href="<?= $userCompanyProfile->facebook_url ?>"><i class="fab fa-facebook-square"></i></a></li>
+                                                                            <?php
+                                                                        }
+                                                                        if(!empty($userCompanyProfile->twitter_url) || $userCompanyProfile->twitter_url != ""){
+                                                                            ?>
+                                                                            <li><a href="<?= $userCompanyProfile->twitter_url ?>"><i class="fab fa-twitter-square"></i></a></li>
+                                                                            <?php
+                                                                        }
+                                                                        if(!empty($userCompanyProfile->linkedin_url) || $userCompanyProfile->linkedin_url != ""){
+                                                                            ?>
+                                                                            <li><a href="<?= $userCompanyProfile->linkedin_url ?>"><i class="fab fa-linkedin"></i></a></li>
+                                                                            <?php
+                                                                        }
+                                                                        if(!empty($userCompanyProfile->instagram_url) || $userCompanyProfile->instagram_url != ""){
+                                                                            ?>
+                                                                            <li><a href="<?= $userCompanyProfile->instagram_url ?>"><i class="fab fa-instagram"></i></a></li>
+                                                                            <?php
+                                                                        }
+                                                                    ?>
                                                                 </ul>
                                                             </div>
-                                                            <div class="site-link-block">
-                                                                <span class="btn-block">Website</span>
-                                                                <span class="btn-block mt-0">http://phillycreditrescue.com</span>
-                                                            </div>
-                                                            <div class="map-button-block">
-                                                                <button type="button" class="btn btn-primary btn-block">Send Pauline a message</button>
-                                                                <button type="button" class="btn btn-primary btn-block">Call (856) 387-0098</button>
-                                                            </div>
+                                                            <?php
+                                                            if(!empty($userCompanyProfile->website_url) || $userCompanyProfile->website_url != ""){
+                                                                ?>
+                                                                <div class="site-link-block">
+                                                                    <span class="btn-block">Website</span>
+                                                                    <span class="btn-block mt-0"><a href="<?= $userCompanyProfile->website_url ?>"><?= $userCompanyProfile->website_url ?></a></span>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            if(!empty($userCompanyProfile->public_phone) || $userCompanyProfile->public_phone != ""){
+                                                                ?>
+                                                                <div class="map-button-block">
+                                                                    <button type="button" class="btn btn-primary btn-block">Send Pauline a message</button>
+                                                                    <button type="button" class="btn btn-primary btn-block">Call <?= $userCompanyProfile->public_phone ?></button>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            ?>
                                                         </div>
                                                     </div>
                                                 </div>

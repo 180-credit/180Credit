@@ -431,6 +431,7 @@
                     }, 850);
                     e.preventDefault();
                 });
+                LetterAvatar.transform();
             });
             var param = encodeURI(name);
             history.pushState(HistoryState, "User_profile",  "<?php echo base_url(); ?>view-specialist-profile/" + param);
