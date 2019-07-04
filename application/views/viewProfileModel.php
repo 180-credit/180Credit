@@ -425,6 +425,37 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
 <script>
+
+   $('.home_tab').click(function () {
+        scrollTo("about-block");
+        $(this).addClass("active");
+   });
+
+   $('.fees_tab').click(function () {
+        scrollTo("fee-payments-block");
+        $(this).addClass("active");
+   });
+
+   $('.contact_tab').click(function () {
+        scrollTo("map-block");
+        $(this).addClass("active");
+   });
+
+   $('.review_tab').click(function () {
+        scrollTo("reviews-block");
+        $(this).addClass("active");
+   });
+
+   $('.qa_tab').click(function () {
+        scrollTo("endorsements-block");
+        $(this).addClass("active");
+   });
+
+   function scrollTo(id)
+    {
+        $('.modal').animate({scrollTop: $("."+id).offset().top},'slow');
+        $("#myTab li").removeClass("active");
+    }
 //    $('.modal').scroll(function () {
 //        var sideBarHeight = $('#sticky_sidebar').offset();
 //        if (sideBarHeight.top < 250) {
