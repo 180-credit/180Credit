@@ -1,13 +1,31 @@
 <style>
     #profilePopup .fixed_modal {
         position: fixed;
-        top: -17%;
-        left: 7%;
+        top: -110px;
+        width: 100%;
     }
 
     .tab-content.scroll-div {
         overflow-y: auto;
         height: 90vh;
+    }
+    
+    @media (min-width: 1440px) {
+        #profilePopup .fixed_modal {
+            left: 6%;
+        }
+    }
+    
+    @media (min-width: 1360px) {
+        #profilePopup .fixed_modal {
+            left: 3%;
+        }
+    }
+    
+    @media (min-width: 1280px) {
+        #profilePopup .fixed_modal {
+            left: 0%;
+        }
     }
 </style>
 
@@ -28,15 +46,15 @@
                                                 ?>
                                                 <img class="round align-self-start mr-3" id='profile-image' width="136"
                                                      height="136" src="<?= base_url() . $user['profile_image']; ?>">
-                                                <?php
-                                            } else {
-                                                ?>
+                                                     <?php
+                                                 } else {
+                                                     ?>
                                                 <img class="round align-self-start mr-3" id='profile-image' width="136"
                                                      height="136"
                                                      avatar="<?= ucfirst($user['firstName']) . ' ' . ucfirst($user['lastName']) ?>">
-                                                <?php
-                                            }
-                                            ?>
+                                                     <?php
+                                                 }
+                                                 ?>
                                         </div>
                                         <div class="media-body">
                                             <h5 class="mt-0"><?= $user['firstName'] . " " . $user['lastName'] ?></h5>
@@ -55,7 +73,7 @@
                                                 <p><?= isset($userCompanyProfile->city) ? $userCompanyProfile->city : '' ?></p>
                                             </div>
                                             <button type="button" class="btn btn-primary"><i
-                                                        class="fas fa-envelope"></i>Send a Message
+                                                    class="fas fa-envelope"></i>Send a Message
                                             </button>
                                         </div>
                                     </div>
@@ -78,7 +96,7 @@
                                                         ?>
                                                         <li>
                                                             <a href="<?php echo $userCompanyProfile->scheduling_url; ?>"><i
-                                                                        class="far fa-calendar-alt"></i>Schedule an
+                                                                    class="far fa-calendar-alt"></i>Schedule an
                                                                 appointment</a></li>
                                                         <?php
                                                     }
@@ -92,7 +110,7 @@
                                                     if (!empty($userCompanyProfile->website_url)) {
                                                         ?>
                                                         <li><a href="<?php echo $userCompanyProfile->website_url; ?>"><i
-                                                                        class="fas fa-external-link-alt"></i>Website</a>
+                                                                    class="fas fa-external-link-alt"></i>Website</a>
                                                         </li>
                                                         <?php
                                                     }
@@ -158,12 +176,12 @@
                                                             }
                                                         }
                                                         ?>
-                                                        <!--<li><i class="fas fa-circle"></i>Credit Repair</li>
-                                                        <li><i class="fas fa-circle"></i>Student Loans</li>
-                                                        <li><i class="fas fa-circle"></i>Debt Consolidation</li>
-                                                        <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
-                                                        <li><i class="fas fa-circle"></i>Collections</li>
-                                                        <li><i class="fas fa-circle"></i>Charge Offs</li>-->
+                                                <!--<li><i class="fas fa-circle"></i>Credit Repair</li>
+                                                <li><i class="fas fa-circle"></i>Student Loans</li>
+                                                <li><i class="fas fa-circle"></i>Debt Consolidation</li>
+                                                <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
+                                                <li><i class="fas fa-circle"></i>Collections</li>
+                                                <li><i class="fas fa-circle"></i>Charge Offs</li>-->
                                                     </ul>
                                                 </div>
                                                 <!--<div class="d-inline-block">
@@ -198,9 +216,9 @@
                                                             <?php
                                                         }
                                                         ?>
-                                                        <!--<div class="d-flex justify-content-between"><label>Credit Analysis / 30 Minute Consultation</label> <span>Free</span></div>
-                                                        <div class="d-flex justify-content-between"><label>Signup and audit fee</label> <span>$129.00</span></div>
-                                                        <div class="d-flex justify-content-between"><label>Collections: Per item - Per bureau</label> <span>$50.00</span></div>-->
+                                                    <!--<div class="d-flex justify-content-between"><label>Credit Analysis / 30 Minute Consultation</label> <span>Free</span></div>
+                                                    <div class="d-flex justify-content-between"><label>Signup and audit fee</label> <span>$129.00</span></div>
+                                                    <div class="d-flex justify-content-between"><label>Collections: Per item - Per bureau</label> <span>$50.00</span></div>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,7 +252,7 @@
                                                                         ?>
                                                                         <li>
                                                                             <a href="<?= $userCompanyProfile->facebook_url ?>"><i
-                                                                                        class="fab fa-facebook-square"></i></a>
+                                                                                    class="fab fa-facebook-square"></i></a>
                                                                         </li>
                                                                         <?php
                                                                     }
@@ -242,7 +260,7 @@
                                                                         ?>
                                                                         <li>
                                                                             <a href="<?= $userCompanyProfile->twitter_url ?>"><i
-                                                                                        class="fab fa-twitter-square"></i></a>
+                                                                                    class="fab fa-twitter-square"></i></a>
                                                                         </li>
                                                                         <?php
                                                                     }
@@ -250,7 +268,7 @@
                                                                         ?>
                                                                         <li>
                                                                             <a href="<?= $userCompanyProfile->linkedin_url ?>"><i
-                                                                                        class="fab fa-linkedin"></i></a>
+                                                                                    class="fab fa-linkedin"></i></a>
                                                                         </li>
                                                                         <?php
                                                                     }
@@ -258,7 +276,7 @@
                                                                         ?>
                                                                         <li>
                                                                             <a href="<?= $userCompanyProfile->instagram_url ?>"><i
-                                                                                        class="fab fa-instagram"></i></a>
+                                                                                    class="fab fa-instagram"></i></a>
                                                                         </li>
                                                                         <?php
                                                                     }
@@ -271,7 +289,7 @@
                                                                 <div class="site-link-block">
                                                                     <span class="btn-block">Website</span>
                                                                     <span class="btn-block mt-0"><a
-                                                                                href="<?= $userCompanyProfile->website_url ?>"><?= $userCompanyProfile->website_url ?></a></span>
+                                                                            href="<?= $userCompanyProfile->website_url ?>"><?= $userCompanyProfile->website_url ?></a></span>
                                                                 </div>
                                                                 <?php
                                                             }
@@ -370,7 +388,7 @@
                                                         <div class="col-md-9 endorsements-right endorsements-inner-block">
                                                             <div class="d-flex">
                                                                 <h6><a href="#">Raymond McMillan</a></h6> <span
-                                                                        class="ml-2">on February 1, 2019</span>
+                                                                    class="ml-2">on February 1, 2019</span>
                                                             </div>
                                                             <p>Seymour has always been a fierce and public advocate for
                                                                 the financially
@@ -412,7 +430,8 @@
     $('.tab-content').scroll(function () {
         var offsetHighlightVal = 300;
         var tabContentHeight = $(".about-block").offset();
-        if (tabContentHeight.top > 270) {
+        console.log(tabContentHeight.top);
+        if (tabContentHeight.top > 70) {
             $('.modal-dialog').removeClass('fixed_modal');
             $('.tab-content').removeClass('scroll-div');
         }
