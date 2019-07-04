@@ -262,8 +262,10 @@ label.custom-control-label.customControlAutosizing2 {
 }
 
 .area-of-expertise-block.d-inline-block ul{
-    display: inline-flex;
+    columns: 2;
+    -webkit-columns: 2;
+    -moz-columns: 2;
 }
 .area-of-expertise-block.d-inline-block ul li{
-    margin-right: 10rem;
+    margin-right: 7rem;
 }
