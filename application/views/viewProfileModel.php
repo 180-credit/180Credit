@@ -10,9 +10,9 @@
         height: 90vh;
     }
     
-    @media (min-width: 1440px) {
+    @media (min-width: 1280px) {
         #profilePopup .fixed_modal {
-            left: 6%;
+            left: 0%;
         }
     }
     
@@ -22,9 +22,15 @@
         }
     }
     
-    @media (min-width: 1280px) {
+    @media (min-width: 1440px) {
         #profilePopup .fixed_modal {
-            left: 0%;
+            left: 6%;
+        }
+    }
+    
+    @media (min-width: 1920px) {
+        #profilePopup .fixed_modal {
+            left: 19%;
         }
     }
 </style>
@@ -419,55 +425,55 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
 <script>
-    $('.modal').scroll(function () {
-        var sideBarHeight = $('#sticky_sidebar').offset();
-        if (sideBarHeight.top < 250) {
-            $('.modal-dialog').addClass('fixed_modal');
-            $('.tab-content').addClass('scroll-div');
-        }
-    });
-
-    $('.tab-content').scroll(function () {
-        var offsetHighlightVal = 300;
-        var tabContentHeight = $(".about-block").offset();
-        console.log(tabContentHeight.top);
-        if (tabContentHeight.top > 70) {
-            $('.modal-dialog').removeClass('fixed_modal');
-            $('.tab-content').removeClass('scroll-div');
-        }
-        var feepaymentHeight = $(".fee-payments-block").offset();
-        var mapHeight = $(".map-block").offset();
-        var reviewHeight = $(".reviews-block").offset();
-        var qaHeight = $(".endorsements-block").offset();
-
-        if (feepaymentHeight.top < offsetHighlightVal) {
-            $('.nav-item.active').each(function () {
-                $(this).removeClass('active');
-            });
-            $('.fees_tab').addClass('active');
-
-            if (qaHeight.top < offsetHighlightVal) {
-                $('.nav-item.active').each(function () {
-                    $(this).removeClass('active');
-                });
-                $('.qa_tab').addClass('active');
-            } else if (reviewHeight.top < offsetHighlightVal) {
-                $('.nav-item.active').each(function () {
-                    $(this).removeClass('active');
-                });
-                $('.review_tab').addClass('active');
-
-            } else if (mapHeight.top < offsetHighlightVal) {
-                $('.nav-item.active').each(function () {
-                    $(this).removeClass('active');
-                });
-                $('.contact_tab').addClass('active');
-            }
-        } else {
-            $('.nav-item.active').each(function () {
-                $(this).removeClass('active');
-            });
-            $('.home_tab').addClass('active');
-        }
-    });
+//    $('.modal').scroll(function () {
+//        var sideBarHeight = $('#sticky_sidebar').offset();
+//        if (sideBarHeight.top < 250) {
+//            $('.modal-dialog').addClass('fixed_modal');
+//            $('.tab-content').addClass('scroll-div');
+//        }
+//    });
+//
+//    $('.tab-content').scroll(function () {
+//        var offsetHighlightVal = 300;
+//        var tabContentHeight = $(".about-block").offset();
+//        console.log(tabContentHeight.top);
+//        if (tabContentHeight.top > 70) {
+//            $('.modal-dialog').removeClass('fixed_modal');
+//            $('.tab-content').removeClass('scroll-div');
+//        }
+//        var feepaymentHeight = $(".fee-payments-block").offset();
+//        var mapHeight = $(".map-block").offset();
+//        var reviewHeight = $(".reviews-block").offset();
+//        var qaHeight = $(".endorsements-block").offset();
+//
+//        if (feepaymentHeight.top < offsetHighlightVal) {
+//            $('.nav-item.active').each(function () {
+//                $(this).removeClass('active');
+//            });
+//            $('.fees_tab').addClass('active');
+//
+//            if (qaHeight.top < offsetHighlightVal) {
+//                $('.nav-item.active').each(function () {
+//                    $(this).removeClass('active');
+//                });
+//                $('.qa_tab').addClass('active');
+//            } else if (reviewHeight.top < offsetHighlightVal) {
+//                $('.nav-item.active').each(function () {
+//                    $(this).removeClass('active');
+//                });
+//                $('.review_tab').addClass('active');
+//
+//            } else if (mapHeight.top < offsetHighlightVal) {
+//                $('.nav-item.active').each(function () {
+//                    $(this).removeClass('active');
+//                });
+//                $('.contact_tab').addClass('active');
+//            }
+//        } else {
+//            $('.nav-item.active').each(function () {
+//                $(this).removeClass('active');
+//            });
+//            $('.home_tab').addClass('active');
+//        }
+//    });
 </script>
