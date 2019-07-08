@@ -267,7 +267,7 @@
                                                         if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 2){
                                                             ?>
                                                             <div class="button-block">
-                                                                <button type="button" class="btn btn-secondary" onclick="modalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($reviewCount->total_review) && $reviewCount->total_review != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
+                                                                <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($reviewCount->total_review) && $reviewCount->total_review != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
                                                             </div>
                                                             <?php
                                                         }
@@ -313,7 +313,7 @@
                                                 }else{
                                                     ?>
                                                         <div class="col-md-12 review-block-bottom">
-                                                                <p class="text-center">No review at</p>
+                                                                <p class="text-center">There is no review.</p>
                                                         </div>
                                                     <?php
                                                 }
@@ -335,7 +335,7 @@
                                                         if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 1){
                                                             ?>
                                                             <div class="button-block">
-                                                                <button type="button" class="btn btn-secondary" onclick="modalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
+                                                                <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
                                                             </div>
                                                             <?php
                                                         }
@@ -378,7 +378,7 @@
                                                     }else{
                                                         ?>
                                                         <div class="col-md-12 review-block-bottom">
-                                                            <p class="text-center">No professional endorsements at</p>
+                                                            <p class="text-center">There is no professional endorsements.</p>
                                                         </div>
                                                         <?php
                                                     }
@@ -463,7 +463,7 @@
             return false;
         });
     });
-    var modalHandler = {
+    var viewProfileModalHandler = {
         openReviewModal : function (userId,name) {
             var html = '<div class="media">\n' +
                 '                    <div class="media-body">\n' +
@@ -529,7 +529,7 @@
                         // $("#review_form").submit();
                         $.post('<?php echo base_url(); ?>home/review_details_save',$("#review_form").serialize(),function (result) {
                             if(result){
-                                modalHandler.openSaveReviewModal(name);
+                                viewProfileModalHandler.openSaveReviewModal(name);
                             }
                         })
                     }
@@ -577,7 +577,7 @@
                         // $("#review_form").submit();
                         $.post('<?php echo base_url(); ?>home/endorse_details_save',$("#review_form").serialize(),function (result) {
                             if(result){
-                                modalHandler.openSaveEndorseModal(name);
+                                viewProfileModalHandler.openSaveEndorseModal(name);
                             }
                         })
                     }

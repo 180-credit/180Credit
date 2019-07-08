@@ -354,7 +354,7 @@
                                                     if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 2){
                                                         ?>
                                                         <div class="button-block">
-                                                            <button type="button" class="btn btn-secondary" onclick="modalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($reviewCount->total_review) && $reviewCount->total_review != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
+                                                            <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($reviewCount->total_review) && $reviewCount->total_review != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
                                                         </div>
                                                         <?php
                                                     }
@@ -368,7 +368,7 @@
                                                         foreach ($reviewAllDetails as $reviewDetail){
                                                             if($reviewDetail->review_type == 1){
                                                                 ?>
-                                                                <div class="row">
+                                                                <div class="row my-2">
                                                                     <div class="col-md-3 review-left review-inner-block">
                                                                         <span class="rating-block">
                                                                             <?php
@@ -400,7 +400,7 @@
                                                 }else{
                                                     ?>
                                                     <div class="col-md-12 review-block-bottom">
-                                                        <p class="text-center">No review at</p>
+                                                        <p class="text-center">There is no review.</p>
                                                     </div>
                                                     <?php
                                                 }
@@ -422,7 +422,7 @@
                                                     if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 1){
                                                         ?>
                                                         <div class="button-block">
-                                                            <button type="button" class="btn btn-secondary" onclick="modalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
+                                                            <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
                                                         </div>
                                                         <?php
                                                     }
@@ -434,7 +434,7 @@
                                                         foreach ($reviewAllDetails as $reviewDetail){
                                                             if($reviewDetail->review_type == 2){
                                                                 ?>
-                                                                <div class="row">
+                                                                <div class="row my-2">
                                                                     <div class="col-md-3 endorsements-left endorsements-inner-block">
                                                                         <div>
                                                                             <?php
@@ -465,7 +465,7 @@
                                                     }else{
                                                         ?>
                                                         <div class="col-md-12 review-block-bottom">
-                                                            <p class="text-center">No professional endorsements at</p>
+                                                            <p class="text-center">There is no professional endorsements.</p>
                                                         </div>
                                                         <?php
                                                     }
@@ -483,6 +483,21 @@
         </div>
     </div>
 </main>
+<div class="modal exampleModal fade" id="modalReview" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0 border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-migrate-git.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
@@ -548,7 +563,7 @@
            return false;
        });
    });
-   var modalHandler = {
+   var viewProfileModalHandler = {
        openReviewModal : function (userId,name) {
            var html = '<div class="media">\n' +
                '                    <div class="media-body">\n' +
@@ -614,7 +629,7 @@
                        // $("#review_form").submit();
                        $.post('<?php echo base_url(); ?>home/review_details_save',$("#review_form").serialize(),function (result) {
                            if(result){
-                               modalHandler.openSaveReviewModal(name);
+                               viewProfileModalHandler.openSaveReviewModal(name);
                            }
                        })
                    }
@@ -662,7 +677,7 @@
                        // $("#review_form").submit();
                        $.post('<?php echo base_url(); ?>home/endorse_details_save',$("#review_form").serialize(),function (result) {
                            if(result){
-                               modalHandler.openSaveEndorseModal(name);
+                               viewProfileModalHandler.openSaveEndorseModal(name);
                            }
                        })
                    }
