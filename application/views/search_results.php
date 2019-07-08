@@ -763,7 +763,7 @@
                 '\n' +
                 '                            <!-- i am not robot ends  -->\n' +
                 '                            <button type="submit" id="submit-message_form" class="btn btn-primary">Save</button>\n' +
-                '                            <button type="button" class="btn btn-secondary">Cancel</button>\n' +
+                '                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>\n' +
                 '                        </form>\n' +
                 '                    </div>\n' +
                 '                </div>';

@@ -172,15 +172,42 @@ class Home extends CI_Controller
         $data['userAreasOfSpecialty'] = $this->Common_model->loadUserAreasOfSpecialty($data['user']['userId']);
         $data['userFees'] = $this->Common_model->loadUserFees($data['user']['userId']);
         $data['userTags'] = $this->Common_model->loadUserTags($data['user']['userId']);
-        /*echo "<pre>";
-        print_r ($data);
-        echo "</pre>";
-        die();*/
+        $data['endorsementCount'] = $this->Common_model->endorsementCount($data['user']['userId']);
+        $data['reviewCount'] = $this->Common_model->reviewCount($data['user']['userId']);
+        $data['reviewAllDetails'] = $this->Common_model->reviewAllDetails($data['user']['userId']);
         if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] == true){
             $this->load->view('viewProfileModel', $data);
         }else{
             $this->template->load('layout','viewProfile', $data);
         }
+    }
+
+    public function review_details_save(){
+        $rating=$this->input->post('rating');
+        $rating_for=$this->input->post('rating_for');
+        $review_headline=$this->input->post('review_headline');
+        $wright_review=$this->input->post('wright_review');
+        $user=$_SESSION['user'];
+        $insert_user_stored_proc = "CALL saveUserReview(
+			{$rating_for}, 
+			{$rating}, 
+			'{$review_headline}',
+			'{$wright_review}',
+			{$user['userId']})";
+        $result = $this->db->query($insert_user_stored_proc);
+        echo 'true';
+    }
+
+    public function endorse_details_save(){
+        $rating_for=$this->input->post('rating_for');
+        $wright_review=$this->input->post('wright_review');
+        $user=$_SESSION['user'];
+        $insert_user_stored_proc = "CALL saveUserEndorsement(
+			{$rating_for}, 
+			'{$wright_review}',
+			{$user['userId']})";
+        $result = $this->db->query($insert_user_stored_proc);
+        echo 'true';
     }
 
     public function edit_profile()

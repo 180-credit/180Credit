@@ -649,3 +649,8 @@ DROP PROCEDURE `saveTag`; CREATE DEFINER=`root`@`localhost` PROCEDURE `saveTag`(
 
 -- 28/06/2019
 ALTER TABLE `users` ADD `question` VARCHAR(255) NOT NULL AFTER `facebookId`, ADD `answer` VARCHAR(500) NOT NULL AFTER `question`;
+
+-- 06/07/2019
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reviewCount`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT COUNT(*) as total_review, AVG(rating) as avg_review FROM user_reviews WHERE user_id = `pUserId` and review_type = 1 AND is_approved =1; END
+CREATE DEFINER=`root`@`localhost` PROCEDURE `endorsementCount`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT COUNT(*) as total_endorsement FROM user_reviews WHERE user_id = `pUserId` and review_type = 2 AND is_approved =1; END
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reviewAllDetails`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT * FROM user_reviews as ur LEFT JOIN users as u ON (ur.user_id = u.userId) WHERE ur.user_id = `pUserId` AND ur.is_approved =1; END

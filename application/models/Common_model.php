@@ -85,6 +85,27 @@ class Common_model extends CI_Model {
         return $query->row();
     }
 
+    public function endorsementCount($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL endorsementCount($userId)");
+        $this->db->close();
+        return $query->row();
+    }
+
+    public function reviewCount($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL reviewCount($userId)");
+        $this->db->close();
+        return $query->row();
+    }
+
+    public function reviewAllDetails($userId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL reviewAllDetails($userId)");
+        $this->db->close();
+        return $query->result();
+    }
+
     public function loadUserCompanyProfile($userId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserCompanyProfile($userId)");

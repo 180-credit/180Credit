@@ -269,3 +269,17 @@ label.custom-control-label.customControlAutosizing2 {
 .area-of-expertise-block.d-inline-block ul li{
     margin-right: 7rem;
 }
+
+.txtarea-all-details{
+    position: absolute;
+    line-height: 0.8rem;
+}
+.specia-pro-view p a{
+    display: inline;
+}
+.morecontent span {
+    display: none;
+}
+.morelink {
+    display: block;
+}

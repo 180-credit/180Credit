@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/star-rating/css/star-rating.min.css">
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/plugins/star-rating/themes/krajee-uni/theme.min.css">
 <main class="specia-pro-view">
     <div class="container">
         <div class="row">
@@ -25,16 +27,24 @@
                                         </div>
                                         <div class="media-body">
                                             <h5 class="mt-0"><?= $user['firstName']." ".$user['lastName'] ?></h5>
-                                            <div class="review-block">
+                                                <?php
+                                                if(isset($reviewCount->total_review) && $reviewCount->total_review != 0){
+                                                    ?>
+                                                    <div class="review-block">
 															<span class="rating-block">
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star"></i>
-																<i class="fas fa-star-half-alt"></i>
-															</span>
-                                                <span class="review-txt">32 Reviews</span>
-                                            </div>
+                                                                <?php
+                                                                for ($i=1;$i <= 5 ; $i++){
+                                                                    ?>
+                                                                    <i class="<?= ($i<=$reviewCount->avg_review ? 'fas' : 'far') ?> fa-star"></i>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </span>
+                                                        <span><?= $reviewCount->total_review ?> Reviews</span>
+                                                    </div>
+                                                    <?php
+                                                }
+                                                ?>
                                             <div class="profile-add mt-2">
                                                 <h6 class="mb-1"><?= isset($userCompanyProfile->company_name) ? $userCompanyProfile->company_name : '' ?></h6>
                                                 <p><?= isset($userCompanyProfile->city) ? $userCompanyProfile->city:'' ?></p>
@@ -138,24 +148,8 @@
                                                             }
                                                         }
                                                         ?>
-                                                        <!--<li><i class="fas fa-circle"></i>Credit Repair</li>
-                                                        <li><i class="fas fa-circle"></i>Student Loans</li>
-                                                        <li><i class="fas fa-circle"></i>Debt Consolidation</li>
-                                                        <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
-                                                        <li><i class="fas fa-circle"></i>Collections</li>
-                                                        <li><i class="fas fa-circle"></i>Charge Offs</li>-->
                                                     </ul>
                                                 </div>
-                                                <!--<div class="d-inline-block">
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li><i class="fas fa-circle"></i>Credit Repair</li>
-                                                        <li><i class="fas fa-circle"></i>Student Loans</li>
-                                                        <li><i class="fas fa-circle"></i>Debt Consolidation</li>
-                                                        <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
-                                                        <li><i class="fas fa-circle"></i>Collections</li>
-                                                        <li><i class="fas fa-circle"></i>Charge Offs</li>
-                                                    </ul>
-                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="card mt-3 fee-payments-block">
@@ -173,8 +167,6 @@
                                                                 <?php
                                                             }
                                                         ?>
-                                                        <!--<div class="d-flex justify-content-between"><label>Credit Analysis / 30 Minute Consultation</label> <span>Free</span></div>-->
-                                                        <!--<div class="d-flex justify-content-between"><label>Collections: Per item - Per bureau</label> <span>$50.00</span></div>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,78 +244,145 @@
                                                 <div class="col-md-12 review-block-top d-block d-sm-flex justify-content-between align-items-center">
                                                     <div class="d-block d-sm-flex align-items-center">
                                                         <h5 class="m-0">Reviews</h5>
-                                                        <div class="ml-4 review-star-text">
-																<span class="rating-block mr-3">
-																	<i class="fas fa-star"></i>
-																	<i class="fas fa-star"></i>
-																	<i class="fas fa-star"></i>
-																	<i class="fas fa-star"></i>
-																	<i class="fas fa-star-half-alt"></i>
-																</span>
-                                                            <span>see all 32 reviews</span>
-                                                        </div>
+                                                        <?php
+                                                            if(isset($reviewCount->total_review) && $reviewCount->total_review != 0){
+                                                                ?>
+                                                                <div class="ml-4 review-star-text">
+                                                                    <span class="rating-block mr-3">
+                                                                        <?php
+                                                                            for ($i=1;$i <= 5 ; $i++){
+                                                                                ?>
+                                                                                <i class="<?= ($i<=$reviewCount->avg_review ? 'fas' : 'far') ?> fa-star"></i>
+                                                                                <?php
+                                                                            }
+                                                                        ?>
+                                                                    </span>
+                                                                    <span>see all <?= $reviewCount->total_review ?> reviews</span>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                        ?>
                                                     </div>
-                                                    <div class="button-block">
-                                                        <button type="button" class="btn btn-secondary">Leave a review</button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 review-block-bottom">
-                                                    <div class="row">
-                                                        <div class="col-md-3 review-left review-inner-block">
-																<span class="rating-block">
-																	<i class="fas fa-star"></i>
-																	<i class="fas fa-star"></i>
-																	<i class="fas fa-star"></i>
-																</span>
-                                                            <div>
-                                                                <ul class="list-unstyled mb-0">
-                                                                    <li>By <span>Raymond C.</span></li>
-                                                                    <li><span>Atlanta, GA</span></li>
-                                                                    <li>February 1, 2019</li>
-                                                                </ul>
+                                                    <?php
+                                                        if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 2){
+                                                            ?>
+                                                            <div class="button-block">
+                                                                <button type="button" class="btn btn-secondary" onclick="modalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($reviewCount->total_review) && $reviewCount->total_review != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-9 review-right review-inner-block">
-                                                            <h5>Excellent response and service!</h5>
-                                                            <p>Ron helped my family with a NJ State Tax Audit. He was able to settle the case
-                                                                for almost half of the State's Audit . This was a seven figure audit that lasted
-                                                                for over 5 years. He was extremely knowledgeable and professional. He was
-                                                                also very patient with all parties involved to get the case settled in a fair ...<a href="#">more</a></p>
-                                                        </div>
-                                                    </div>
+                                                            <?php
+                                                        }
+                                                    ?>
                                                 </div>
+                                                <?php
+                                                if($reviewCount->total_review != 0){
+                                                    ?>
+                                                    <div class="col-md-12 review-block-bottom">
+                                                        <?php
+                                                            foreach ($reviewAllDetails as $reviewDetail){
+                                                                if($reviewDetail->review_type == 1){
+                                                                    ?>
+                                                                    <div class="row">
+                                                                        <div class="col-md-3 review-left review-inner-block">
+                                                                        <span class="rating-block">
+                                                                            <?php
+                                                                            for ($i=1;$i <= 5 ; $i++){
+                                                                                ?>
+                                                                                <i class="<?= ($i<=$reviewDetail->rating ? 'fas' : 'far') ?> fa-star"></i>
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </span>
+                                                                            <div>
+                                                                                <ul class="list-unstyled mb-0">
+                                                                                    <li>By <span><?= ucfirst($reviewDetail->firstName).' '.ucfirst($reviewDetail->lastName[0]).'.' ?></span></li>
+                                                                                    <li><?= date('F j, Y',strtotime($reviewDetail->created_on)) ?></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-9 review-right review-inner-block">
+                                                                            <h5><?= $reviewDetail->headline ?></h5>
+                                                                            <p class="more"><?= $reviewDetail->description ?></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                    <?php
+                                                }else{
+                                                    ?>
+                                                        <div class="col-md-12 review-block-bottom">
+                                                                <p class="text-center">No review at</p>
+                                                        </div>
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="card mt-3 endorsements-block">
                                             <div class="card-body" id="contact-tab4">
                                                 <div class="col-md-12 top-block d-block d-sm-flex justify-content-between align-items-center p-0">
                                                     <h5 class="m-0">Professional endorsements</h5>
-                                                    <div class="ml-4">
-                                                        (<span>read all 6 endorsements</span>)
-                                                    </div>
-                                                    <div class="button-block">
-                                                        <button type="button" class="btn btn-secondary">Endorse Pauline</button>
-                                                    </div>
+                                                    <?php
+                                                        if(isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0){
+                                                            ?>
+                                                            <div class="ml-4">
+                                                                (<span>read all <?= $endorsementCount->total_endorsement ?> endorsements</span>)
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 1){
+                                                            ?>
+                                                            <div class="button-block">
+                                                                <button type="button" class="btn btn-secondary" onclick="modalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                    ?>
                                                 </div>
                                                 <div class="col-md-12 bottom-block p-0">
-                                                    <div class="row">
-                                                        <div class="col-md-3 endorsements-left endorsements-inner-block">
-                                                            <div>
-                                                                <img src="<?php echo base_url(); ?>assets/images/head-shot.jpg" class="align-self-start mr-3" alt="...">
-                                                            </div>
+                                                    <?php
+                                                    if(isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0){
+                                                        foreach ($reviewAllDetails as $reviewDetail){
+                                                            if($reviewDetail->review_type == 2){
+                                                                ?>
+                                                                <div class="row">
+                                                                    <div class="col-md-3 endorsements-left endorsements-inner-block">
+                                                                        <div>
+                                                                            <?php
+                                                                            if(isset($user['profile_image'])){
+                                                                                ?>
+                                                                                <img class="align-self-start mr-3 round" id='profile-image' width="136" height="136" src="<?= base_url().$reviewDetail->profile_image; ?>">
+                                                                                <?php
+                                                                            }
+                                                                            else{
+                                                                                ?>
+                                                                                <img class="align-self-start mr-3 round" id='profile-image' width="136" height="136" avatar="<?= ucfirst($reviewDetail->firstName).' '.ucfirst($reviewDetail->lastName) ?>">
+                                                                                <?php
+                                                                            }
+                                                                            ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-9 endorsements-right endorsements-inner-block">
+                                                                        <div class="d-flex">
+                                                                            <h6><a href="<?= base_url().'view-specialist-profile/'.ucfirst($reviewDetail->firstName).'-'.ucfirst($reviewDetail->lastName);  ?>"><?= ucfirst($reviewDetail->firstName).' '.ucfirst($reviewDetail->lastName) ?></a></h6> <span class="ml-2">on <?= date('F j, Y',strtotime($reviewDetail->created_on)) ?></span>
+                                                                        </div>
+                                                                        <p class="more"><?= $reviewDetail->description ?></a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                        }
+                                                    }else{
+                                                        ?>
+                                                        <div class="col-md-12 review-block-bottom">
+                                                            <p class="text-center">No professional endorsements at</p>
                                                         </div>
-                                                        <div class="col-md-9 endorsements-right endorsements-inner-block">
-                                                            <div class="d-flex">
-                                                                <h6><a href="#">Raymond McMillan</a></h6> <span class="ml-2">on February 1, 2019</span>
-                                                            </div>
-                                                            <p>Seymour has always been a fierce and public advocate for the financially
-                                                                destitute. While as a debt collection attorney, that often pit us at odds, we
-                                                                were always civil, professional and creative. I endorse him as an advocate
-                                                                and an important tool to those who feel they have no more options financially.
-                                                                <a href="#">more</a>
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -344,13 +403,215 @@
         </div>
     </div>
 </main>
+<div class="modal exampleModal fade" id="modalReview" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0 border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+        </div>
+    </div>
+</div>
 <script src="https://code.jquery.com/jquery-migrate-git.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script>
     <?php
     $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
     ?>
+    $(document).ready(function() {
+        // Configure/customize these variables.
+        var showChar = 400;  // How many characters are shown by default
+        var ellipsestext = "...";
+        var moretext = "Show more";
+        var lesstext = "Show less";
+
+
+        $('.more').each(function() {
+            var content = $(this).html();
+
+            if(content.length > showChar) {
+
+                var c = content.substr(0, showChar);
+                var h = content.substr(showChar, content.length - showChar);
+
+                var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+                $(this).html(html);
+            }
+
+        });
+
+        $(".morelink").click(function(){
+            if($(this).hasClass("less")) {
+                $(this).removeClass("less");
+                $(this).html(moretext);
+            } else {
+                $(this).addClass("less");
+                $(this).html(lesstext);
+            }
+            $(this).parent().prev().toggle();
+            $(this).prev().toggle();
+            return false;
+        });
+    });
+    var modalHandler = {
+        openReviewModal : function (userId,name) {
+            var html = '<div class="media">\n' +
+                '                    <div class="media-body">\n' +
+                '                        <div class="popup-head">\n' +
+                '                            <h5 class="mt-0">Leave a review for '+ name +'</h5>\n' +
+                '                        </div>\n' +
+                '                        <form id="review_form" method="post">\n' +
+                '                            <div class="form-group" >\n' +
+                '                                <h6><b>Overall rating</b></h6>' +
+                '                                <div style="display:inline-block;" id="rateYo"></div>\n' +
+                '<input type="hidden" name="rating" id="rating_input"/><input type="hidden" name="rating_for" id="rating_for" value="'+userId+'" />\n' +
+                '                            </div>\n' +
+                '                            <div class="form-group" >\n' +
+                '                                <h6><b>Add a headline</b></h6>' +
+                '                                <input type="text" class="form-control" id="review_headline" name="review_headline" placeholder="">\n' +
+                '                            </div>\n' +
+                '                            <div class="form-group">\n' +
+                '                                <h6 class="txtarea-all-details"><b>Wright your review</b></h6>' +
+                '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
+                '                                <textarea class="form-control" id="contact_message" name="wright_review" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
+                '<div class="error contact_message_lable_error clr-red"></div>' +
+                '                            </div>\n' +
+                '                            <button type="submit" id="submit-message_form" class="btn btn-primary">Submit review</button>\n' +
+                '                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>\n' +
+                '                        </form>\n' +
+                '                    </div>\n' +
+                '                </div>';
+
+
+            $('#btn-rating-input').on('click', function () {
+                $inp.rating('refresh', {
+                    showClear: true,
+                    disabled: !$inp.attr('disabled')
+                });
+            });
+
+            $('#modalReview .modal-body').html(html);
+            $('#modalReview').modal('show');
+            $('#modalReview').on('shown.bs.modal', function() {
+                $("#rateYo").rateYo({
+                    halfStar:false,
+                    fullStar: true,
+                    onSet: function (rating, rateYoInstance) {
+                        rating = Math.ceil(rating);
+                        $('#rating_input').val(rating);//setting up rating value to hidden field
+                    }
+                });
+                $("#review_form").validate({
+                    rules: {
+                        // simple rule, converted to {required:true}
+                        // compound rule
+                        review_headline: {
+                            required: true
+                        },
+                        wright_review: {
+                            required: true
+                        }
+                    }
+                });
+                $("#review_form").submit(function (e) {
+                    if($("#review_form").valid()){
+                        e.preventDefault();
+                        // $("#review_form").submit();
+                        $.post('<?php echo base_url(); ?>home/review_details_save',$("#review_form").serialize(),function (result) {
+                            if(result){
+                                modalHandler.openSaveReviewModal(name);
+                            }
+                        })
+                    }
+                });
+            });
+        },
+        openEndorseModal : function (userId,name) {
+            var html = '<div class="media">\n' +
+                '                    <div class="media-body">\n' +
+                '                        <div class="popup-head">\n' +
+                '                            <h5 class="mt-0">Leave a review for '+ name +'</h5>\n' +
+                '                        </div>\n' +
+                '                        <form id="review_form" method="post">\n' +
+                '                            <div class="form-group">\n' +
+                '<input type="hidden" name="rating_for" id="rating_for" value="'+userId+'" />' +
+                '                                <h6 class="txtarea-all-details"><b>Wright your endorsement</b></h6>' +
+                '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
+                '                                <textarea class="form-control" id="contact_message" name="wright_review" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
+                '<div class="error contact_message_lable_error clr-red"></div>' +
+                '                            </div>\n' +
+                '                            <button type="submit" id="submit-message_form" class="btn btn-primary">Submit endorsement</button>\n' +
+                '                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>\n' +
+                '                        </form>\n' +
+                '                    </div>\n' +
+                '                </div>';
+            $('#modalReview .modal-body').html(html);
+            $('#modalReview').modal('show');
+            $('#modalReview').on('shown.bs.modal', function() {
+                $("#review_form").validate({
+                    rules: {
+                        // simple rule, converted to {required:true}
+                        // compound rule
+                        review_headline: {
+                            required: true
+                        },
+                        wright_review: {
+                            required: true
+                        }
+                    }
+                });
+                $("#review_form").submit(function (e) {
+                    if($("#review_form").valid()){
+                        // $("#review_form").submit();
+                        e.preventDefault();
+                        // $("#review_form").submit();
+                        $.post('<?php echo base_url(); ?>home/endorse_details_save',$("#review_form").serialize(),function (result) {
+                            if(result){
+                                modalHandler.openSaveEndorseModal(name);
+                            }
+                        })
+                    }
+                });
+            });
+        },
+        openSaveReviewModal : function (name) {
+            var html = '<div class="media">\n' +
+                '                    <div class="media-body">\n' +
+                '                        <div class="popup-head text-center">\n' +
+                '                            <h5 class="mt-0">Thank you, your review for '+ name +' has been submitted!</h5>\n' +
+                '                            <p class="text-justify mb-1">' +
+                'Although we do not censor reviews, all submissions are reviewed by our customer service team to ensure that inappropriate content and/or spam is not submitted.</p><p class="text-justify mb-1">Please allow up to 24 hours for your review to be posted publicly.</p>' +
+                '                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                </div>';
+            $('#modalReview .modal-body').html(html);
+        },
+        openSaveEndorseModal : function (name) {
+            var html = '<div class="media">\n' +
+                '                    <div class="media-body">\n' +
+                '                        <div class="popup-head text-center">\n' +
+                '                            <h5 class="mt-0">Thank you, your endorsement for '+ name +' has been submitted!</h5>\n' +
+                '                            <p class="text-justify mb-1">' +
+                'Although we do not censor endorsement, all submissions are reviewed by our customer service team to ensure that inappropriate content and/or spam is not submitted.</p><p class="text-justify mb-1">Please allow up to 24 hours for your endorsement to be posted publicly.</p>' +
+                '                            <button type="button" class="btn btn-primary text-center" data-dismiss="modal">Close</button>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                </div>';
+            $('#modalReview .modal-body').html(html);
+        }
+    };
+
     if($('#profilePopup').length < 1){
         $("#myTab").sticky({topSpacing:0,bottomSpacing:400});
         var sidebar = document.getElementById('sticky_sidebar');
@@ -430,5 +691,18 @@
                 .end().filter("[href='#home-tab']").parent().addClass("active");
         }
     });
+    function countTextWord(a){
+        var txtlennospace = 2000 - $(a).val().replace(/\s+/g, '').length;
+        if(txtlennospace < 0){
+            $('.contact_message_lable_error').text('Max length '+2000+' characters only!');
+            $('#submit-message_form').prop('disabled','disabled');
+            $('#contact_message_lable').text(0);
+        }
+        else {
+            $('.contact_message_lable_error').text('');
+            $('#submit-message_form').prop('disabled',false);
+            $('#contact_message_lable').text(txtlennospace);
+        }
+    }
 </script>
 <!--  [Script Section] Ends -->
