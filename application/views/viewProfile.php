@@ -281,7 +281,7 @@
                                                             foreach ($reviewAllDetails as $reviewDetail){
                                                                 if($reviewDetail->review_type == 1){
                                                                     ?>
-                                                                    <div class="row">
+                                                                    <div class="row my-3">
                                                                         <div class="col-md-3 review-left review-inner-block">
                                                                         <span class="rating-block">
                                                                             <?php
@@ -347,7 +347,7 @@
                                                         foreach ($reviewAllDetails as $reviewDetail){
                                                             if($reviewDetail->review_type == 2){
                                                                 ?>
-                                                                <div class="row">
+                                                                <div class="row my-3">
                                                                     <div class="col-md-3 endorsements-left endorsements-inner-block">
                                                                         <div>
                                                                             <?php
