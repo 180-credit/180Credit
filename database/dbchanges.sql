@@ -654,3 +654,54 @@ ALTER TABLE `users` ADD `question` VARCHAR(255) NOT NULL AFTER `facebookId`, ADD
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reviewCount`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT COUNT(*) as total_review, AVG(rating) as avg_review FROM user_reviews WHERE user_id = `pUserId` and review_type = 1 AND is_approved =1; END
 CREATE DEFINER=`root`@`localhost` PROCEDURE `endorsementCount`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT COUNT(*) as total_endorsement FROM user_reviews WHERE user_id = `pUserId` and review_type = 2 AND is_approved =1; END
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reviewAllDetails`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT * FROM user_reviews as ur LEFT JOIN users as u ON (ur.reviewer_user_id = u.userId) WHERE ur.user_id = `pUserId` AND ur.is_approved =1; END
+
+
+-- 09/07/2019
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserProfile`(IN `pProfileId` INT, IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN
+
+SELECT
+    u.userId,
+    u.firstName,
+    u.lastName,
+    u.profile_image,
+    up.company_name,
+    up.address1,
+    up.address2,
+    up.city,
+    s.abbr as 'state_abbr',
+    s.name as 'state_name',
+    up.zip,
+    (SELECT latitude FROM zipcodes WHERE ZIPcode = up.zip LIMIT 1) as 'Latitude1',
+    (SELECT longitude FROM zipcodes WHERE ZIPcode = up.zip LIMIT 1) as 'Longitude1',
+    up.public_phone,
+    up.website_url,
+    up.scheduling_url,
+    up.facebook_url,
+    up.twitter_url,
+    up.youtube_url,
+    up.linkedin_url,
+    up.instagram_url,
+    up.short_description,
+    up.long_description,
+    up.offersFreeConsultations,
+    up.isPremium,
+    u.isCreditRepairService,
+    u.isCreditRepairIndustry,
+    r.id as 'reviewId',
+    e.id as 'endorsementId',
+    (SELECT AVG(rating) FROM `user_reviews` WHERE user_id = pProfileId AND review_type = 1 AND is_approved = 1) as 'avgRating',
+    (SELECT COUNT(*) FROM `user_reviews` WHERE user_id = pProfileId AND review_type = 1 AND is_approved = 1) as 'reviewCount',
+    (SELECT COUNT(*) FROM `user_reviews` WHERE user_id = pProfileId AND review_type = 2 AND is_approved = 1) as 'endorsementCount'
+
+FROM
+	`users` u
+LEFT JOIN `user_profiles` up ON up.user_id = u.userId
+LEFT JOIN `state` s on s.id = up.state_id
+LEFT JOIN `user_reviews` r ON r.user_id = u.userId AND r.reviewer_user_id = pUserId AND r.review_type = 1
+LEFT JOIN `user_reviews` e ON e.user_id = u.userId AND e.reviewer_user_id = pUserId AND e.review_type = 2
+
+WHERE
+	u.userId = pProfileId;
+END
+
+DROP PROCEDURE `reviewAllDetails`; CREATE DEFINER=`root`@`localhost` PROCEDURE `reviewAllDetails`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT * FROM user_reviews as ur LEFT JOIN users as u ON (ur.reviewer_user_id = u.userId) WHERE ur.user_id = `pUserId` AND ur.is_approved =1; END

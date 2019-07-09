@@ -28,26 +28,26 @@
                                         <div class="media-body">
                                             <h5 class="mt-0"><?= $user['firstName']." ".$user['lastName'] ?></h5>
                                                 <?php
-                                                if(isset($reviewCount->total_review) && $reviewCount->total_review != 0){
+                                                if(isset($userProfile->reviewCount) && $userProfile->reviewCount != 0){
                                                     ?>
                                                     <div class="review-block">
 															<span class="rating-block">
                                                                 <?php
                                                                 for ($i=1;$i <= 5 ; $i++){
                                                                     ?>
-                                                                    <i class="<?= ($i<=$reviewCount->avg_review ? 'fas' : 'far') ?> fa-star"></i>
+                                                                    <i class="<?= ($i<=$userProfile->avgRating ? 'fas' : 'far') ?> fa-star"></i>
                                                                     <?php
                                                                 }
                                                                 ?>
                                                             </span>
-                                                        <span><?= $reviewCount->total_review ?> Reviews</span>
+                                                        <span><?= $userProfile->reviewCount ?> Reviews</span>
                                                     </div>
                                                     <?php
                                                 }
                                                 ?>
                                             <div class="profile-add mt-2">
-                                                <h6 class="mb-1"><?= isset($userCompanyProfile->company_name) ? $userCompanyProfile->company_name : '' ?></h6>
-                                                <p><?= isset($userCompanyProfile->city) ? $userCompanyProfile->city:'' ?></p>
+                                                <h6 class="mb-1"><?= isset($userProfile->company_name) ? $userProfile->company_name : '' ?></h6>
+                                                <p><?= isset($userProfile->city) ? $userProfile->city:'' ?>, <?= isset($userProfile->state_abbr) ? $userProfile->state_abbr : '' ?></p>
                                             </div>
                                             <button type="button" class="btn btn-primary"><i class="fas fa-envelope"></i>Send a Message</button>
                                         </div>
@@ -62,21 +62,21 @@
                                             </div>
                                             <div class="prof-midd-right">
                                                 <ul class="list-unstyled mb-0">
-                                                    <li><?= isset($userCompanyProfile->offersFreeConsultations) && $userCompanyProfile->offersFreeConsultations== 1 ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle clr-red"></i>' ?>Free consultations</li>
+                                                    <li><?= isset($userProfile->offersFreeConsultations) && $userProfile->offersFreeConsultations== 1 ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle clr-red"></i>' ?>Free consultations</li>
                                                     <?php
-                                                        if(!empty($userCompanyProfile->scheduling_url)){
+                                                        if(!empty($userProfile->scheduling_url)){
                                                             ?>
-                                                                <li><a href="<?php echo $userCompanyProfile->scheduling_url; ?>"><i class="far fa-calendar-alt"></i>Schedule an appointment</a></li>
+                                                                <li><a href="<?php echo $userProfile->scheduling_url; ?>"><i class="far fa-calendar-alt"></i>Schedule an appointment</a></li>
                                                             <?php
                                                         }
-                                                        if(!empty($userCompanyProfile->public_phone)){
+                                                        if(!empty($userProfile->public_phone)){
                                                             ?>
-                                                            <li><i class="fas fa-phone"></i><?= $userCompanyProfile->public_phone ?></li>
+                                                            <li><i class="fas fa-phone"></i><?= $userProfile->public_phone ?></li>
                                                             <?php
                                                         }
-                                                        if(!empty($userCompanyProfile->website_url)){
+                                                        if(!empty($userProfile->website_url)){
                                                             ?>
-                                                            <li><a href="<?php echo $userCompanyProfile->website_url; ?>"><i class="fas fa-external-link-alt"></i>Website</a></li>
+                                                            <li><a href="<?php echo $userProfile->website_url; ?>"><i class="fas fa-external-link-alt"></i>Website</a></li>
                                                             <?php
                                                         }
                                                     ?>
@@ -134,8 +134,8 @@
                                         <div class="card about-block">
                                             <div class="card-body p-3 block-right-one" id="home-tab">
                                                 <h5>About <?= ucfirst($user['firstName']) ?></h5>
-                                                <h6 class="mb-3 mt-4"><?= isset($userAboutMe->short_description) ? $userAboutMe->short_description : '' ?></h6>
-                                                <p><?= isset($userAboutMe->long_description) ? $userAboutMe->long_description : '' ?></p>
+                                                <h6 class="mb-3 mt-4"><?= isset($userProfile->short_description) ? $userProfile->short_description : '' ?></h6>
+                                                <p><?= isset($userProfile->long_description) ? $userProfile->long_description : '' ?></p>
                                                 <h6 class="font-italic">Areas of expertise...</h6>
                                                 <div class="d-inline-block area-of-expertise-block">
                                                     <ul class="list-unstyled mb-0">
@@ -186,50 +186,50 @@
                                                         </div>
                                                         <div class="col-md-6 map-right-block">
                                                             <div class="addres-block">
-                                                                <?= isset($userCompanyProfile->address1) ? "<label>{$userCompanyProfile->address1}</label>":'' ?>
-                                                                <?= isset($userCompanyProfile->city) ? "<label>{$userCompanyProfile->city}</label>":'' ?>
-                                                                <?= isset($userCompanyProfile->public_phone) ? "<label><b>{$userCompanyProfile->public_phone}</b></label>":'' ?>
+                                                                <?= isset($userProfile->address1) ? "<label>{$userProfile->address1}</label>":'' ?>
+                                                                <?= isset($userProfile->city) ? "<label>{$userProfile->city},</label>":'' ?><?= isset($userProfile->state_name) ? "<label>{$userProfile->state_name}</label>":'' ?>
+                                                                <?= isset($userProfile->public_phone) ? "<label><b>{$userProfile->public_phone}</b></label>":'' ?>
                                                             </div>
                                                             <div class="social-block">
                                                                 <ul class="list-unstyled mb-0">
                                                                     <?php
-                                                                        if(!empty($userCompanyProfile->facebook_url) || $userCompanyProfile->facebook_url != ""){
+                                                                        if(!empty($userProfile->facebook_url) || $userProfile->facebook_url != ""){
                                                                             ?>
-                                                                            <li><a href="<?= $userCompanyProfile->facebook_url ?>"><i class="fab fa-facebook-square"></i></a></li>
+                                                                            <li><a href="<?= $userProfile->facebook_url ?>"><i class="fab fa-facebook-square"></i></a></li>
                                                                             <?php
                                                                         }
-                                                                        if(!empty($userCompanyProfile->twitter_url) || $userCompanyProfile->twitter_url != ""){
+                                                                        if(!empty($userProfile->twitter_url) || $userProfile->twitter_url != ""){
                                                                             ?>
-                                                                            <li><a href="<?= $userCompanyProfile->twitter_url ?>"><i class="fab fa-twitter-square"></i></a></li>
+                                                                            <li><a href="<?= $userProfile->twitter_url ?>"><i class="fab fa-twitter-square"></i></a></li>
                                                                             <?php
                                                                         }
-                                                                        if(!empty($userCompanyProfile->linkedin_url) || $userCompanyProfile->linkedin_url != ""){
+                                                                        if(!empty($userProfile->linkedin_url) || $userProfile->linkedin_url != ""){
                                                                             ?>
-                                                                            <li><a href="<?= $userCompanyProfile->linkedin_url ?>"><i class="fab fa-linkedin"></i></a></li>
+                                                                            <li><a href="<?= $userProfile->linkedin_url ?>"><i class="fab fa-linkedin"></i></a></li>
                                                                             <?php
                                                                         }
-                                                                        if(!empty($userCompanyProfile->instagram_url) || $userCompanyProfile->instagram_url != ""){
+                                                                        if(!empty($userProfile->instagram_url) || $userProfile->instagram_url != ""){
                                                                             ?>
-                                                                            <li><a href="<?= $userCompanyProfile->instagram_url ?>"><i class="fab fa-instagram"></i></a></li>
+                                                                            <li><a href="<?= $userProfile->instagram_url ?>"><i class="fab fa-instagram"></i></a></li>
                                                                             <?php
                                                                         }
                                                                     ?>
                                                                 </ul>
                                                             </div>
                                                             <?php
-                                                            if(!empty($userCompanyProfile->website_url) || $userCompanyProfile->website_url != ""){
+                                                            if(!empty($userProfile->website_url) || $userProfile->website_url != ""){
                                                                 ?>
                                                                 <div class="site-link-block">
                                                                     <span class="btn-block">Website</span>
-                                                                    <span class="btn-block mt-0"><a href="<?= $userCompanyProfile->website_url ?>"><?= $userCompanyProfile->website_url ?></a></span>
+                                                                    <span class="btn-block mt-0"><a href="<?= $userProfile->website_url ?>"><?= $userProfile->website_url ?></a></span>
                                                                 </div>
                                                                 <?php
                                                             }
-                                                            if(!empty($userCompanyProfile->public_phone) || $userCompanyProfile->public_phone != ""){
+                                                            if(!empty($userProfile->public_phone) || $userProfile->public_phone != ""){
                                                                 ?>
                                                                 <div class="map-button-block">
-                                                                    <button type="button" class="btn btn-primary btn-block">Send Pauline a message</button>
-                                                                    <button type="button" class="btn btn-primary btn-block">Call <?= $userCompanyProfile->public_phone ?></button>
+                                                                    <button type="button" class="btn btn-primary btn-block">Send <?= ucfirst($user['firstName']) ?> a message</button>
+                                                                    <button type="button" class="btn btn-primary btn-block">Call <?= $userProfile->public_phone ?></button>
                                                                 </div>
                                                                 <?php
                                                             }
@@ -245,19 +245,19 @@
                                                     <div class="d-block d-sm-flex align-items-center">
                                                         <h5 class="m-0">Reviews</h5>
                                                         <?php
-                                                            if(isset($reviewCount->total_review) && $reviewCount->total_review != 0){
+                                                            if(isset($userProfile->reviewCount) && $userProfile->reviewCount != 0){
                                                                 ?>
                                                                 <div class="ml-4 review-star-text">
                                                                     <span class="rating-block mr-3">
                                                                         <?php
                                                                             for ($i=1;$i <= 5 ; $i++){
                                                                                 ?>
-                                                                                <i class="<?= ($i<=$reviewCount->avg_review ? 'fas' : 'far') ?> fa-star"></i>
+                                                                                <i class="<?= ($i<=$userProfile->avgRating ? 'fas' : 'far') ?> fa-star"></i>
                                                                                 <?php
                                                                             }
                                                                         ?>
                                                                     </span>
-                                                                    <span>see all <?= $reviewCount->total_review ?> reviews</span>
+                                                                    <span>see all <?= $userProfile->reviewCount ?> reviews</span>
                                                                 </div>
                                                                 <?php
                                                             }
@@ -267,14 +267,14 @@
                                                         if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 2){
                                                             ?>
                                                             <div class="button-block">
-                                                                <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($reviewCount->total_review) && $reviewCount->total_review != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
+                                                                <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($userProfile->reviewCount) && $userProfile->reviewCount != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
                                                             </div>
                                                             <?php
                                                         }
                                                     ?>
                                                 </div>
                                                 <?php
-                                                if($reviewCount->total_review != 0){
+                                                if($userProfile->reviewCount != 0){
                                                     ?>
                                                     <div class="col-md-12 review-block-bottom">
                                                         <?php
@@ -325,17 +325,17 @@
                                                 <div class="col-md-12 top-block d-block d-sm-flex justify-content-between align-items-center p-0">
                                                     <h5 class="m-0">Professional endorsements</h5>
                                                     <?php
-                                                        if(isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0){
+                                                        if(isset($userProfile->endorsementCount) && $userProfile->endorsementCount != 0){
                                                             ?>
                                                             <div class="ml-4">
-                                                                (<span>read all <?= $endorsementCount->total_endorsement ?> endorsements</span>)
+                                                                (<span>read all <?= $userProfile->endorsementCount ?> endorsements</span>)
                                                             </div>
                                                             <?php
                                                         }
                                                         if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 1){
                                                             ?>
                                                             <div class="button-block">
-                                                                <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
+                                                                <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($userProfile->endorsementCount) && $userProfile->endorsementCount != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
                                                             </div>
                                                             <?php
                                                         }
@@ -343,7 +343,7 @@
                                                 </div>
                                                 <div class="col-md-12 bottom-block p-0">
                                                     <?php
-                                                    if(isset($endorsementCount->total_endorsement) && $endorsementCount->total_endorsement != 0){
+                                                    if(isset($userProfile->endorsementCount) && $userProfile->endorsementCount != 0){
                                                         foreach ($reviewAllDetails as $reviewDetail){
                                                             if($reviewDetail->review_type == 2){
                                                                 ?>

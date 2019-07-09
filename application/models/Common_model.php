@@ -42,6 +42,13 @@ class Common_model extends CI_Model {
         return $query->result();
     }
 
+    public function loadUserProfile($userId,$loginUserId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadUserProfile({$userId},{$this->db->escape($loginUserId)});");
+        $this->db->close();
+        return $query->row();
+    }
+
     public function viewZipCodes($q = null, $is_numeric = false){
         if($is_numeric) {
             $this->db->reconnect();

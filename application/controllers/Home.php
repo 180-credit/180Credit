@@ -167,13 +167,15 @@ class Home extends CI_Controller
         $userName = explode('-',urldecode($param));
         $condition = "firstName =" . "'" . $userName[0] . "' and lastName='". (isset($userName[1]) ? $userName[1] : '')."'";
         $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
-        $data['userCompanyProfile'] = $this->Common_model->loadUserCompanyProfile($data['user']['userId']);
-        $data['userAboutMe'] = $this->Common_model->loadUserAboutMe($data['user']['userId']);
+        $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
+        $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+//        $data['userCompanyProfile'] = $this->Common_model->loadUserCompanyProfile($data['user']['userId']);
+//        $data['userAboutMe'] = $this->Common_model->loadUserAboutMe($data['user']['userId']);
         $data['userAreasOfSpecialty'] = $this->Common_model->loadUserAreasOfSpecialty($data['user']['userId']);
         $data['userFees'] = $this->Common_model->loadUserFees($data['user']['userId']);
         $data['userTags'] = $this->Common_model->loadUserTags($data['user']['userId']);
-        $data['endorsementCount'] = $this->Common_model->endorsementCount($data['user']['userId']);
-        $data['reviewCount'] = $this->Common_model->reviewCount($data['user']['userId']);
+//        $data['endorsementCount'] = $this->Common_model->endorsementCount($data['user']['userId']);
+//        $data['reviewCount'] = $this->Common_model->reviewCount($data['user']['userId']);
         $data['reviewAllDetails'] = $this->Common_model->reviewAllDetails($data['user']['userId']);
         if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] == true){
             $this->load->view('viewProfileModel', $data);
