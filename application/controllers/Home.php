@@ -191,8 +191,8 @@ class Home extends CI_Controller
         $insert_user_stored_proc = "CALL saveUserReview(
 			{$rating_for}, 
 			{$rating}, 
-			'{$this->db->escape($review_headline)}',
-			'{$this->db->escape($wright_review)}',
+			{$this->db->escape($review_headline)},
+			{$this->db->escape($wright_review)},
 			{$user['userId']})";
         $result = $this->db->query($insert_user_stored_proc);
         echo 'true';
@@ -204,7 +204,7 @@ class Home extends CI_Controller
         $user=$_SESSION['user'];
         $insert_user_stored_proc = "CALL saveUserEndorsement(
 			{$rating_for}, 
-			'{$this->db->escape($wright_review)}',
+			{$this->db->escape($wright_review)},
 			{$user['userId']})";
         $result = $this->db->query($insert_user_stored_proc);
         echo 'true';
