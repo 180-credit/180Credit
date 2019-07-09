@@ -264,7 +264,7 @@
                                                         ?>
                                                     </div>
                                                     <?php
-                                                        if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 2){
+                                                        if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 2 && $userProfile->reviewId == 0){
                                                             ?>
                                                             <div class="button-block">
                                                                 <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($userProfile->reviewCount) && $userProfile->reviewCount != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
@@ -332,7 +332,7 @@
                                                             </div>
                                                             <?php
                                                         }
-                                                        if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 1){
+                                                        if(isset($_SESSION['user']['userId']) && $_SESSION['user']['180creditUserType'] == 1 && $userProfile->endorsementId == 0){
                                                             ?>
                                                             <div class="button-block">
                                                                 <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($userProfile->endorsementCount) && $userProfile->endorsementCount != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
