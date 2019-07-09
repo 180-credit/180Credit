@@ -501,6 +501,8 @@
 <script src="https://code.jquery.com/jquery-migrate-git.min.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
 <script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script>
 
    $('.home_tab').click(function () {
