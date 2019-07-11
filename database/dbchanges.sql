@@ -705,3 +705,44 @@ WHERE
 END
 
 DROP PROCEDURE `reviewAllDetails`; CREATE DEFINER=`root`@`localhost` PROCEDURE `reviewAllDetails`(IN `pUserId` INT) DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT * FROM user_reviews as ur LEFT JOIN users as u ON (ur.reviewer_user_id = u.userId) WHERE ur.user_id = `pUserId` AND ur.is_approved =1; END
+
+
+
+
+-- 11/07/2019
+DROP PROCEDURE `loadUserTags`; CREATE DEFINER=`root`@`localhost` PROCEDURE `loadUserTags`(IN `pUserId` INT(11)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN SELECT `ut`.`id` as userTagId, `t`.`tagName` as tagname FROM `user_tags` ut LEFT JOIN `tags` t on (`ut`.`tagId` = `t`.`id` AND `ut`.`userId` = `t`.`createdByUserId`) WHERE `ut`.`userId` = `pUserId`; END
+DROP PROCEDURE `saveTag`;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `saveTag`(IN `pUserId` INT(11), IN `pTagName` VARCHAR(255)) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER BEGIN
+	DECLARE `pTagId` Int(11);
+IF (NOT EXISTS (
+    SELECT 1 FROM `tags` WHERE `tags`.`tagName`=`pTagName` AND `tags`.`createdByUserId`=`pUserId`)) THEN
+	INSERT INTO `tags` (
+	`tagName`,
+	`createdByUserId`,
+	`createdOn`)
+	VALUES (
+    `pTagName`,
+	`pUserId`,
+	NOW());
+
+END IF;
+
+    SET `pTagId` = (SELECT `id`FROM tags
+    WHERE `tagName` = `pTagName` AND `tags`.`createdByUserId`=`pUserId`);
+    IF (NOT EXISTS (
+    SELECT 1 FROM `user_tags` WHERE `user_tags`.`tagId`=`pTagId` AND `user_tags`.`userId` = `pUserId`) ) THEN
+	INSERT INTO `user_tags` (
+	`tagId`,
+	`userId`,
+	`createdOn`)
+	VALUES (
+    `pTagId`,
+	`pUserId`,
+	NOW());
+    END IF;
+
+	SELECT `id`, `tagName`, `createdByUserId`
+    FROM tags
+    WHERE `tagName` = `pTagName` AND `createdByUserId` = `pUserId`;
+
+END

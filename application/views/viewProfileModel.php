@@ -454,7 +454,7 @@
                                                                         <div class="d-flex">
                                                                             <h6><a href="<?= base_url().'view-specialist-profile/'.ucfirst($reviewDetail->firstName).'-'.ucfirst($reviewDetail->lastName);  ?>"><?= ucfirst($reviewDetail->firstName).' '.ucfirst($reviewDetail->lastName) ?></a></h6> <span class="ml-2">on <?= date('F j, Y',strtotime($reviewDetail->created_on)) ?></span>
                                                                         </div>
-                                                                        <p class="more"><?= $reviewDetail->description ?></a>
+                                                                        <p class="more"><?= $reviewDetail->description ?>
                                                                         </p>
                                                                     </div>
                                                                 </div>
