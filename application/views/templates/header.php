@@ -63,21 +63,82 @@
 							</button>
 						</div>
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
 							<ul class="navbar-nav mr-auto">
-								<li class="nav-item">
-									<a class="nav-link" href="#">About Us</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#">Free Q & A</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="#">News & Articles</a>
-								</li>
+                                <?php
+
+                                if(isset($_SESSION['user']) && $_SESSION['user']['180creditUserType'] == '1'){
+                                ?>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fas fa-user"></i> Deals</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fa fa-envelope"></i> Mail</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fa fa-calendar-check" aria-hidden="true"></i> Activities</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fas fa-user"></i> Contacts</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#"><i class="fas fa-chart-bar" aria-hidden="true"></i> Progress</a>
+                                    </li>
+
+                                    <?php
+                                }
+                                else{
+                                    ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">About Us</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Free Q & A</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">News & Articles</a>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+
 
 							</ul>
 							<div class="register-block d-flex">
+                                <?php
+
+                                if(isset($_SESSION['user']) && $_SESSION['user']['180creditUserType'] == '1'){
+//                                    font_service_prov
+                                ?>
+                                    <i class="fa fa-bell font_icon_set " aria-hidden="true"></i>
+                                    <?php
+                                }
+                                elseif(isset($_SESSION['user']) && $_SESSION['user']['180creditUserType'] == '2'){
+                                ?>
+                                    <i class="fa fa-bell font_icon_set" aria-hidden="true"></i>
+                                    <?php
+                                }
+                                else{
+                                    ?>
+                                    <button type="button" class="btn list-buis">List Your Business</button>
+                                    <?php
+                                }
+                                ?>
+
+                                <div class="dropdown login-dropdown lang_drop">
+                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-globe"></i>English
+                                    </a>
+                                    <div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink1">
+                                        <a href="<?= base_url(); ?>" class="btn btn-primary btn-block txtwhite">Españiol</a>
+                                    </div>
+                                </div>
+
 								<div class="dropdown login-dropdown mr-3">
 									<?php
+
 										if(isset($_SESSION['user'])){
 											$user = $_SESSION['user'];
 											?>
@@ -106,19 +167,19 @@
 										}
 										else{
 											?>
-												<a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 												<i class="fas fa-user"></i> Log in/Register
 												</a>
 
-												<div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
-													<a href="<?= base_url(); ?>consumer/login" class="btn btn-primary btn-block txtwhite">Consumer</a>
-													<a href="<?= base_url(); ?>service-provider/login" class="btn btn-secondary btn-block txtwhite">Service Provider</a>
-												</div>		
+                                                <div class="dropdown-menu p-2 rounded shadow-sm border-0" aria-labelledby="dropdownMenuLink">
+                                                    <a href="<?= base_url(); ?>consumer/login" class="btn btn-primary btn-block txtwhite">Consumer</a>
+                                                    <a href="<?= base_url(); ?>service-provider/login" class="btn btn-secondary btn-block txtwhite">Service Provider</a>
+                                                </div>
 											<?php
 										}
 									?>
 								</div>
-								<button type="button" class="btn list-buis">List Your Business</button>
+
 							</div>
 						</div>
 

@@ -298,3 +298,28 @@ label.custom-control-label.customControlAutosizing2 {
     display: block;
     margin-top: 15rem;
 }
+.lang_drop a
+{
+    color: #4a5566 !important;
+}
+.lang_drop .txtwhite
+{
+    color:white !important;
+}
+.font_icon_set
+{
+    margin: auto;
+    padding: 0 15px;
+}
+.font_service_prov
+{
+    color: #e57125;
+}
+
+.register-block .login-dropdown a.btn i.fa.fa-globe {
+    color: #4a5566;
+    background: transparent;
+    font-size: 16px;
+    padding-right: 0px;
+    margin-right: 5px;
+}
