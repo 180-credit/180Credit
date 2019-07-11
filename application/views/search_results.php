@@ -394,7 +394,7 @@
         </div>
     </div>
 </div>
-
+<div id="wait" ><img src='<?php echo base_url(); ?>assets/images/loader.gif' /></div>
 </div>
 <script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 <script>
@@ -409,6 +409,12 @@
             echo 'var user = {};';
         }
     ?>
+    $(document).ajaxStart(function(){
+        $("#wait").css("display", "block");
+    });
+    $(document).ajaxComplete(function(){
+        $("#wait").css("display", "none");
+    });
     var currentUrl = window.location.href;
     var HistoryState = {};
     function showProfileModel(name){
