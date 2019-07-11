@@ -284,9 +284,8 @@ label.custom-control-label.customControlAutosizing2 {
     display: block;
 }
 #wait{
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
     padding: 2px;
     z-index: 100000000;
     background: #9e9e9eb3;
