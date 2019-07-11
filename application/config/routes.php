@@ -66,6 +66,7 @@ $route['privacy_policy'] = 'welcome/privacy_policy';
 $route['verify/(:any)'] = 'login/verify_user_email';
 $route['search'] = 'home/searchDetails';
 $route['view-specialist-profile/(:any)'] = 'home/specialistProfile/$1';
+$route['list-your-business'] = 'Home';
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

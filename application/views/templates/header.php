@@ -122,7 +122,7 @@
                                 }
                                 else{
                                     ?>
-                                    <button type="button" class="btn list-buis">List Your Business</button>
+                                    <button type="button" class="btn list-buis" onclick="window.location.href='<?= base_url().'list-your-business'; ?>'">List Your Business</button>
                                     <?php
                                 }
                                 ?>
