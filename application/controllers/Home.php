@@ -247,7 +247,45 @@ class Home extends CI_Controller
         }
     }
 
+    public function sendReviewToUser($user){
+        $data['msg'] = '';
+        $data['title'] = urldecode($user).'\'s Profile';
+        $data['view'] = 'profile';
+        $this->load->model('Common_model');
+        $this->load->model('Login_model');
+        $userName = explode('-',urldecode($user));
+        $condition = "firstName =" . "'" . $userName[0] . "' and lastName='". (isset($userName[1]) ? $userName[1] : '')."'";
+        $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
+        $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
+        $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+        $this->template->load('layout','sendReviewDetails', $data);
+    }
 
+    public function sendEndorsementToUser($user){
+        $data['msg'] = '';
+        $data['title'] = urldecode($user).'\'s Profile';
+        $data['view'] = 'profile';
+        $this->load->model('Common_model');
+        $this->load->model('Login_model');
+        $userName = explode('-',urldecode($user));
+        $condition = "firstName =" . "'" . $userName[0] . "' and lastName='". (isset($userName[1]) ? $userName[1] : '')."'";
+        $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
+        $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
+        $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+        $this->template->load('layout','sendEndorsementDetails', $data);
+    }
 
-
+    public function sendMessageToUser($user){
+        $data['msg'] = '';
+        $data['title'] = urldecode($user).'\'s Profile';
+        $data['view'] = 'profile';
+        $this->load->model('Common_model');
+        $this->load->model('Login_model');
+        $userName = explode('-',urldecode($user));
+        $condition = "firstName =" . "'" . $userName[0] . "' and lastName='". (isset($userName[1]) ? $userName[1] : '')."'";
+        $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
+        $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
+        $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+        $this->template->load('layout','sendMessageToUser', $data);
+    }
 }

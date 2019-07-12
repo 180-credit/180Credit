@@ -829,7 +829,7 @@
                     return false;
                     // $("#consumer_form").submit();
                 }
-            })
+            });
         }
     }
     function countTextWord(a){

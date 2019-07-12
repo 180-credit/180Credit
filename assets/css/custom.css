@@ -308,7 +308,7 @@ label.custom-control-label.customControlAutosizing2 {
 }
 .font_icon_set
 {
-    margin: auto;
+    margin: auto;.
     padding: 0 15px;
 }
 .font_service_prov
@@ -322,4 +322,8 @@ label.custom-control-label.customControlAutosizing2 {
     font-size: 16px;
     padding-right: 0px;
     margin-right: 5px;
+}
+
+.media .media-body #message_form .best-call .custom-checkbox{
+    display: inline-block;
 }

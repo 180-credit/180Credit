@@ -481,7 +481,7 @@
                 '                                <input type="text" class="form-control" id="review_headline" name="review_headline" placeholder="">\n' +
                 '                            </div>\n' +
                 '                            <div class="form-group">\n' +
-                '                                <h6 class="txtarea-all-details"><b>Wright your review</b></h6>' +
+                '                                <h6 class="txtarea-all-details"><b>Write your review</b></h6>' +
                 '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
                 '                                <textarea class="form-control" id="contact_message" name="wright_review" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
                 '<div class="error contact_message_lable_error clr-red"></div>' +
@@ -545,7 +545,7 @@
                 '                        <form id="review_form" method="post">\n' +
                 '                            <div class="form-group">\n' +
                 '<input type="hidden" name="rating_for" id="rating_for" value="'+userId+'" />' +
-                '                                <h6 class="txtarea-all-details"><b>Wright your endorsement</b></h6>' +
+                '                                <h6 class="txtarea-all-details"><b>Write your endorsement</b></h6>' +
                 '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
                 '                                <textarea class="form-control" id="contact_message" name="wright_review" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
                 '<div class="error contact_message_lable_error clr-red"></div>' +
