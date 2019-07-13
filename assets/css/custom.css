@@ -327,3 +327,6 @@ label.custom-control-label.customControlAutosizing2 {
 .media .media-body #message_form .best-call .custom-checkbox{
     display: inline-block;
 }
+.media .media-body #message_form .custom-control-label{
+    padding-top: 0.10rem;
+}

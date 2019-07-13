@@ -276,6 +276,20 @@ class Home extends CI_Controller
     }
 
     public function sendMessageToUser($user){
+        if(!isset($_SESSION['user'])){
+            $path = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $this->load->library('uuid');
+            $token = $this->uuid->v4();
+            $data = array(
+                'id' => $token,
+                'redirectURL' => $path
+            );
+            $this->db->set($data);
+            $query=$this->db->get_compiled_insert('redirects');
+            $this->db->query($query);
+            $_SESSION['rt'] = $token;
+            redirect('consumer/login');
+        }
         $data['msg'] = '';
         $data['title'] = urldecode($user).'\'s Profile';
         $data['view'] = 'profile';

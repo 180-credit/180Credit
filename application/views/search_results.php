@@ -551,11 +551,15 @@
                             }
                             html +='</ul>\n' +
                                 '                </div>\n' +
-                                '                <div class="button-block">\n' +
-                                '                    <button type="button" class="btn btn-primary modelPrimiumBtn">\n' +
-                                '                        <i class="fas fa-envelope"></i>Message\n' +
-                                '                    </button>\n' +
-                                '                </div>\n' +
+                                '                <div class="button-block">\n';
+                            if (user.firstName){
+                                html +='<button type="button" class="btn btn-primary modelPrimiumBtn">\n' +
+                                    '<i class="fas fa-envelope"></i>Message</button>\n';
+                            }else {
+                                html +='<button type="button" class="btn btn-primary" onclick="window.location.href=\'<?php echo base_url().'send-message/'; ?>'+v.firstName+'-'+v.lastName+'\'">\n' +
+                                    '<i class="fas fa-envelope"></i>Message</button>\n';
+                            }
+                            html +='                </div>\n' +
                                 '            </div>';
                         }
                         html += '    </div>\n' +

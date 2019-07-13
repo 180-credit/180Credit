@@ -86,9 +86,17 @@
                                                 <h6 class="mb-1"><?= isset($userProfile->company_name) ? $userProfile->company_name : '' ?></h6>
                                                 <p><?= isset($userProfile->city) ? $userProfile->city : '' ?>, <?= isset($userProfile->state_abbr) ? $userProfile->state_abbr : '' ?></p>
                                             </div>
-                                            <button type="button" class="btn btn-primary"><i
-                                                    class="fas fa-envelope"></i>Send a Message
-                                            </button>
+                                            <?php
+                                                if(!isset($_SESSION['user'])){
+                                                    ?>
+                                                    <button type="button" class="btn btn-primary" onclick="window.location.href='<?php echo base_url().'send-message/'.$user['firstName'].'-'.$user['lastName']; ?>'"><i class="fas fa-envelope"></i>Send a Message</button>
+                                                    <?php
+                                                } else{
+                                                    ?>
+                                                    <button type="button" class="btn btn-primary"><i class="fas fa-envelope"></i>Send a Message</button>
+                                                    <?php
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="profile-bottom p-3">
@@ -310,9 +318,21 @@
                                                             if (!empty($userProfile->public_phone) || $userProfile->public_phone != "") {
                                                                 ?>
                                                                 <div class="map-button-block">
-                                                                    <button type="button"
-                                                                            class="btn btn-primary btn-block">Send <?= ucfirst($user['firstName']) ?> a message
-                                                                    </button>
+                                                                    <?php
+                                                                        if (!isset($_SESSION['user'])){
+                                                                            ?>
+                                                                            <button type="button"
+                                                                                    class="btn btn-primary btn-block" onclick="window.location.href='<?php echo base_url().'send-message/'.$user['firstName'].'-'.$user['lastName']; ?>'">Send <?= ucfirst($user['firstName']) ?> a message
+                                                                            </button>
+                                                                            <?php
+                                                                        }else{
+                                                                            ?>
+                                                                            <button type="button"
+                                                                                    class="btn btn-primary btn-block">Send <?= ucfirst($user['firstName']) ?> a message
+                                                                            </button>
+                                                                            <?php
+                                                                        }
+                                                                    ?>
                                                                     <button type="button"
                                                                             class="btn btn-primary btn-block">
                                                                         Call <?= $userProfile->public_phone ?></button>

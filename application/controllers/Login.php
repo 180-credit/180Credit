@@ -53,6 +53,18 @@ class Login extends CI_Controller
         $this->template->load('layout', 'login/login_consumer', $data);
     }
 
+    public function sessionRedirectionCheck(){
+        if (isset($_SESSION['rt'])){
+            $this->db->select('*');
+            $this->db->from('redirects');
+            $this->db->where('id',$_SESSION['rt']);
+            $result = $this->db->get()->row();
+            if(isset($result->redirectURL)){
+                redirect($result->redirectURL);
+            }
+        }
+    }
+
     public function signup_consumer()
     {
         if ($this->checkLogin()) {
@@ -182,6 +194,7 @@ class Login extends CI_Controller
                 if (isset($_POST['redirection_url'])) {
                     redirect($_POST['redirection_url']);
                 } else {
+                    $this->sessionRedirectionCheck();
                     redirect('/my-account');
                 }
             } else {
@@ -301,6 +314,7 @@ class Login extends CI_Controller
                 }
                 $this->session->set_userdata('user', $user);
                 $this->session->set_flashdata('success', 'You are login successfully.');
+                $this->sessionRedirectionCheck();
                 redirect('/my-account');
             }
         }
@@ -357,6 +371,7 @@ class Login extends CI_Controller
                 }
                 $this->session->set_userdata('user', $user);
                 $this->session->set_flashdata('success', 'You are login successfully.');
+                $this->sessionRedirectionCheck();
                 redirect('/my-account');
             }
         } catch (Exception $e) {
