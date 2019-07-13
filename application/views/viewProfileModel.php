@@ -198,24 +198,8 @@
                                                             }
                                                         }
                                                         ?>
-                                                <!--<li><i class="fas fa-circle"></i>Credit Repair</li>
-                                                <li><i class="fas fa-circle"></i>Student Loans</li>
-                                                <li><i class="fas fa-circle"></i>Debt Consolidation</li>
-                                                <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
-                                                <li><i class="fas fa-circle"></i>Collections</li>
-                                                <li><i class="fas fa-circle"></i>Charge Offs</li>-->
                                                     </ul>
                                                 </div>
-                                                <!--<div class="d-inline-block">
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li><i class="fas fa-circle"></i>Credit Repair</li>
-                                                        <li><i class="fas fa-circle"></i>Student Loans</li>
-                                                        <li><i class="fas fa-circle"></i>Debt Consolidation</li>
-                                                        <li><i class="fas fa-circle"></i>Consumer Credit Counseling</li>
-                                                        <li><i class="fas fa-circle"></i>Collections</li>
-                                                        <li><i class="fas fa-circle"></i>Charge Offs</li>
-                                                    </ul>
-                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="card mt-3 fee-payments-block" id="Fees">
@@ -374,6 +358,12 @@
                                                         ?>
                                                         <div class="button-block">
                                                             <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openReviewModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($userProfile->reviewCount) && $userProfile->reviewCount != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
+                                                        </div>
+                                                        <?php
+                                                    }else if (!isset($_SESSION['user'])){
+                                                        ?>
+                                                        <div class="button-block">
+                                                            <button type="button" class="btn btn-secondary" onclick="window.location.href='<?php echo base_url().'give-review/'.$user['firstName'].'-'.$user['lastName']; ?>'"><?= isset($userProfile->reviewCount) && $userProfile->reviewCount != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
                                                         </div>
                                                         <?php
                                                     }

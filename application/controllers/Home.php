@@ -197,7 +197,12 @@ class Home extends CI_Controller
 			{$this->db->escape($wright_review)},
 			{$user['userId']})";
         $result = $this->db->query($insert_user_stored_proc);
-        echo 'true';
+        if($this->input->post('is_page') == true){
+            $prive = explode('/',$_SERVER['HTTP_REFERER']);
+            redirect('/view-specialist-profile/'.end($prive));
+        }else{
+            echo 'true';
+        }
     }
 
     public function endorse_details_save(){
@@ -209,7 +214,12 @@ class Home extends CI_Controller
 			{$this->db->escape($wright_review)},
 			{$user['userId']})";
         $result = $this->db->query($insert_user_stored_proc);
-        echo 'true';
+        if($this->input->post('is_page') == true){
+            $prive = explode('/',$_SERVER['HTTP_REFERER']);
+            redirect('/view-specialist-profile/'.end($prive));
+        }else{
+            echo 'true';
+        }
     }
 
     public function edit_profile()
@@ -248,6 +258,22 @@ class Home extends CI_Controller
     }
 
     public function sendReviewToUser($user){
+        if(!isset($_SESSION['user'])){
+            $path = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $this->load->library('uuid');
+            $token = $this->uuid->v4();
+            $data = array(
+                'id' => $token,
+                'redirectURL' => $path
+            );
+            $this->db->set($data);
+            $query=$this->db->get_compiled_insert('redirects');
+            $this->db->query($query);
+            $_SESSION['rt'] = $token;
+            redirect('consumer/login');
+        }elseif (isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] == 1){
+            $data['not_able_to_review'] = true;
+        }
         $data['msg'] = '';
         $data['title'] = urldecode($user).'\'s Profile';
         $data['view'] = 'profile';

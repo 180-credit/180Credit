@@ -68,29 +68,56 @@
                                     <div class="media">
                                         <div class="media-body ">
                                             <div class="card about-block p-2">
-                                                <div class="popup-head">
-                                                    <h5 class="mt-0">Leave a review for <?= ucfirst($user['firstName']) ?></h5>
-                                                </div>
-                                                <form id="review_form" method="post">
-                                                    <div class="form-group">
-                                                        <input type="hidden" name="rating_for" id="rating_for" value="<?= ucfirst($user['userId']) ?>"/>
-                                                        <div style="display:inline-block;" id="rateYo"></div>
-                                                        <input type="hidden" name="rating" id="rating_input"/>
+                                                <?php
+                                                if (isset($not_able_to_review) && $not_able_to_review == true) {
+                                                    ?>
+                                                    <div class="popup-head">
+                                                        <h5 class="mt-0">You can't give a review.</h5>
                                                     </div>
-                                                    <div class="form-group" >
-                                                        <h6><b>Add a headline</b></h6>
-                                                        <input type="text" class="form-control" id="review_headline" name="review_headline" placeholder="">
+                                                    <?php
+                                                }elseif (isset($userProfile->reviewId) && $userProfile->reviewId != 0) {
+                                                    ?>
+                                                    <div class="popup-head">
+                                                        <h5 class="mt-0">You have already given review to <?= ucfirst($user['firstName']) ?>.</h5>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <h6 class="txtarea-all-details"><b>Write your endorsement</b></h6>
-                                                        <label for="contact_message" class="float-right" id="contact_message_lable">2000</label>
-                                                        <textarea class="form-control" id="contact_message" name="wright_review" onkeyup="countTextWord(this)" rows="3"></textarea>
-                                                        <div class="error contact_message_lable_error clr-red"></div>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <div class="popup-head">
+                                                        <h5 class="mt-0">Leave a review
+                                                            for <?= ucfirst($user['firstName']) ?></h5>
                                                     </div>
-                                                    <button type="submit" id="submit-message_form" class="btn btn-primary">
-                                                        Submit endorsement
-                                                    </button>
-                                                </form>
+                                                    <form id="review_form" method="post" action="<?= base_url() ?>home/review_details_save">
+                                                        <div class="form-group">
+                                                            <input type="hidden" name="rating_for" id="rating_for"
+                                                                   value="<?= ucfirst($user['userId']) ?>"/>
+                                                            <div style="display:inline-block;" id="rateYo"></div>
+                                                            <input type="hidden" name="rating" id="rating_input"/>
+                                                            <input type="hidden" name="is_page" value="true" id="rating_input"/>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <h6><b>Add a headline</b></h6>
+                                                            <input type="text" class="form-control" id="review_headline"
+                                                                   name="review_headline" placeholder="">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <h6 class="txtarea-all-details"><b>Write your
+                                                                    endorsement</b></h6>
+                                                            <label for="contact_message" class="float-right"
+                                                                   id="contact_message_lable">2000</label>
+                                                            <textarea class="form-control" id="contact_message"
+                                                                      name="wright_review" onkeyup="countTextWord(this)"
+                                                                      rows="3"></textarea>
+                                                            <div class="error contact_message_lable_error clr-red"></div>
+                                                        </div>
+                                                        <button type="submit" id="submit-message_form"
+                                                                class="btn btn-primary">
+                                                            Submit endorsement
+                                                        </button>
+                                                    </form>
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -105,8 +132,6 @@
     </div>
 </main>
 <script src="https://code.jquery.com/jquery-migrate-git.min.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/jquery.sticky.js" type="text/javascript"></script>
-<script src="<?php echo base_url(); ?>assets/js/sticky-sidebar.js" type="text/javascript"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
 <script>
@@ -150,7 +175,7 @@
         });
     });
     $("#rateYo").rateYo({
-        halfStar:false,
+        halfStar: false,
         fullStar: true,
         onSet: function (rating, rateYoInstance) {
             rating = Math.ceil(rating);
@@ -171,9 +196,8 @@
     });
     $("#review_form").submit(function (e) {
         if ($("#review_form").valid()) {
-            // $("#review_form").submit();
-            e.preventDefault();
-            // $("#review_form").submit();
+            $("#review_form").submit();
+            // e.preventDefault();
             /*$.post('home/endorse_details_save', $("#review_form").serialize(), function (result) {
                 if (result) {
                     viewProfileModalHandler.openSaveEndorseModal(name);
