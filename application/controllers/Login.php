@@ -467,9 +467,9 @@ class Login extends CI_Controller
             $user = (array)$this->Login_model->getDataByCondition('users', $condition, true);
 
             if (!empty($user)) {
-//                $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
+                $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
 //                $this->session->set_flashdata('success', 'Email verification successfully');
-//                $this->addOrUpdateCCData($user);
+                $this->addOrUpdateCCData($user);
                 $data['redirectUrl'] = base_url() . '/my-account';
                 if ($this->input->get('redirectToken') != '') {
                     $this->db->select('*');
