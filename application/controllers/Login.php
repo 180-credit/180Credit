@@ -1,5 +1,6 @@
 <?php
 
+use Ctct\Components\Contacts\Contact;
 use Ctct\ConstantContact;
 use Ctct\Exceptions\CtctException;
 
@@ -40,7 +41,8 @@ class Login extends CI_Controller
         $this->template->load('layout', 'login/login_service_provider', $data);
     }
 
-    public function login_consumer() {
+    public function login_consumer()
+    {
         if ($this->checkLogin()) {
             redirect('/');
         }
@@ -53,13 +55,14 @@ class Login extends CI_Controller
         $this->template->load('layout', 'login/login_consumer', $data);
     }
 
-    public function sessionRedirectionCheck(){
-        if (isset($_SESSION['rt'])){
+    public function sessionRedirectionCheck()
+    {
+        if (isset($_SESSION['rt'])) {
             $this->db->select('*');
             $this->db->from('redirects');
-            $this->db->where('id',$_SESSION['rt']);
+            $this->db->where('id', $_SESSION['rt']);
             $result = $this->db->get()->row();
-            if(isset($result->redirectURL)){
+            if (isset($result->redirectURL)) {
                 redirect($result->redirectURL);
             }
         }
@@ -103,7 +106,7 @@ class Login extends CI_Controller
         $condition = "userEmail =" . "'" . $this->input->post('email') . "'";
         $user_details = (array)$this->Login_model->getDataByCondition('users', $condition, true);
 
-        $linkToken = base_url() . 'verify/' . $user_details['verificationToken'];
+        $linkToken = base_url() . 'verify/' . $user_details['verificationToken'] . (isset($_SESSION['rt']) ? '?redirectToken=' . $_SESSION['rt'] : '');
         $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -380,28 +383,29 @@ class Login extends CI_Controller
     }
 
 
-    private function addOrUpdateCCData($userData){
+    private function addOrUpdateCCData($userData)
+    {
         $this->cc = new ConstantContact(CONSTANT_CONTACT_APIKEY);
         try {
             // check to see if a contact with the email address already exists in the account
             $response = $this->cc->contactService->getContacts(CONSTANT_CONTACT_ACCESS_TOKEN, array("email" => $userData['userEmail']));
-            if(isset($userData['180creditUserType']) && $userData['180creditUserType']==1){
-                $listType = $this->cc->listService->getList(CONSTANT_CONTACT_ACCESS_TOKEN,CONSTANT_CONTACT_PROVIDER_LIST);
-            }else{
-                $listType = $this->cc->listService->getList(CONSTANT_CONTACT_ACCESS_TOKEN,CONSTANT_CONTACT_CONSUMER_LIST);
+            if (isset($userData['180creditUserType']) && $userData['180creditUserType'] == 1) {
+                $listType = $this->cc->listService->getList(CONSTANT_CONTACT_ACCESS_TOKEN, CONSTANT_CONTACT_PROVIDER_LIST);
+            } else {
+                $listType = $this->cc->listService->getList(CONSTANT_CONTACT_ACCESS_TOKEN, CONSTANT_CONTACT_CONSUMER_LIST);
             }
             // create a new contact if one does not exist
             if (empty($response->results)) {
-                $contact = new \Ctct\Components\Contacts\Contact();
+                $contact = new Contact();
                 $contact->addEmail($userData['userEmail']);
-                $contact->lists[]=$listType;
+                $contact->lists[] = $listType;
                 $contact->first_name = $userData['firstName'];
                 $contact->last_name = $userData['lastName'];
                 $contact->status = 'ACTIVE';
                 $returnContact = $this->cc->contactService->addContact(CONSTANT_CONTACT_ACCESS_TOKEN, $contact);
             } else {
                 $contact = $response->results[0];
-                if ($contact instanceof \Ctct\Components\Contacts\Contact) {
+                if ($contact instanceof Contact) {
 //                    $contact->lists[]=$listType;
                     $contact->first_name = $userData['firstName'];
                     $contact->last_name = $userData['lastName'];
@@ -453,26 +457,31 @@ class Login extends CI_Controller
         return $data;
     }
 
-    public function verify_user_email()
+    public function verify_user_email($param)
     {
         $link = $_SERVER['PHP_SELF'];
-        $link_array = explode('/', $link);
-        $verification_token = end($link_array);
-
+        $verification_token = $param;
+        $data['title'] = 'Email verification';
         if ($verification_token != '') {
             $condition = "verificationToken =" . "'" . $verification_token . "'";
             $user = (array)$this->Login_model->getDataByCondition('users', $condition, true);
 
             if (!empty($user)) {
-                $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
-                $this->session->set_flashdata('success', 'Email verification successfully');
-                if (isset($user['180creditUserType']) && $user['180creditUserType'] == "1") {
-                    $this->addOrUpdateCCData($user);
-                    redirect('/login/login_service_provider');
-                } else {
-                    $this->addOrUpdateCCData($user);
-                    redirect('/login/login_consumer');
+//                $this->user_model->Edit($user['userId'], array('verificationToken' => '', 'isEmailVerified' => 1));
+//                $this->session->set_flashdata('success', 'Email verification successfully');
+//                $this->addOrUpdateCCData($user);
+                $data['redirectUrl'] = base_url() . '/my-account';
+                if ($this->input->get('redirectToken') != '') {
+                    $this->db->select('*');
+                    $this->db->from('redirects');
+                    $this->db->where('id', $this->input->get('redirectToken'));
+                    $result = $this->db->get()->row();
+                    if (isset($result->redirectURL)) {
+                        $data['redirectUrl'] = $result->redirectURL;
+                    }
                 }
+                $this->session->set_userdata('user', $user);
+                $this->template->load('layout', 'login/verification_screen', $data);
             } else {
                 $this->session->set_flashdata('error', 'Verification token is expired.');
                 redirect('/consumer/login');

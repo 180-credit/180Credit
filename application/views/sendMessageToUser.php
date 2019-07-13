@@ -86,7 +86,7 @@
                                         <div class="media-body">
                                             <form id="message_form">
                                             <div class="form-group">
-                                                <h7 class="txtarea-all-details">Use the form below to send Paul a message. We’ll notify you as soon as they respond!</h7>
+                                                <h7 class="">Use the form below to send Paul a message. We’ll notify you as soon as they respond!</h7>
                                                     <label for="contact_message" class="float-right" id="contact_message_lable">2000</label>
                                                     <textarea class="form-control" id="contact_message" name="contact_message" onkeyup="countTextWord(this)" rows="3"></textarea>
                                                     <div class="error contact_message_lable_error clr-red"></div>
