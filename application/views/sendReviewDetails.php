@@ -93,7 +93,7 @@
                                                                    value="<?= ucfirst($user['userId']) ?>"/>
                                                             <div style="display:inline-block;" id="rateYo"></div>
                                                             <input type="hidden" name="rating" id="rating_input"/>
-                                                            <input type="hidden" name="is_page" value="true" id="rating_input"/>
+                                                            <input type="hidden" name="is_page" value="true" />
                                                         </div>
                                                         <div class="form-group">
                                                             <h6><b>Add a headline</b></h6>

@@ -364,6 +364,12 @@
                                                                 <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.openEndorseModal('<?= $user['userId']; ?>','<?= $user['firstName'].' '.$user['lastName']; ?>')"><?= isset($userProfile->endorsementCount) && $userProfile->endorsementCount != 0 ? 'Endorse '.$user['firstName'] : 'Be the first to endorse '.$user['firstName']; ?></button>
                                                             </div>
                                                             <?php
+                                                        }else if (!isset($_SESSION['user'])){
+                                                            ?>
+                                                            <div class="button-block">
+                                                                <button type="button" class="btn btn-secondary" onclick="window.location.href='<?php echo base_url().'give-review/'.$user['firstName'].'-'.$user['lastName']; ?>'"><?= isset($userProfile->reviewCount) && $userProfile->reviewCount != 0 ? 'Leave a review' : 'Be the first to leave a review'; ?></button>
+                                                            </div>
+                                                            <?php
                                                         }
                                                     ?>
                                                 </div>

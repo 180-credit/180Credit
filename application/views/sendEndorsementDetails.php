@@ -65,29 +65,50 @@
                         <div class="card border-0 shadow_card bg-light" id="sticky_main_panel">
                             <div class="card-body p-0">
                                 <div class="tab-content bg-light p-2" id="myTabContent">
-                                <div class="media">
-                                    <div class="media-body ">
-                                        <div class="card about-block p-2">
-                                        <div class="popup-head">
-                                            <h5 class="mt-0">Leave a review for <?= ucfirst($user['firstName']) ?></h5>
-                                        </div>
-                                        <form id="review_form" method="post">
-                                            <div class="form-group">
-                                                <input type="hidden" name="rating_for" id="rating_for"
-                                                       value="<?= $user['userId'] ?>"/>
-                                                <h6 class="txtarea-all-details"><b>Write your endorsement</b></h6>
-                                                <label for="contact_message" class="float-right" id="contact_message_lable">2000</label>
-                                                <textarea class="form-control" id="contact_message" name="wright_review"
-                                                          onkeyup="countTextWord(this)" rows="3"></textarea>
-                                                <div class="error contact_message_lable_error clr-red"></div>
+                                    <div class="media">
+                                        <div class="media-body ">
+                                            <div class="card about-block p-2">
+                                                <?php
+                                                if (isset($not_able_to_review) && $not_able_to_review == true) {
+                                                    ?>
+                                                    <div class="popup-head">
+                                                        <h5 class="mt-0">You can't give a endorsement.</h5>
+                                                    </div>
+                                                    <?php
+                                                } elseif (isset($userProfile->endorsementId) && $userProfile->endorsementId != 0) {
+                                                    ?>
+                                                    <div class="popup-head">
+                                                        <h5 class="mt-0">You have already given endorsement
+                                                            to <?= ucfirst($user['firstName']) ?>.</h5>
+                                                    </div>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <form id="review_form" method="post" action="<?= base_url() ?>home/endorse_details_save">
+                                                        <div class="form-group">
+                                                            <input type="hidden" name="rating_for" id="rating_for"
+                                                                   value="<?= $user['userId'] ?>"/>
+                                                            <input type="hidden" name="is_page" value="true" />
+                                                            <h6 class="txtarea-all-details"><b>Write your
+                                                                    endorsement</b></h6>
+                                                            <label for="contact_message" class="float-right"
+                                                                   id="contact_message_lable">2000</label>
+                                                            <textarea class="form-control" id="contact_message"
+                                                                      name="wright_review"
+                                                                      onkeyup="countTextWord(this)" rows="3"></textarea>
+                                                            <div class="error contact_message_lable_error clr-red"></div>
+                                                        </div>
+                                                        <button type="submit" id="submit-message_form"
+                                                                class="btn btn-primary">
+                                                            Submit endorsement
+                                                        </button>
+                                                    </form>
+                                                    <?php
+                                                }
+                                                ?>
                                             </div>
-                                            <button type="submit" id="submit-message_form" class="btn btn-primary">
-                                                Submit endorsement
-                                            </button>
-                                        </form>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -152,8 +173,8 @@
     });
     $("#review_form").submit(function (e) {
         if ($("#review_form").valid()) {
-            // $("#review_form").submit();
-            e.preventDefault();
+            $("#review_form").submit();
+            // e.preventDefault();
             // $("#review_form").submit();
             /*$.post('home/endorse_details_save', $("#review_form").serialize(), function (result) {
                 if (result) {
