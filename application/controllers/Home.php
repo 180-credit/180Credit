@@ -300,7 +300,7 @@ class Home extends CI_Controller
             $query=$this->db->get_compiled_insert('redirects');
             $this->db->query($query);
             $_SESSION['rt'] = $token;
-            redirect('consumer/login');
+            redirect('service-provider/login');
         }elseif (isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] == 2){
             $data['not_able_to_review'] = true;
         }
