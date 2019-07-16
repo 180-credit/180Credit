@@ -195,7 +195,7 @@ footer .footer-bottom .social-links ul li a:hover { color: #fff; border-color: #
 .select2-outer-div .select2-container--default .select2-selection--multiple .select2-selection__choice span { color: #222; }
 
 /*---------------------- Specialist Profile View CSS Starts ----------------------*/
-.specia-pro-view { font-size: 14px; background-color: #fff; }
+.specia-pro-view { font-size: 14px; }
 .specia-pro-view header { background-image: url("../images/head.png"); background-attachment: fixed; background-color: #fff; }
 .specia-pro-view .sticky { position: fixed; top: 0; }
 .specia-pro-view .left-col-block-inner.sticky { width: 380px; }

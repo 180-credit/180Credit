@@ -9,7 +9,7 @@
                     <div class="col-md-4 left-col-block" id="sticky_sidebar">
                         <div class="sidebar__inner">
                             <div class="card border-0 shadow_card bg-light">
-                                <div class="card-body p-2">
+                                <div class="card-body p-2 btn-default border-r-1">
                                     <div class="media">
                                         <div class="profile-user-img">
                                             <?php
@@ -51,10 +51,9 @@
                                                 <p><?= isset($userProfile->city) ? $userProfile->city : '' ?>
                                                     , <?= isset($userProfile->state_abbr) ? $userProfile->state_abbr : '' ?></p>
                                             </div>
-                                            <button type="button" class="btn btn-primary"
-                                                    onclick="window.location.href='<?= base_url() . 'view-specialist-profile/' . $user['firstName'] . "-" . $user['lastName'] ?>'">
+                                            <a href="<?= base_url() . 'view-specialist-profile/' . $user['firstName'] . "-" . $user['lastName'] ?>">
                                                 View full profile
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -196,14 +195,9 @@
     });
     $("#review_form").submit(function (e) {
         if ($("#review_form").valid()) {
-            $("#review_form").submit();
-            // e.preventDefault();
-            /*$.post('home/endorse_details_save', $("#review_form").serialize(), function (result) {
-                if (result) {
-                    viewProfileModalHandler.openSaveEndorseModal(name);
-                }
-            })*/
+            return true;
         }
+        return false;
     });
 
     function countTextWord(a) {

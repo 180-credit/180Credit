@@ -44,7 +44,7 @@
                     <div class="col-md-4 left-col-block" id="sticky_sidebar">
                         <div class="sidebar__inner">
                             <div class="card border-0 shadow_card bg-light">
-                                <div class="card-body p-2">
+                                <div class="card-body p-2 btn-default border-r-1">
                                     <div class="media">
                                         <div class="profile-user-img">
                                             <?php
@@ -93,7 +93,7 @@
                                                     <?php
                                                 } else{
                                                     ?>
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-envelope"></i>Send a Message</button>
+                                                    <button type="button" class="btn btn-primary" onclick="viewProfileModalHandler.showPrimumButton('<?= $user['firstName'].' '.$user['lastName'] ?>')"><i class="fas fa-envelope"></i>Send a Message</button>
                                                     <?php
                                                 }
                                             ?>
@@ -311,8 +311,7 @@
                                                                             <?php
                                                                         }else{
                                                                             ?>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary btn-block">Send <?= ucfirst($user['firstName']) ?> a message
+                                                                            <button type="button" class="btn btn-primary btn-block" onclick="viewProfileModalHandler.showPrimumButton('<?= $user['firstName'].' '.$user['lastName'] ?>')">Send <?= ucfirst($user['firstName']) ?> a message
                                                                             </button>
                                                                             <?php
                                                                         }
@@ -501,11 +500,6 @@
 <div class="modal exampleModal fade" id="modalReview" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header p-0 border-0">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
             <div class="modal-body">
 
             </div>
@@ -668,7 +662,7 @@
                '<div class="error contact_message_lable_error clr-red"></div>' +
                '                            </div>\n' +
                '                            <button type="submit" id="submit-message_form" class="btn btn-primary">Submit endorsement</button>\n' +
-               '                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>\n' +
+               '                            <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.closeReviewModal()">Cancel</button>\n' +
                '                        </form>\n' +
                '                    </div>\n' +
                '                </div>';
@@ -708,7 +702,7 @@
                '                            <h5 class="mt-0">Thank you, your review for '+ name +' has been submitted!</h5>\n' +
                '                            <p class="text-justify mb-1">' +
                'Although we do not censor reviews, all submissions are reviewed by our customer service team to ensure that inappropriate content and/or spam is not submitted.</p><p class="text-justify mb-1">Please allow up to 24 hours for your review to be posted publicly.</p>' +
-               '                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>\n' +
+               '                            <button type="button" class="btn btn-primary" onclick="viewProfileModalHandler.closeReviewModal()">Close</button>\n' +
                '                        </div>\n' +
                '                    </div>\n' +
                '                </div>';
@@ -721,11 +715,126 @@
                '                            <h5 class="mt-0">Thank you, your endorsement for '+ name +' has been submitted!</h5>\n' +
                '                            <p class="text-justify mb-1">' +
                'Although we do not censor endorsement, all submissions are reviewed by our customer service team to ensure that inappropriate content and/or spam is not submitted.</p><p class="text-justify mb-1">Please allow up to 24 hours for your endorsement to be posted publicly.</p>' +
-               '                            <button type="button" class="btn btn-primary text-center" data-dismiss="modal">Close</button>\n' +
+               '                            <button type="button" class="btn btn-primary text-center" onclick="viewProfileModalHandler.closeReviewModal()">Close</button>\n' +
                '                        </div>\n' +
                '                    </div>\n' +
                '                </div>';
            $('#modalReview .modal-body').html(html);
+       },
+       closeReviewModal : function(){
+           $('#modalReview').modal('hide');
+           setTimeout(function () {
+               $('body').addClass('modal-open');
+               $('body').css('padding-right','15px');
+           },500);
+       },
+       showPrimumButton:function (name) {
+           var img =$('#profile-image').attr('src');
+           var html = '<div class="media">\n' +
+               '                    <div class="img-status">\n' +
+               '                        <img src="'+ img +'" class="round mr-3" alt="img">\n' +
+               '                        <span class="status online"></span>\n' +
+               '                    </div>\n' +
+               '                    <div class="media-body">\n' +
+               '                        <div class="popup-head">\n' +
+               '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
+               '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
+               '                        </div>\n' +
+               '                        <form id="message_form">\n' +
+               '                            <div class="form-group">\n' +
+               '                                <label for="contact_message" id="contact_message_lable">2000</label>\n' +
+               '                                <textarea class="form-control" id="contact_message" name="contact_message" onkeyup="countTextWord(this)" rows="3"></textarea>\n' +
+               '<div class="error contact_message_lable_error clr-red"></div>' +
+               '                            </div>\n' +
+               '\n' +
+               '                            <div class="custom-control custom-checkbox">\n' +
+               '                                <input type="checkbox" class="custom-control-input" id="prefer_on_phone" name="prefer_on_phone">\n' +
+               '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
+               '                            </div>\n' +
+               '                            <div class="form-group cell-no" style="display: none;">\n' +
+               '                                <input type="text" class="form-control" id="phone_no_message" name="phone_no_message" placeholder="US phone numbers only">\n' +
+               '                            </div>\n' +
+               '                            <div class="best-call" style="display: none;">\n' +
+               '                                <label>Best time to call:</label>\n' +
+               '                                <div class="custom-control custom-checkbox">\n' +
+               '                                    <input type="checkbox" class="custom-control-input " name="time_slot_message" id="customControlAutosizing2">\n' +
+               '                                    <label class="custom-control-label customControlAutosizing2" for="customControlAutosizing2">Morning (9-12) </label>\n' +
+               '                                </div>\n' +
+               '                                <div class="custom-control custom-checkbox">\n' +
+               '                                    <input type="checkbox" class="custom-control-input" name="time_slot_message" id="customControlAutosizing3">\n' +
+               '                                    <label class="custom-control-label" for="customControlAutosizing3">Afternoon (12-4)</label>\n' +
+               '                                </div>\n' +
+               '                                <div class="custom-control custom-checkbox">\n' +
+               '                                    <input type="checkbox" class="custom-control-input" name="time_slot_message" id="customControlAutosizing4">\n' +
+               '                                    <label class="custom-control-label" for="customControlAutosizing4">Evening (5-9)</label>\n' +
+               '                                </div>\n' +
+               '                            </div>\n' +
+               '\n' +
+               '                            <!-- i am not robot starts  -->\n' +
+               '\n' +
+               '                            <!-- i am not robot ends  -->\n' +
+               '                            <button type="submit" id="submit-message_form" class="btn btn-primary">Save</button>\n' +
+               '                            <button type="button" class="btn btn-secondary" onclick="viewProfileModalHandler.closeReviewModal()">Cancel</button>\n' +
+               '                        </form>\n' +
+               '                    </div>\n' +
+               '                </div>';
+
+           $('#modalReview').find('.modal-body').html(html);
+           $('#modalReview').modal('show');
+
+           $('#prefer_on_phone').click(function () {
+               if($(this).prop('checked') ==true){
+                   $(".cell-no").show();
+                   $(".best-call").show();
+               }
+               else
+               {
+                   $(".cell-no").hide();
+                   $(".best-call").hide();
+               }
+           });
+           $("#message_form").validate({
+               rules: {
+                   // simple rule, converted to {required:true}
+                   // compound rule
+                   contact_message: {
+                       required: true
+                   },
+                   phone_no_message: {
+                       required: function (element) {
+                           if ($("#prefer_on_phone").is(':checked')) {
+                               return true;
+                           } else {
+                               return false;
+                           }
+                       },
+                       number:true
+                   },
+                   time_slot_message: {
+                       required: function (element) {
+                           if ($("#prefer_on_phone").is(':checked')) {
+                               return true;
+                           } else {
+                               return false;
+                           }
+                       }
+                   }
+               },
+               errorPlacement: function (error, element) {
+                   if (element.attr("type") == "checkbox") {
+                       $($(element).parent("div").find("label")).append(error);
+                   }else {
+                       error.insertAfter(element);
+                   }
+               }
+           });
+           $("#submit-message_form").click(function(){
+               if($("#message_form").valid()){
+                   console.log("done");
+                   return false;
+                   // $("#consumer_form").submit();
+               }
+           });
        }
    };
    function scrollTo(id)

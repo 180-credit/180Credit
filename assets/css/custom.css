@@ -330,3 +330,7 @@ label.custom-control-label.customControlAutosizing2 {
 .media .media-body #message_form .custom-control-label{
     padding-top: 0.10rem;
 }
+
+.border-r-1{
+    border-radius: .5rem;
+}

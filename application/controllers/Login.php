@@ -62,6 +62,7 @@ class Login extends CI_Controller
             $this->db->from('redirects');
             $this->db->where('id', $_SESSION['rt']);
             $result = $this->db->get()->row();
+            unset($_SESSION['rt']);
             if (isset($result->redirectURL)) {
                 redirect($result->redirectURL);
             }

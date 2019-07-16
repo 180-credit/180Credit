@@ -9,7 +9,7 @@
                     <div class="col-md-4 left-col-block" id="sticky_sidebar">
                         <div class="sidebar__inner">
                             <div class="card border-0 shadow_card bg-light">
-                                <div class="card-body p-2">
+                                <div class="card-body p-2 btn-default border-r-1">
                                     <div class="media">
                                         <div class="profile-user-img">
                                             <?php
@@ -51,10 +51,9 @@
                                                 <p><?= isset($userProfile->city) ? $userProfile->city : '' ?>
                                                     , <?= isset($userProfile->state_abbr) ? $userProfile->state_abbr : '' ?></p>
                                             </div>
-                                            <button type="button" class="btn btn-primary"
-                                                    onclick="window.location.href='<?= base_url() . 'view-specialist-profile/' . $user['firstName'] . "-" . $user['lastName'] ?>'">
+                                            <a href="<?= base_url() . 'view-specialist-profile/' . $user['firstName'] . "-" . $user['lastName'] ?>">
                                                 View full profile
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -123,49 +122,8 @@
     <?php
     $actual_link = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
     ?>
-    $(document).ready(function () {
-        // Configure/customize these variables.
-        var showChar = 400;  // How many characters are shown by default
-        var ellipsestext = "...";
-        var moretext = "Show more";
-        var lesstext = "Show less";
-
-
-        $('.more').each(function () {
-            var content = $(this).html();
-
-            if (content.length > showChar) {
-
-                var c = content.substr(0, showChar);
-                var h = content.substr(showChar, content.length - showChar);
-
-                var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
-
-                $(this).html(html);
-            }
-
-        });
-
-        $(".morelink").click(function () {
-            if ($(this).hasClass("less")) {
-                $(this).removeClass("less");
-                $(this).html(moretext);
-            } else {
-                $(this).addClass("less");
-                $(this).html(lesstext);
-            }
-            $(this).parent().prev().toggle();
-            $(this).prev().toggle();
-            return false;
-        });
-    });
     $("#review_form").validate({
         rules: {
-            // simple rule, converted to {required:true}
-            // compound rule
-            review_headline: {
-                required: true
-            },
             wright_review: {
                 required: true
             }
@@ -173,15 +131,9 @@
     });
     $("#review_form").submit(function (e) {
         if ($("#review_form").valid()) {
-            $("#review_form").submit();
-            // e.preventDefault();
-            // $("#review_form").submit();
-            /*$.post('home/endorse_details_save', $("#review_form").serialize(), function (result) {
-                if (result) {
-                    viewProfileModalHandler.openSaveEndorseModal(name);
-                }
-            })*/
+            return true;
         }
+        return false;
     });
 
     function countTextWord(a) {

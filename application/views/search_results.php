@@ -447,7 +447,9 @@
         }*/
     }
     $('#profilePopup').on('hidden.bs.modal', function () {
-        history.replaceState(HistoryState, "User_profile", currentUrl);
+        if(!$('#profilePopup').hasClass('show')){
+            history.replaceState(HistoryState, "User_profile", currentUrl);
+        }
     })
 
     function jsUcfirst(string)
