@@ -101,7 +101,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <h6 class="txtarea-all-details"><b>Write your
-                                                                    endorsement</b></h6>
+                                                                    review</b></h6>
                                                             <label for="contact_message" class="float-right"
                                                                    id="contact_message_lable">2000</label>
                                                             <textarea class="form-control" id="contact_message"
@@ -111,7 +111,7 @@
                                                         </div>
                                                         <button type="submit" id="submit-message_form"
                                                                 class="btn btn-primary">
-                                                            Submit endorsement
+                                                            Review <?= $user['firstName'] ?>
                                                         </button>
                                                     </form>
                                                     <?php

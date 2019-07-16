@@ -88,8 +88,7 @@
                                                             <input type="hidden" name="rating_for" id="rating_for"
                                                                    value="<?= $user['userId'] ?>"/>
                                                             <input type="hidden" name="is_page" value="true" />
-                                                            <h6 class="txtarea-all-details"><b>Write your
-                                                                    endorsement</b></h6>
+                                                            <span>Industry specialist are welcome to leave endorsements for fellow professionals. You can use the from below to let users know why you support this specialist and their services.</span>
                                                             <label for="contact_message" class="float-right"
                                                                    id="contact_message_lable">2000</label>
                                                             <textarea class="form-control" id="contact_message"
@@ -99,7 +98,7 @@
                                                         </div>
                                                         <button type="submit" id="submit-message_form"
                                                                 class="btn btn-primary">
-                                                            Submit endorsement
+                                                            Endorse <?= $user['firstName'] ?>
                                                         </button>
                                                     </form>
                                                     <?php
