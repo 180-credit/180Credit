@@ -200,6 +200,10 @@ li.draggable-item.ui-sortable-placeholder {
     color: #e57125 !important;
     cursor: pointer;
 }
+#myTab .nav-link:hover {
+    color: #e57125 !important;
+    cursor: pointer;
+}
 #myTab li.nav-item.active {
     background-color: #f3f3f4;
 }
