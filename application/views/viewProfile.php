@@ -383,7 +383,7 @@
                                                                     <div class="col-md-3 endorsements-left endorsements-inner-block">
                                                                         <div>
                                                                             <?php
-                                                                            if(isset($reviewDetail['profile_image']) && $reviewDetail['profile_image'] != ''){
+                                                                            if(isset($reviewDetail->profile_image) && $reviewDetail->profile_image != ''){
                                                                                 ?>
                                                                                 <img class="align-self-start mr-3 round" id='profile-image' width="136" height="136" src="<?= base_url().$reviewDetail->profile_image; ?>">
                                                                                 <?php
