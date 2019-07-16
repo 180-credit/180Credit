@@ -85,14 +85,14 @@
                                         <div class="media-body">
                                             <form id="message_form">
                                             <div class="form-group">
-                                                <h7 class="">Use the form below to send Paul a message. We’ll notify you as soon as they respond!</h7>
+                                                <h7 class="">Use the form below to send <?= ucfirst($user['firstName']) ?> a message. We’ll notify you as soon as they respond!</h7>
                                                     <label for="contact_message" class="float-right" id="contact_message_lable">2000</label>
                                                     <textarea class="form-control" id="contact_message" name="contact_message" onkeyup="countTextWord(this)" rows="3"></textarea>
                                                     <div class="error contact_message_lable_error clr-red"></div>
                                                     </div>
                                                 <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="prefer_on_phone" name="prefer_on_phone">
-                                                <label class="custom-control-label" for="prefer_on_phone">I prefer that Paul responds to this message with a phone call. (optional)</label>
+                                                <label class="custom-control-label" for="prefer_on_phone">I prefer that <?= ucfirst($user['firstName']) ?> responds to this message with a phone call. (optional)</label>
                                                 </div>
                                                 <div class="form-group cell-no" style="display: none;">
                                                     <input type="text" class="form-control" id="phone_no_message" name="phone_no_message" placeholder="US phone numbers only">

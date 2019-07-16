@@ -763,7 +763,7 @@
                 '                    <div class="media-body">\n' +
                 '                        <div class="popup-head">\n' +
                 '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
-                '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
+                '                            <p>Use the form below to send a message. We’ll notify you as soon as they respond! </p>\n' +
                 '                        </div>\n' +
                 '                        <form id="message_form">\n' +
                 '                            <div class="form-group">\n' +
@@ -774,7 +774,7 @@
                 '\n' +
                 '                            <div class="custom-control custom-checkbox">\n' +
                 '                                <input type="checkbox" class="custom-control-input" id="prefer_on_phone" name="prefer_on_phone">\n' +
-                '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
+                '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that responds to this message with a phone call. (optional)</label>\n' +
                 '                            </div>\n' +
                 '                            <div class="form-group cell-no" style="display: none;">\n' +
                 '                                <input type="text" class="form-control" id="phone_no_message" name="phone_no_message" placeholder="US phone numbers only">\n' +

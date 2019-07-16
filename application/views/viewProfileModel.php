@@ -232,7 +232,7 @@
                                         <div class="card mt-3 map-block" id="Contact">
                                             <div class="card-body" id="contact-tab2">
                                                 <div class="col-md-12 p-0">
-                                                    <h5>Contact Pauline</h5>
+                                                    <h5>Contact <?= ucfirst($user['firstName']) ?></h5>
                                                 </div>
                                                 <div class="col-md-12 p-0">
                                                     <div class="row">
@@ -732,13 +732,13 @@
            var img =$('#profile-image').attr('src');
            var html = '<div class="media">\n' +
                '                    <div class="img-status">\n' +
-               '                        <img src="'+ img +'" class="round mr-3" alt="img">\n' +
+               '                        <img src="'+ img +'" class="round mr-3"  alt="img" width="136" height="136">\n' +
                '                        <span class="status online"></span>\n' +
                '                    </div>\n' +
                '                    <div class="media-body">\n' +
                '                        <div class="popup-head">\n' +
                '                            <h5 class="mt-0">'+ name +' - Send a Message</h5>\n' +
-               '                            <p>Use the form below to send Paul a message. We’ll notify you as soon as they respond! </p>\n' +
+               '                            <p>Use the form below to send <?= ucfirst($user['firstName']) ?> a message. We’ll notify you as soon as they respond! </p>\n' +
                '                        </div>\n' +
                '                        <form id="message_form">\n' +
                '                            <div class="form-group">\n' +
@@ -749,7 +749,7 @@
                '\n' +
                '                            <div class="custom-control custom-checkbox">\n' +
                '                                <input type="checkbox" class="custom-control-input" id="prefer_on_phone" name="prefer_on_phone">\n' +
-               '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that Paul responds to this message with a phone call. (optional)</label>\n' +
+               '                                <label class="custom-control-label" for="prefer_on_phone">I prefer that <?= ucfirst($user['firstName']) ?> responds to this message with a phone call. (optional)</label>\n' +
                '                            </div>\n' +
                '                            <div class="form-group cell-no" style="display: none;">\n' +
                '                                <input type="text" class="form-control" id="phone_no_message" name="phone_no_message" placeholder="US phone numbers only">\n' +
