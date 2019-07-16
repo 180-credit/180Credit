@@ -398,6 +398,30 @@
 </div>
 <script src="<?php echo base_url(); ?>assets/plugins/select2/select2.min.js" type="text/javascript"></script>
 <script>
+    $('.home_tab').click(function () {
+        scrollTo("about-block");
+        $(this).addClass("active");
+    });
+
+    $('.fees_tab').click(function () {
+        scrollTo("fee-payments-block");
+        $(this).addClass("active");
+    });
+
+    $('.contact_tab').click(function () {
+        scrollTo("map-block");
+        $(this).addClass("active");
+    });
+
+    $('.review_tab').click(function () {
+        scrollTo("review-block-main");
+        $(this).addClass("active");
+    });
+
+    $('.qa_tab').click(function () {
+        scrollTo("endorsements-block");
+        $(this).addClass("active");
+    });
     $('#specialities-dropdown').select2();
     $('#tags-dropdown').select2();
     <?php

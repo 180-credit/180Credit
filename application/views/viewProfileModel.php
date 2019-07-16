@@ -161,21 +161,21 @@
                             <div class="card-body p-0">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item home_tab active">
-                                        <a class="nav-link" href="#About" aria-selected="true"><span>About</span></a>
+                                        <a class="nav-link" aria-selected="true"><span>About</span></a>
                                     </li>
                                     <li class="nav-item fees_tab">
-                                        <a class="nav-link" href="#Fees" aria-selected="false"><span>Fees</span></a>
+                                        <a class="nav-link" aria-selected="false"><span>Fees</span></a>
                                     </li>
                                     <li class="nav-item contact_tab">
-                                        <a class="nav-link" href="#Contact"
+                                        <a class="nav-link"
                                            aria-selected="false"><span>Contact</span></a>
                                     </li>
                                     <li class="nav-item review_tab">
-                                        <a class="nav-link" href="#Reviews"
+                                        <a class="nav-link"
                                            aria-selected="false"><span>Reviews</span></a>
                                     </li>
                                     <li class="nav-item qa_tab">
-                                        <a class="nav-link" href="#QA" aria-selected="false"><span>Q&A</span></a>
+                                        <a class="nav-link" aria-selected="false"><span>Q&A</span></a>
                                     </li>
                                 </ul>
                                 <div class="tab-content bg-light p-4" id="myTabContent">
@@ -328,7 +328,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mt-3 review-block" id="Reviews">
+                                        <div class="card mt-3 review-block-main" id="Reviews">
                                             <div class="card-body" id="contact-tab3">
                                                 <div class="col-md-12 review-block-top d-block d-sm-flex justify-content-between align-items-center">
                                                     <div class="d-block d-sm-flex align-items-center">
@@ -530,7 +530,7 @@
    });
 
    $('.review_tab').click(function () {
-        scrollTo("reviews-block");
+        scrollTo("review-block-main");
         $(this).addClass("active");
    });
 
@@ -839,7 +839,7 @@
    };
    function scrollTo(id)
     {
-        $('.modal').animate({scrollTop: $("."+id).offset().top},'slow');
+        $('#profilePopup').animate({scrollTop: $("."+id).offset().top},'slow');
         $("#myTab li").removeClass("active");
     }
 //    $('.modal').scroll(function () {
