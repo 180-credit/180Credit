@@ -3,19 +3,7 @@
         <div class="breadcum ">
             <ul class="list-unstyled">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <?php
-                $dataToSearch = $_GET;
-                if (!empty($dataToSearch)) {
-                    ?>
-                    <li><a href="<?php echo base_url(); ?>/search">Search Specialist</a></li>
-                    <li><a class="active" href="javascript:">Credit repair</a></li>
-                    <?php
-                } else {
-                    ?>
-                    <li><a href="javascript:">Search Specialist</a></li>
-                    <?php
-                }
-                ?>
+                <li><a class="active" href="javascript:">Events Specialist</a></li>
             </ul>
         </div>
         <div class="content-area-event mt-2 row shadow">
@@ -29,7 +17,7 @@
                                 <select class="form-control ml-1">
                                     <option>All events</option>
                                     <option>Virtual/Online</option>
-                                    <option>Physical</option>
+                                    <option>Physical Location</option>
                                 </select>
                                 <label for="event_type" class=" ml-3">Search: </label>
                                 <input type="password" placeholder="Search" class="form-control" id="pwd">
@@ -66,7 +54,7 @@
                                                     <p><?= $event_detail->venueName ?></p>
                                                     <p><b>Event Type:</b> <?php
                                                             if($event_detail->eventType == 1){
-                                                                echo 'Physical';
+                                                                echo 'Physical location';
                                                             }else{
                                                                 echo 'Virtual/Online';
                                                             }

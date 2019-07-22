@@ -21,7 +21,7 @@
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" checked name="event_type"
                                                        id="physical" value="1">
-                                                <label class="form-check-label" for="physical">Physical</label>
+                                                <label class="form-check-label" for="physical">Physical location</label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="event_type"

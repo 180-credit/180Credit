@@ -1,5 +1,5 @@
 <div class="container search-result">
-    <div class="row events-section ">
+    <div class="events-section ">
         <div class="breadcum ">
             <ul class="list-unstyled">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
@@ -10,8 +10,8 @@
         <div class="content-area-event mt-2 row shadow">
             <div class="col-8">
                 <div class="left-side row">
-                    <h1><?= $event_details->eventTitle ?></h1><br>
                     <div class="col-md-12">
+                        <h1><?= $event_details->eventTitle ?></h1>
                         <?php
                         if($event_details->imageURL != ''){
                             ?>
@@ -23,33 +23,34 @@
                             <?php
                         }
                         ?>
+
                     </div>
-                    <table border="0">
+                    <table class="ml-3" border="0">
                         <tr>
-                            <th valign="top">When:</th>
+                            <td valign="top">When:</td>
                             <td><?php
                                 echo date('F dS',strtotime($event_details->startDate)).' - '.date('dS m,Y',strtotime($event_details->endDate));
                                 ?><br></td>
                         </tr>
                         <tr>
-                            <th valign="top">Where:</th>
+                            <td valign="top">Where:</td>
                             <td><?= $event_details->venueStreetAddress; ?>, <br><?= $event_details->venueCity; ?>, <?= $event_details->venueStateAbbr; ?>, <?= $event_details->venuePostalCode; ?><br></td>
                         </tr>
                         <tr>
-                            <th valign="top">Cost:</th>
+                            <td valign="top">Cost:</td>
                             <td>$<?= $event_details->eventCost; ?><br></td>
                         </tr>
                         <tr>
-                            <th valign="top">Details:</th>
+                            <td valign="top">Details:</td>
                             <td> <?= $event_details->eventDescription; ?></td>
                         </tr>
                         <tr>
-                            <th ></th>
+                            <td ></td>
                             <td>For more information, visit: <a href="<?= $event_details->eventURL; ?>"><?= $event_details->eventURL; ?></a><br></td>
                         </tr>
                         <tr>
-                            <th></th>
-                            <td>Posted by: <?= $event_details->submittedByUserName ?>  &nbsp;&nbsp;&nbsp; <?= date('m/d,/Y @ h:m a',strtotime($event_details->createdOn)) ?> &nbsp;&nbsp; <button type="button" onclick="#" class="btn btn-primary">Approve</button></td>
+                            <td></td>
+                            <td>Posted by: <?= $event_details->submittedByUserName ?>  &nbsp;&nbsp;&nbsp; <?= date('m/d/Y @ h:m a',strtotime($event_details->createdOn)) ?> &nbsp;&nbsp; <button type="button" onclick="#" class="btn btn-primary">Approve</button></td>
                         </tr>
                     </table>
                 </div>
