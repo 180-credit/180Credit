@@ -339,3 +339,106 @@ label.custom-control-label.customControlAutosizing2 {
 .border-r-1{
     border-radius: .5rem;
 }
+
+
+/* ------------------------ events section --------------------------- */
+
+.events-section .right-sidebar{
+    padding: 1rem 1rem;
+    background-color: #fff;
+}
+
+.events-section .left-side{
+    padding: 1rem 1rem;
+    background-color: #fff;
+}
+
+.content-area-event{
+    background-color: #fff;
+}
+
+.brd-bottom{
+    border-bottom: #e57124 solid 2px;
+}
+
+.events-section .right-sidebar h1 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 46px;
+    margin-bottom: 15px;
+}
+
+.events-section .right-sidebar h2 {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-size: 23px;
+    font-weight: 200;
+    line-height: 26px;
+}
+
+.events-section .right-sidebar h2.h2-with-bottom {
+    margin-bottom: 10px;
+    color: #8b8989;
+    border-bottom: #e57124 solid 2px;
+}
+
+.events-section .right-sidebar .width-20-rem{
+    width: 20rem;
+}
+
+.events-section .right-sidebar .category {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 5px;
+    margin-right: 5px;
+}
+
+.events-section .right-sidebar .student {
+    background-color: #ff0000;
+    color: #fff;
+}
+.events-section .right-sidebar .collections {
+    background-color: #09cec2;
+    color: #fff;
+}
+.events-section .right-sidebar .rehab {
+    background-color: #d29ecb;
+    color: #fff;
+}
+
+.events-section .content-area-event .form-inline label {
+    font-size: 16px;
+}
+
+.events-section .content-area-event .form-inline select.form-control.ml-1{
+    border-radius: 0;
+    width: 7rem;
+    padding: 0px;
+}
+
+.events-section .content-area-event .form-inline input{
+    border-radius: 0;
+    width: 10rem;
+}
+
+.events-section .content-area-event .form-inline button{
+    border-radius: 0;
+}
+
+.search-result .events-section .premium-listing{
+    border-radius: 0px;
+}
+.content-area-event .input-group .input-group-addon{
+    border: 1px solid #ced4da;
+    border-right: 0;
+}
+
+.content-area-event .img-preview-div.img-thumbnail{
+    height: 8rem;
+    width: 10rem;
+    border: 1px dashed #dee2e6;
+}

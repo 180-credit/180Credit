@@ -343,5 +343,6 @@ class Home extends CI_Controller
         $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
         $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
         $this->template->load('layout','sendMessageToUser', $data);
+        redirect('/events');
     }
 }

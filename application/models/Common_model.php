@@ -78,6 +78,20 @@ class Common_model extends CI_Model {
         return $query->result();
     }
 
+    public function loadAllEvents(){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadAllEvents()");
+        $this->db->close();
+        return $query->result();
+    }
+
+    public function loadEvent($eventId){
+        $this->db->reconnect();
+        $query = $this->db->query("CALL loadEvent({$eventId})");
+        $this->db->close();
+        return $query->row();
+    }
+
     public function loadFeeTypes(){
         $this->db->reconnect();       
         $query = $this->db->query("CALL loadFeeTypes()");

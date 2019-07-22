@@ -69,6 +69,7 @@ $route['view-specialist-profile/(:any)'] = 'home/specialistProfile/$1';
 $route['send-message/(:any)'] = 'home/sendMessageToUser/$1';
 $route['give-review/(:any)'] = 'home/sendReviewToUser/$1';
 $route['give-endorsement/(:any)'] = 'home/sendEndorsementToUser/$1';
+$route['event-details/(:any)'] = 'events/details/$1';
 $route['list-your-business'] = 'login/success_screen';
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
