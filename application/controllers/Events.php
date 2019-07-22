@@ -5,6 +5,7 @@ class Events extends CI_Controller {
     public function index(){
         $data['title'] = 'Event lists';
         $this->load->model('Common_model');
+        $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
         $data['event_details']=$this->Common_model->loadAllEvents();
         $this->template->load('layout', 'event/list', $data);
     }
@@ -14,8 +15,6 @@ class Events extends CI_Controller {
         $data['title'] = 'Event lists';
         $this->load->model('Common_model');
         $data['event_details']=$this->Common_model->loadEvent($eventId);
-        /*print_r($data['event_details']);
-        die();*/
         $this->template->load('layout', 'event/details', $data);
     }
 
@@ -84,6 +83,7 @@ class Events extends CI_Controller {
 			)";
         $this->db->query($insert_user_stored_proc);
         $this->db->close();
+        $this->session->set_flashdata('success', "done");
         redirect('/events');
     }
 }

@@ -156,3 +156,39 @@
         </div>
     </div>
 </div>
+<div class="modal exampleModal fade" id="modalReview" tabindex="-1" role="dialog" aria-labelledby="exampleModal1Label" aria-modal="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header p-0 border-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="media">
+                    <div class="media-body">
+                        <div class="popup-head text-center">
+                            <h5 class="mt-0">Thank you, your event has been submitted!</h5>
+                            <p class="text-justify mb-1">
+                                All events are reviewed by our moderators before public posting. Please allow 12-24 hours for your submission to be reviewed and approved. We will send you a notification once your event is live.
+                            </p>
+                            <button type="button" class="btn btn-primary text-center" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+if(isset($_SESSION['success'])){
+    ?>
+    <script>
+        $(document).ready(function () {
+            $("#modalReview").modal('show');
+        });
+    </script>
+    <?php
+}
+?>
