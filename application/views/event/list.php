@@ -74,7 +74,7 @@
 
                                                         <br>
                                                         <?php
-                                                            echo date('dS m,Y',strtotime($event_detail->startDate)).' - '.date('dS m,Y',strtotime($event_detail->endDate));
+                                                            echo date('dS M,Y',strtotime($event_detail->startDate)).' - '.date('dS M,Y',strtotime($event_detail->endDate));
                                                         ?>
                                                     </p>
 
