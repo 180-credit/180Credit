@@ -32,59 +32,6 @@
                     </div>
                     <div class="col-md-12">
                         <div class="main_data_block">
-                        <?php
-                        foreach ($event_details as $event_detail) {
-                            ?>
-                            <div class="search-result-block mt-2">
-                                <div class="premium-listing p-2">
-                                    <div class="media">
-                                        <?php
-                                        if($event_detail->imageURL != ''){
-                                            ?>
-                                            <a > <img class="mr-3" width="136" height="136" src="<?= base_url().$event_detail->imageURL ?>" alt="<?= $event_detail->eventTitle ?>"></a>
-                                            <?php
-                                        }else{
-                                            ?>
-                                                <a > <img class="mr-3" width="136" height="136" src="<?= base_url().'assets/images/default.png' ?>" alt="<?= $event_detail->eventTitle ?>"></a>
-                                            <?php
-                                        }
-                                        ?>
-                                        <div class="media-body">
-                                            <div class="row">
-                                                <div class="col-md-12 description">
-                                                    <h6><?= $event_detail->eventTitle ?></h6>
-                                                    <p><?= $event_detail->venueName ?></p>
-                                                    <p><b>Event Type:</b> <?php
-                                                            if($event_detail->eventType == 1){
-                                                                echo 'Physical location';
-                                                            }else{
-                                                                echo 'Virtual/Online';
-                                                            }
-                                                        ?>&nbsp;&nbsp;&nbsp;&nbsp;<b>Cost:</b> $<?= $event_detail->eventCost; ?>
-
-                                                        <br>
-                                                        <?php
-                                                            echo date('dS M,Y',strtotime($event_detail->startDate)).' - '.date('dS M,Y',strtotime($event_detail->endDate));
-                                                        ?>
-                                                    </p>
-
-                                                </div>
-                                                <div class="col-md-9 puser-left">
-                                                    <div class="user-address">
-                                                        <span><?= $event_detail->venueCity ?>,  <?= $event_detail->venueStateAbbr ?></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3 puser-right">
-                                                    <button type="button" onclick="window.location.href='<?= base_url().'event-details/'.$event_detail->id ?>'" class="btn btn-primary ml-3 text-right">Details</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                        ?>
                         </div>
                         <div class="pagination_block mt-2">
 
@@ -245,7 +192,7 @@ if(isset($_SESSION['success'])){
                     }
                     html += '</div></div>' +
                         '<div class="col-md-3 puser-right">' +
-                        '<button type="button" onclick="window.location.href=\'<?= base_url().'event-details/' ?>\''+v.id+'" class="btn btn-primary ml-3 text-right">Details</button>' +
+                        '<button type="button" onclick="window.location.href=\'<?= base_url().'event-details/' ?>'+v.id+'\'" class="btn btn-primary ml-3 text-right">Details</button>' +
                         '</div>' +
                         '                </div>\n' +
                         '            </div>\n' +

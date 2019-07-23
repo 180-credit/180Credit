@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td>Posted by: <?= $event_details->submittedByUserName ?>  &nbsp;&nbsp;&nbsp; <?= date('m/d/Y @ h:m a',strtotime($event_details->createdOn)) ?> &nbsp;&nbsp; <button type="button" onclick="#" class="btn btn-primary">Approve</button></td>
+                            <td>Posted by: <?= $event_details->submittedByUserName ?>  &nbsp;&nbsp;&nbsp; <?= date('m/d/Y @ h:m a',strtotime($event_details->createdOn)) ?> &nbsp;&nbsp; <!--<button type="button" onclick="#" class="btn btn-primary">Approve</button>--></td>
                         </tr>
                     </table>
                 </div>
