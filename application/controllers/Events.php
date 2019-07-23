@@ -142,7 +142,7 @@ class Events extends MY_Controller
 			{$this->db->escape($this->input->post('cost'))},
 			{$user['userId']},
 			{$this->db->escape($this->input->post('timezone'))},
-			0
+			{$this->input->post('target_audience')}
 			)";
         $this->db->query($insert_user_stored_proc);
         $this->db->close();

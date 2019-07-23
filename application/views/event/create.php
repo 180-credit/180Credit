@@ -16,7 +16,18 @@
                             <form id="event_form" method="post" action="<?= base_url(); ?>events/store_event" enctype="multipart/form-data">
                                 <fieldset class="form-group">
                                     <div class="row">
-                                        <legend class="col-form-label col-sm-2 pt-0">Event type</legend>
+                                        <legend class="col-form-label col-sm-2 pt-0">Target audience:</legend>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" name="target_audience">
+                                                <option value="1">This is an industry event open to industry professionals</option>
+                                                <option value="2">This event is for consumers looking for help and services</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-2 pt-0">Event location:</legend>
                                         <div class="col-sm-10">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" checked name="event_type"
@@ -33,20 +44,20 @@
                                     </div>
                                 </fieldset>
                                 <div class="form-group row">
-                                    <label for="event_title" class="col-sm-2 col-form-label">Event title</label>
+                                    <label for="event_title" class="col-sm-2 col-form-label">Event title:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="event_title" name="event_title"
                                                placeholder="Event title">
                                     </div>
                                 </div>
                                 <div class="form-group evnt_type_block row show">
-                                    <label for="input_venue" class="col-sm-2 col-form-label">Venue</label>
+                                    <label for="input_venue" class="col-sm-2 col-form-label">Venue:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="input_venue" name="venue" placeholder="Venue">
                                     </div>
                                 </div>
                                 <div class="form-group evnt_type_block row show">
-                                    <label for="input_address" class="col-sm-2 col-form-label">Address</label>
+                                    <label for="input_address" class="col-sm-2 col-form-label">Address:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="address" id="input_address"
                                                placeholder="Enter your address" onFocus="geolocate()">
@@ -56,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_address" class="col-sm-2 col-form-label">Date & time</label>
+                                    <label for="input_address" class="col-sm-2 col-form-label">Date & time:</label>
                                     <div class="col-sm-10 row">
                                         <div class='col-md-9'>
                                             <div class=" form-group">
@@ -79,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_upload_image" class="col-sm-2 col-form-label">Upload image</label>
+                                    <label for="input_upload_image" class="col-sm-2 col-form-label">Upload image:</label>
                                     <div class="col-sm-10 row">
                                         <div class='col-md-4'>
                                             <div class=" form-group">
@@ -100,20 +111,20 @@
                                 </div>
                                 <div class="form-group row">
                                     <label for="input_event_description" class="col-sm-2 col-form-label">Event
-                                        description</label>
+                                        description:</label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control" id="input_event_description"
                                                   name="event_description" placeholder="Event description"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_cost" class="col-sm-2 col-form-label">Cost</label>
+                                    <label for="input_cost" class="col-sm-2 col-form-label">Cost:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="input_cost" name="cost" placeholder="Cost">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_site_link" class="col-sm-2 col-form-label">Site Link</label>
+                                    <label for="input_site_link" class="col-sm-2 col-form-label">Site Link:</label>
                                     <div class="col-sm-10">
                                         <input type="url" class="form-control" id="input_site_link" name="site_link"
                                                placeholder="Site Link">
