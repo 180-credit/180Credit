@@ -21,8 +21,8 @@
                                 <label for="event_type">Event type: </label>
                                 <select class="form-control ml-1" name="event_type">
                                     <option value="0">All events</option>
-                                    <option value="1">Virtual/Online</option>
-                                    <option value="2">Physical Location</option>
+                                    <option value="1">Physical Location</option>
+                                    <option value="2">Virtual/Online</option>
                                 </select>
                                 <label for="event_type" class=" ml-3">Search: </label>
                                 <input type="text" placeholder="Search" name="event_search" class="form-control" id="pwd">
