@@ -26,16 +26,24 @@
 
                     </div>
                     <table class="ml-3" border="0">
-                        <tr>
-                            <td valign="top">When:</td>
-                            <td><?php
-                                echo date('F dS',strtotime($event_details->startDate)).' - '.date('dS m,Y',strtotime($event_details->endDate));
-                                ?><br></td>
-                        </tr>
-                        <tr>
-                            <td valign="top">Where:</td>
-                            <td><?= $event_details->venueStreetAddress; ?>, <br><?= $event_details->venueCity; ?>, <?= $event_details->venueStateAbbr; ?>, <?= $event_details->venuePostalCode; ?><br></td>
-                        </tr>
+
+                        <?php
+                            if($event_details->eventType == 1){
+                                ?>
+                                <tr>
+                                    <td valign="top">When:</td>
+                                    <td><?php
+                                        echo date('F dS',strtotime($event_details->startDate)).' - '.date('dS m,Y',strtotime($event_details->endDate));
+                                        ?><br></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">Where:</td>
+                                    <td><?= $event_details->venueStreetAddress; ?>, <br><?= $event_details->venueCity; ?>, <?= $event_details->venueStateAbbr; ?>, <?= $event_details->venuePostalCode; ?><br></td>
+                                </tr>
+                                <?php
+                            }
+
+                        ?>
                         <tr>
                             <td valign="top">Cost:</td>
                             <td>$<?= $event_details->eventCost; ?><br></td>
