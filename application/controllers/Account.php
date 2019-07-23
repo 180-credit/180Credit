@@ -4,7 +4,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'application/helpers/Authenticate.php';
 
-class Account extends CI_Controller {
+class Account extends MY_Controller {
 	use Authenticate;
 	function __construct() {
         parent::__construct();
@@ -21,12 +21,14 @@ class Account extends CI_Controller {
 	public function index()
 	{
 		$data['title']='My account';
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'account/my_account', $data);
 	}
 
 	public function edit_profile()
 	{
 		$data['title']='My account edit';
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'account/account_edit', $data);
 	}
 
@@ -46,7 +48,8 @@ class Account extends CI_Controller {
 		foreach($tags as $tag){
 			$tagsList[] = $tag->tagname;
 		}
-		$data['tags'] = implode(",",$tagsList); 
+		$data['tags'] = implode(",",$tagsList);
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'account/business_profile', $data);
 	}
 
@@ -213,12 +216,14 @@ class Account extends CI_Controller {
 	public function change_password()
 	{
 		$data['title']='Password & Security';
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'account/pwd_change', $data);
 	}
 
 	public function change_password_edit()
 	{
 		$data['title']='Password & Security';
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'account/pwd_change_edit', $data);
 	}
 

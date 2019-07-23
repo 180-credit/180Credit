@@ -1,12 +1,21 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Events extends CI_Controller {
+class Events extends MY_Controller {
+
+    function __construct()
+    {
+        parent::__construct();
+        if(!isset($_SESSION['user'])){
+            redirect('consumer/login');
+        }
+    }
+
     public function index(){
         $data['title'] = 'Event lists';
-        $this->load->model('Common_model');
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
-        $data['event_details']=$this->Common_model->loadAllEvents();
+        $data['event_details']=$this->Common_model->loadAllEvents(0,'','','createdOn','desc',100,0);
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/list', $data);
     }
 
@@ -15,12 +24,14 @@ class Events extends CI_Controller {
         $data['title'] = 'Event lists';
         $this->load->model('Common_model');
         $data['event_details']=$this->Common_model->loadEvent($eventId);
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/details', $data);
     }
 
 
     public function create(){
         $data['title'] = 'Create event';
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/create', $data);
     }
 

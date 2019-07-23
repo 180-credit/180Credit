@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Welcome extends MY_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -26,11 +26,13 @@ class Welcome extends CI_Controller {
 	public function terms_of_use()
 	{
 		$data['title'] = 'Terms of use';
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'information/terms', $data);
 	}
 	public function privacy_policy()
 	{
 		$data['title'] = 'Privacy policy';
+        $data['upcoming_events'] = $this->upcoming_events;
 		$this->template->load('layout', 'information/policy', $data);
 	}
 }

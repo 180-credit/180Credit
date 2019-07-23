@@ -7,7 +7,7 @@ use Ctct\Exceptions\CtctException;
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once 'application/helpers/Authenticate.php';
 
-class Login extends CI_Controller
+class Login extends MY_Controller
 {
 
     use Authenticate;
@@ -38,6 +38,7 @@ class Login extends CI_Controller
         $_SESSION['fb_user_type'] = 1;
         $data['facebook_login_url'] = $this->facebook->login_url();
         $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url() . GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=1';
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'login/login_service_provider', $data);
     }
 
@@ -52,6 +53,7 @@ class Login extends CI_Controller
         $_SESSION['fb_user_type'] = 2;
         $data['facebook_login_url'] = $this->facebook->login_url();
         $data['google_login_url'] = 'https://accounts.google.com/o/oauth2/v2/auth?scope=' . urlencode('https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email') . '&redirect_uri=' . urlencode(base_url() . GOOGLE_CLIENT_REDIRECT_URL) . '&response_type=code&client_id=' . GOOGLE_CLIENT_ID . '&access_type=online&state=2';
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'login/login_consumer', $data);
     }
 
@@ -75,6 +77,7 @@ class Login extends CI_Controller
             redirect('/');
         }
         $data['title'] = 'Create a consumer account';
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'login/signup_consumer', $data);
     }
 
@@ -84,6 +87,7 @@ class Login extends CI_Controller
             redirect('/');
         }
         $data['title'] = 'Create a service provider account';
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'login/signup_service_provider', $data);
     }
 
@@ -243,6 +247,7 @@ class Login extends CI_Controller
     {
         $data['title'] = 'Success';
         $data['msg'] = isset($_SESSION['success']) ? $_SESSION['success'] : '';
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'login/success_screen', $data);
     }
 
@@ -483,6 +488,7 @@ class Login extends CI_Controller
                     }
                 }
                 $this->session->set_userdata('user', $user);
+                $data['upcoming_events'] = $this->upcoming_events;
                 $this->template->load('layout', 'login/verification_screen', $data);
             } else {
                 $this->session->set_flashdata('error', 'Verification token is expired.');

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller
+class Home extends MY_Controller
 {
 
     function __construct()
@@ -22,6 +22,7 @@ class Home extends CI_Controller
             'area_of_speciality' => $areasOfSpecialties,
             'specialist' => $loadUserAreasOfSpecialtySearch
         ));
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'home', $data);
     }
 
@@ -44,6 +45,7 @@ class Home extends CI_Controller
         $data['limit'] = 20;
         $data['areas_of_specialties'] = $this->Common_model->loadAreasOfSpecialty();
         $data['load_all_tags'] = $this->Common_model->loadAllTags();
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'search_results', $data);
     }
 
@@ -180,6 +182,7 @@ class Home extends CI_Controller
         if(isset($_GET['onlyHtml']) && $_GET['onlyHtml'] == true){
             $this->load->view('viewProfileModel', $data);
         }else{
+            $data['upcoming_events'] = $this->upcoming_events;
             $this->template->load('layout','viewProfile', $data);
         }
     }
@@ -284,6 +287,7 @@ class Home extends CI_Controller
         $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
         $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
         $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout','sendReviewDetails', $data);
     }
 
@@ -314,6 +318,7 @@ class Home extends CI_Controller
         $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
         $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
         $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout','sendEndorsementDetails', $data);
     }
 
@@ -342,6 +347,7 @@ class Home extends CI_Controller
         $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
         $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
         $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout','sendMessageToUser', $data);
         redirect('/events');
     }

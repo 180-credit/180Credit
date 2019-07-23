@@ -80,8 +80,8 @@ class Common_model extends CI_Model {
 
     public function loadAllEvents($pEventType=0,$searchString = '',$sortColumn = '',$sortOrder = '',$page=1,$perPage=0){
         $this->db->reconnect();
-        $offset = ($page - 1) * $perPage;
-        $query = $this->db->query("CALL loadAllEvents({$pEventType},'{$searchString}','{$sortColumn}','{$sortOrder}',{$offset},{$perPage})");
+        $offset = isset($page) && $page!=0 ? ($page - 1) * $perPage : 0;
+        $query = $this->db->query("CALL loadAllEvents({$pEventType},'{$searchString}','{$sortColumn}','{$sortOrder}',{$perPage},{$offset})");
         $this->db->close();
         return $query->result();
     }
