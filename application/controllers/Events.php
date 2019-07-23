@@ -106,7 +106,9 @@ class Events extends MY_Controller
         $stateId = 0;
         if (!empty($state) && $state != '') {
             $stateDetails = $this->Login_model->getDataByCondition('state', "name like '%{$state}%'", true);
-            $stateId = $stateDetails->id;
+            if(isset($stateDetails->id)){
+                $stateId = $stateDetails->id;
+            }
         }
         $path = 'assets/events';
         if (!is_dir(FCPATH . $path)) {
