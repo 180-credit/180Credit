@@ -16,6 +16,7 @@ class Events extends MY_Controller
     {
         $data['title'] = 'Event lists';
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
+        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/list', $data);
     }
 
