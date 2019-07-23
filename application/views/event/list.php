@@ -8,31 +8,33 @@
         </div>
         <div class="content-area-event mt-2 row shadow">
             <div class="col-8">
-                <div class="left-side">
-                    <h1>Upcoming Events...</h1>
-                    <div class="col-md-12 brd-bottom pb-2 ">
-                        <form class="form-inline">
+                <div class="left-side row">
+                    <div class="col-md-9">
+                        <h1>Upcoming Events</h1>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <button type="button" onclick="window.location.href='<?= base_url(); ?>events/create'" class="btn btn-primary ml-1">Submit an event</button>
+                    </div>
+                    <div class="brd-bottom pb-2 col-md-12">
+                        <form class="form-inline" id="filterForm">
                             <div class="form-group">
                                 <label for="event_type">Event type: </label>
-                                <select class="form-control ml-1">
-                                    <option>All events</option>
-                                    <option>Virtual/Online</option>
-                                    <option>Physical Location</option>
+                                <select class="form-control ml-1" name="event_type">
+                                    <option value="0">All events</option>
+                                    <option value="1">Virtual/Online</option>
+                                    <option value="2">Physical Location</option>
                                 </select>
                                 <label for="event_type" class=" ml-3">Search: </label>
-                                <input type="password" placeholder="Search" class="form-control" id="pwd">
-                                <button type="button" class="btn btn-primary ml-3">Filter</button>
-                                <button type="button" onclick="window.location.href='<?= base_url(); ?>events/create'"
-                                        class="btn btn-primary ml-3">Submit an event
-                                </button>
+                                <input type="text" placeholder="Search" name="event_search" class="form-control" id="pwd">
+                                <button type="button" onclick="filterManagement.applyFilterData(1);" class="btn btn-primary ml-3">Filter</button>
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-12 ">
+                    <div class="col-md-12">
+                        <div class="main_data_block">
                         <?php
                         foreach ($event_details as $event_detail) {
                             ?>
-                        <div class="main_data_block">
                             <div class="search-result-block mt-2">
                                 <div class="premium-listing p-2">
                                     <div class="media">
@@ -80,10 +82,13 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                             <?php
                         }
                         ?>
+                        </div>
+                        <div class="pagination_block mt-2">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -180,7 +185,8 @@
         </div>
     </div>
 </div>
-
+<div id="wait" ><img src='<?php echo base_url(); ?>assets/images/loader.gif' /></div>
+<script type="text/javascript" src="<?= base_url(); ?>assets/plugins/daterangepicker/moment.min.js"></script>
 <?php
 if(isset($_SESSION['success'])){
     ?>
@@ -192,3 +198,114 @@ if(isset($_SESSION['success'])){
     <?php
 }
 ?>
+
+<script>
+    function jsUcfirst(string)
+    {
+        return string.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+            return letter.toUpperCase();
+        });
+    }
+    $(document).ajaxStart(function(){
+        $("#wait").css("display", "block");
+    });
+    $(document).ajaxComplete(function(){
+        $("#wait").css("display", "none");
+    });
+    var filterManagement ={
+        applyHtmlData : function (data) {
+            let html = '';
+            if(data.paginationData.length){
+                $.each(data.paginationData,function (k,v) {
+                    html +='<div class="search-result-block mt-2">\n' +
+                        '    <div class="premium-listing p-2">\n' +
+                        '        <div class="media">\n' +
+                        '            <a>';
+                    if(v.imageURL != ''){
+                        html += '                <img class="mr-3"  width="136" height="136" src="<?= base_url(); ?>'+v.imageURL+'">';
+                    } else {
+                        html += '                <img class="mr-3" width="136" height="136" src="<?= base_url().'assets/images/default.png' ?>">';
+                    }
+                    html += '            </a>\n' +
+                        '            <div class="media-body">\n' +
+                        '                <div class="row">\n' +
+                        '                    <div class="col-md-12 description">\n' +
+                        '<h6>'+jsUcfirst(v.eventTitle)+'</h6>' +
+                        '<p>'+jsUcfirst(v.venueName)+'</p>' +
+                        '                        <p><b>Event Type:</b> '+(v.eventType == 1 ? 'Physical location':'Virtual/Online')+'' +
+                        '&nbsp;&nbsp;&nbsp;<b>Cost:</b> '+v.eventCost +
+                        '</p>';
+                        if(v.startDate && v.endDate){
+                            html +=moment(v.startDate).format('Do MMMM, YYYY')+' - '+moment(v.endDate).format('Do MMMM, YYYY');
+                        }
+                    html +='</div>\n' +
+                        '<div class="col-md-9 puser-left"><div class="user-address">';
+                    if(v.venueCity && v.venueStateAbbr){
+                        html += '<span>'+v.venueCity+', '+v.venueStateAbbr+'</span>' ;
+                    }
+                    html += '</div></div>' +
+                        '<div class="col-md-3 puser-right">' +
+                        '<button type="button" onclick="window.location.href=\'<?= base_url().'event-details/' ?>\''+v.id+'" class="btn btn-primary ml-3 text-right">Details</button>' +
+                        '</div>' +
+                        '                </div>\n' +
+                        '            </div>\n' +
+                        '        </div>';
+                    html += '    </div>\n' +
+                        '</div>';
+                });
+            }
+            return html;
+        },
+        applyHtmlPagination : function (data) {
+            let html = '<ul class="pagination pagination-sm justify-content-center">\n' +
+                '    <li class="page-item '+ (data.page <= 1 ? 'disabled' : '' ) +'">\n' +
+                '        <a onclick="filterManagement.applyFilterData(1);" class="page-link" href="javascript:;"><<</a>\n' +
+                '    </li>\n' +
+                '    <li class="page-item '+ (data.page <= 1 ? 'disabled' : '' ) +'">\n' +
+                '        <a onclick="filterManagement.applyFilterData(1);" class="page-link" href="javascript:;"><</a>\n' +
+                '    </li>';
+            let i = data.start;
+            for (i; i <= data.end; i++ ){
+                html += '<li class="page-item '+ (i == data.page ? 'active' : '') +'">\n' +
+                    '<a '+ (i != data.page ? 'onclick="filterManagement.applyFilterData('+i+');"' : '') +' class="page-link" href="javascript:;">'+i+'</a>\n' +
+                    '</li>\n';
+            }
+            html +='    <li class="page-item '+(data.page >= data.total_pages ? 'disabled' : '')+'">\n' +
+                '        <a class="page-link" onclick="filterManagement.applyFilterData('+(parseInt(data.page) + 1)+');" href="javascript:;">></a>\n' +
+                '    </li>\n' +
+                '    <li class="page-item '+(data.page >= data.total_pages ? 'disabled' : '')+'">\n' +
+                '        <a class="page-link" onclick="filterManagement.applyFilterData('+data.end +');" href="javascript:;">>></a>\n' +
+                '    </li>\n' +
+                '</ul>';
+
+            return html;
+
+        },
+        applyFilterData : function (page) {
+            var filterData = $('#filterForm').serialize();
+            filterData=filterData+'&page='+page;
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url(); ?>events/load_ajax_data',
+                dataType: 'json',
+                data:filterData,
+                success: function(data)
+                {
+                    $('.main_data_block').html(filterManagement.applyHtmlData(data));
+                    if(data.end != 0) {
+                        $('.pagination_block').html(filterManagement.applyHtmlPagination(data));
+                    } else {
+                        $('.pagination_block').html('');
+                    }
+                },
+                error: function(e)
+                {
+                    alert(e.message);
+                }
+            });
+        }
+    };
+    $(document).ready(function () {
+        filterManagement.applyFilterData(1);
+    })
+</script>

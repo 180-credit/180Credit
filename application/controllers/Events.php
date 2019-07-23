@@ -1,73 +1,122 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Events extends MY_Controller {
+class Events extends MY_Controller
+{
 
     function __construct()
     {
         parent::__construct();
-        if(!isset($_SESSION['user'])){
-            redirect('consumer/login');
+        if (!isset($_SESSION['user'])) {
+            redirect('service-provider/login');
         }
     }
 
-    public function index(){
+    public function index()
+    {
         $data['title'] = 'Event lists';
         $data['success'] = isset($_SESSION['success']) ? $_SESSION['success'] : null;
-        $data['event_details']=$this->Common_model->loadAllEvents(0,'','','createdOn','desc',100,0);
-        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/list', $data);
     }
 
+    public function load_ajax_data()
+    {
+        $input = $this->input->post();
+        $eventType = 0;
+        $eventSearch = '';
+        $data['page'] = 1;
+        if (isset($input['event_type']) && $input['event_type'] != '') {
+            $eventType = $input['event_type'];
+        }
+        if (isset($input['event_search']) && $input['event_search'] != '') {
+            $eventSearch = $input['event_search'];
+        }
+        if (isset($input['page']) && $input['page'] != '') {
+            $data['page'] = $input['page'];
+        }
 
-    public function details($eventId){
+        $data['limit'] = 20;
+        $usersData['count'] = count($this->Common_model->loadAllEvents($eventType, $eventSearch, 'createdOn', 'desc', 1, 100000));
+        $usersData['data'] = $this->Common_model->loadAllEvents($eventType, $eventSearch, 'createdOn', 'desc', $data['page'], $data['limit']);
+
+        $data['paginationData'] = isset($usersData['data']) ? $usersData['data'] : array();
+        $total_pages = round($usersData['count'] / $data['limit']);
+
+        $adjacents = 2;
+        $data['total'] = $usersData['count'];
+        $data['total_pages'] = $total_pages;
+        if ($total_pages <= (1 + ($adjacents * 2))) {
+            $data['start'] = 1;
+            $data['end'] = $total_pages;
+        } else {
+            if (($data['page'] - $adjacents) > 1) {
+                if (($data['page'] + $adjacents) < $total_pages) {
+                    $data['start'] = ($data['page'] - $adjacents);
+                    $data['end'] = ($data['page'] + $adjacents);
+                } else {
+                    $data['start'] = ($total_pages - (1 + ($adjacents * 2)));
+                    $data['end'] = $total_pages;
+                }
+            } else {
+                $data['start'] = 1;
+                $data['end'] = (1 + ($adjacents * 2));
+            }
+        }
+
+        echo json_encode($data);
+    }
+
+
+    public function details($eventId)
+    {
         $data['title'] = 'Event lists';
         $this->load->model('Common_model');
-        $data['event_details']=$this->Common_model->loadEvent($eventId);
+        $data['event_details'] = $this->Common_model->loadEvent($eventId);
         $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/details', $data);
     }
 
 
-    public function create(){
+    public function create()
+    {
         $data['title'] = 'Create event';
         $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/create', $data);
     }
 
 
-
-    public function store_event(){
+    public function store_event()
+    {
         $datetimes = $this->input->post('datetimes');
-        $datetimesArray =explode(" - ",$datetimes);
-        $startDateTime =explode(" ",$datetimesArray[0]);
+        $datetimesArray = explode(" - ", $datetimes);
+        $startDateTime = explode(" ", $datetimesArray[0]);
         $startDate = date('Y-m-d', strtotime(str_replace('-', '/', $startDateTime[0])));
-        $startTime =implode(" ",array($startDateTime[1],$startDateTime[2]));
-        $date = DateTime::createFromFormat( 'H:i A', $startTime);
-        $startFormattedTime = $date->format( 'H:i:s');
-        $endDateTime =explode(" ",$datetimesArray[1]);
+        $startTime = implode(" ", array($startDateTime[1], $startDateTime[2]));
+        $date = DateTime::createFromFormat('H:i A', $startTime);
+        $startFormattedTime = $date->format('H:i:s');
+        $endDateTime = explode(" ", $datetimesArray[1]);
         $endDate = date('Y-m-d', strtotime(str_replace('-', '/', $endDateTime[0])));
-        $endTime =implode(" ",array($endDateTime[1],$endDateTime[2]));
-        $date = DateTime::createFromFormat( 'H:i A', $endTime);
-        $endFormattedTime = $date->format( 'H:i:s');
+        $endTime = implode(" ", array($endDateTime[1], $endDateTime[2]));
+        $date = DateTime::createFromFormat('H:i A', $endTime);
+        $endFormattedTime = $date->format('H:i:s');
 
         $loginModal = $this->load->model('Login_model');
         $state = $this->input->post('state');
-        $stateId=0;
-        if(!empty($state) && $state !=''){
-            $stateDetails = $this->Login_model->getDataByCondition('state',"name like '%{$state}%'",true);
+        $stateId = 0;
+        if (!empty($state) && $state != '') {
+            $stateDetails = $this->Login_model->getDataByCondition('state', "name like '%{$state}%'", true);
             $stateId = $stateDetails->id;
         }
         $path = 'assets/events';
-        if(!is_dir(FCPATH.$path)){
-            mkdir($path,0777,true);
+        if (!is_dir(FCPATH . $path)) {
+            mkdir($path, 0777, true);
         }
 
-        $user= $_SESSION['user'];
+        $user = $_SESSION['user'];
 
-        if(isset($_FILES['profile_image']['name']) && !empty($_FILES['profile_image']['name'])){
-            $fileName = $path.'/'.time().'.'.pathinfo($_FILES['profile_image']['name'])['extension'];
-            move_uploaded_file($_FILES['profile_image']['tmp_name'],FCPATH.$fileName);
+        if (isset($_FILES['profile_image']['name']) && !empty($_FILES['profile_image']['name'])) {
+            $fileName = $path . '/' . time() . '.' . pathinfo($_FILES['profile_image']['name'])['extension'];
+            move_uploaded_file($_FILES['profile_image']['tmp_name'], FCPATH . $fileName);
         }
         // $oldImage =$this->input->post('old_profile_image');
         $this->db->reconnect();

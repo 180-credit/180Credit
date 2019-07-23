@@ -415,18 +415,12 @@ label.custom-control-label.customControlAutosizing2 {
 }
 
 .events-section .content-area-event .form-inline select.form-control.ml-1{
-    border-radius: 0;
-    width: 7rem;
+    width: 12rem;
     padding: 0px;
 }
 
 .events-section .content-area-event .form-inline input{
-    border-radius: 0;
-    width: 10rem;
-}
-
-.events-section .content-area-event .form-inline button{
-    border-radius: 0;
+    width: 18rem;
 }
 
 .search-result .events-section .premium-listing{
