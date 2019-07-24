@@ -7,9 +7,6 @@ class Events extends MY_Controller
     function __construct()
     {
         parent::__construct();
-        if (!isset($_SESSION['user'])) {
-            redirect('service-provider/login');
-        }
     }
 
     public function index()
@@ -80,6 +77,9 @@ class Events extends MY_Controller
 
     public function create()
     {
+        if (!isset($_SESSION['user']) || (isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] != 1 )) {
+            redirect('service-provider/login');
+        }
         $data['title'] = 'Create event';
         $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout', 'event/create', $data);
@@ -88,6 +88,9 @@ class Events extends MY_Controller
 
     public function store_event()
     {
+        if (!isset($_SESSION['user']) || (isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] != 1 )) {
+            redirect('service-provider/login');
+        }
         $datetimes = $this->input->post('datetimes');
         $datetimesArray = explode(" - ", $datetimes);
         $startDateTime = explode(" ", $datetimesArray[0]);

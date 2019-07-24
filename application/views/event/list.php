@@ -13,7 +13,13 @@
                         <h1>Upcoming Events</h1>
                     </div>
                     <div class="col-md-3 mt-3">
-                        <button type="button" onclick="window.location.href='<?= base_url(); ?>events/create'" class="btn btn-primary ml-1">Submit an event</button>
+                        <?php
+                        if (isset($_SESSION['user']) && (isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] == 1 )) {
+                            ?>
+                            <button type="button" onclick="window.location.href='<?= base_url(); ?>events/create'" class="btn btn-primary ml-1">Submit an event</button>
+                            <?php
+                        }
+                        ?>
                     </div>
                     <div class="brd-bottom pb-2 col-md-12">
                         <form class="form-inline" id="filterForm">

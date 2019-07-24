@@ -10,23 +10,17 @@
 					</ul>
 				</div>
 				<div class="col-md-4 mb-sm-5">
-                    <?php
-                        if (isset($_SESSION['user'])){
+                    <h5 class="text-uppercase text-white">Upcoming Events</h5>
+                    <ul class="list-unstyled mb-0">
+                        <?php
+                        foreach ($upcoming_events as $upcoming_event){
                             ?>
-                                <h5 class="text-uppercase text-white">Upcoming Events</h5>
-                                <ul class="list-unstyled mb-0">
-                                    <?php
-                                    foreach ($upcoming_events as $upcoming_event){
-                                        ?>
-                                        <li> <a href="<?= base_url('event-details/'.$upcoming_event->id) ?>"><?= $upcoming_event->eventTitle ?> - <?= date('M d',strtotime($upcoming_event->startDate))." - ".date('dS',strtotime($upcoming_event->startDate)) ?></a> </li>
-                                        <?php
-                                    }
-                                    ?>
-                                    <li><a href="<?= base_url('events') ?>">View all upcoming events</a></li>
-                                </ul>
+                            <li> <a href="<?= base_url('event-details/'.$upcoming_event->id) ?>"><?= $upcoming_event->eventTitle ?> - <?= date('M d',strtotime($upcoming_event->startDate))." - ".date('dS',strtotime($upcoming_event->startDate)) ?></a> </li>
                             <?php
                         }
-                    ?>
+                        ?>
+                        <li><a href="<?= base_url('events') ?>">View all upcoming events</a></li>
+                    </ul>
 				</div>
 				<div class="col-md-4 mb-sm-5">
 					<h5 class="text-uppercase text-white">Resources</h5>
