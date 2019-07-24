@@ -16,7 +16,7 @@ class Login_model extends CI_Model {
         if ($first == true) {
             return $result->row();
         } else {
-            return $result;
+            return $result->result();
         }
     }
 

@@ -149,7 +149,65 @@ class Events extends MY_Controller
 			)";
         $this->db->query($insert_user_stored_proc);
         $this->db->close();
+
+        $condition = "eventType={$this->input->post('event_type')} and targetAudience={$this->input->post('target_audience')} and eventTitle like '{$this->input->post('event_title')}' and submittedByUserId={$user['userId']}";
+        $eventDetails = $this->Login_model->getDataByCondition('events', $condition, true);
+
+        $condition = "(permissionBitmask & 1) = 1";
+        $user_details = (array)$this->Login_model->getDataByCondition('users', $condition, false);
+        if(isset($eventDetails->id)){
+            foreach ($user_details as $user_detail){
+                $linkUrl = base_url('event-details/'.$eventDetails->id);
+                $html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                <html xmlns="http://www.w3.org/1999/xhtml">
+                <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                </head>
+                <body>
+                Hello '.ucfirst($user_detail->firstName).',<br><br>  
+                A new event has been submitted for approval.<br>  
+                Submitted by: '.ucfirst($user['firstName']).' '.ucfirst($user['lastName']).'<br>
+                Event: '.ucfirst($this->input->post('event_title')).'<br>
+                Link:   <a href="'.$linkUrl.'">'.$linkUrl.'</a><br>
+                <br>
+                Thank you,<br> 180Credit.com 
+                </body>
+                </html>';
+
+                $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $user_details->userEmail, "A new event has been submitted.", $html);
+            }
+        }
+
         $this->session->set_flashdata('success', "done");
         redirect('/events');
+    }
+
+
+    function SendVerifyMail($from, $email, $subject, $message, $attach = '', $filename = '')
+    {
+        $data = array(
+            'from' => $from,
+            'to' => $email,
+            'subject' => $subject,
+            'html' => $message,
+        );
+
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, 'https://api.mailgun.net/v3/m.180credit.com/messages');
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($curl, CURLOPT_USERPWD, "api:" . MAIL_API);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+        $result = curl_exec($curl);
+        curl_close($curl);
+        // print_r($result);
+        // exit;
+        return true;
     }
 }
