@@ -175,7 +175,7 @@ class Events extends MY_Controller
                 </body>
                 </html>';
 
-                $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $user_details->userEmail, "A new event has been submitted.", $html);
+                $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $user_detail->userEmail, "A new event has been submitted.", $html);
                 if(isset($user_detail->player_ids) && $user_detail->player_ids != ''){
                     $message = "A new event has been submitted for approval. Submitted by: ";
                     $message .= ucfirst($user['firstName'])." ";
