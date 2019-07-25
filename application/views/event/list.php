@@ -262,3 +262,6 @@ if(isset($_SESSION['success'])){
         filterManagement.applyFilterData(1);
     })
 </script>
+<script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d35f8b8cdce3fb1">
+
+</script>
