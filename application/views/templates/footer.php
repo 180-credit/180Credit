@@ -82,6 +82,77 @@
 	<!--  Required JS [Bootstrap Js] Ends -->
 
 	<!--  [Script Section] Ends -->
+<?php
+    if (isset($_SESSION['user']['userId'])){
+        ?>
+            <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+            <script>
+                var OneSignal = window.OneSignal || [];
+                OneSignal.push(["init", {
+                    appId: "<?php echo ONESIGNAL_APPID; ?>",
+                    subdomainName: 'push',
+                    autoRegister: true,
+                    promptOptions: {
+                        /* These prompt options values configure both the HTTP prompt and the HTTP popup. */
+                        /* actionMessage limited to 90 characters */
+                        actionMessage: "Test Message",
+                        /* acceptButtonText limited to 15 characters */
+                        acceptButtonText: "Test btn",
+                        /* cancelButtonText limited to 15 characters */
+                        cancelButtonText: "Test cancel"
+                    }
+                }]);
+                /*function subscribe() {
+                    // OneSignal.push(["registerForPushNotifications"]);
+                    OneSignal.push(["registerForPushNotifications"]);
+                    event.preventDefault();
+                }
+                function unsubscribe(){
+                    OneSignal.setSubscription(true);
+                }*/
+                var OneSignal = OneSignal || [];
+                OneSignal.push(function(e) {
+                    /* These examples are all valid */
+                    // Occurs when the user's subscription changes to a new value.
+                    OneSignal.on('subscriptionChange', function (isSubscribed) {
+                        if(isSubscribed){
+                            OneSignal.sendTag("user_id",<?= $_SESSION['user']['userId'] ?>);
+                            <?php
+                                if($_SESSION['user']['180creditUserType'] == 1){
+                                    ?>
+                                    OneSignal.sendTag("user_type","specialists");
+                                    <?php
+                                }
+                                elseif ($_SESSION['user']['180creditUserType'] == 2){
+                                    ?>
+                                    OneSignal.sendTag("user_type","consumers");
+                                    <?php
+                                }
+                            ?>
+                        }
+                        OneSignal.getUserId(function(userId) {
+                            $.post('<?= base_url('login/enableSubscription') ?>',{ is_subscribed : isSubscribed, player_id : userId },function (result) {
+                                console.log(result);
+                            });
+                        });
+                    });
+                    var isPushSupported = OneSignal.isPushNotificationsSupported();
+                    if (isPushSupported)
+                    {
+                        // Push notifications are supported
+                        OneSignal.isPushNotificationsEnabled().then(function(isEnabled)
+                        {
+                            if (!isEnabled)
+                            {
+                                OneSignal.showHttpPrompt();
+                            }
+                        });
+                    }
+                });
+            </script>
+        <?php
+    }
+?>
 </body>
 
 </html>

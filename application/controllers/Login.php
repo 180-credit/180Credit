@@ -500,4 +500,31 @@ class Login extends MY_Controller
         }
     }
 
+    public function enableSubscription()
+    {
+        $user = $_SESSION['user'];
+        $input = $this->input->post();
+        $playerIds = array();
+
+        if (isset($user['player_ids']) && !empty($user['player_ids'])) {
+            $playerIds = explode(',', $user['player_ids']);
+        }
+
+        if (isset($input['is_subscribed']) && $input['is_subscribed'] == "true") {
+            if (!in_array($input['player_id'], $playerIds)) {
+                array_push($playerIds, $input['player_id']);
+            }
+        } else {
+            if (($key = array_search($input['player_id'], $playerIds)) !== false) {
+                unset($playerIds[$key]);
+            }
+        }
+        $data = array('player_ids' => implode(',', $playerIds));
+        $this->db->where('userId', $user['userId']);
+        $this->db->update('users', $data);
+        $condition = "userEmail =" . "'" . $user['userEmail'] . "'";
+        $user = (array)$this->Login_model->getDataByCondition('users', $condition, true);
+
+        $this->session->set_userdata('user', $user);
+    }
 }

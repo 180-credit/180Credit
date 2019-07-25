@@ -176,6 +176,13 @@ class Events extends MY_Controller
                 </html>';
 
                 $mail_status = $this->SendVerifyMail("donotreply@180credit.com", $user_details->userEmail, "A new event has been submitted.", $html);
+                if(isset($user_detail->player_ids) && $user_detail->player_ids != ''){
+                    $message = "A new event has been submitted for approval. Submitted by: ";
+                    $message .= ucfirst($user['firstName'])." ";
+                    $message .= ucfirst($user['lastName']);
+                    $headings = "A new event has been submitted.";
+                    $this->sendPushNotification($message,explode(',',$user_detail->player_ids),$linkUrl,$headings,base_url($fileName));
+                }
             }
         }
 

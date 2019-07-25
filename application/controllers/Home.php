@@ -351,4 +351,14 @@ class Home extends MY_Controller
         $this->template->load('layout','sendMessageToUser', $data);
         redirect('/events');
     }
+
+
+    public function testNotification(){
+        $message = "test message";
+        $user_id =array("7aa99a65-3044-463f-9ab4-c5845ddaaf88","c1b41351-9941-4b0a-b1b6-3ad3f0f9aa18");
+        $url = "http://localhost/180Credit/my-account";
+        $headings = "Test Title";
+        $img = "http://localhost/180Credit/assets/images/main2.jpg";
+        $this->sendPushNotification($message,$user_id,$url,$headings,$img);
+    }
 }
