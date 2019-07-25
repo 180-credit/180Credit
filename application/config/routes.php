@@ -64,6 +64,7 @@ $route['password-and-security/edit'] = 'account/change_password_edit';
 $route['terms_of_use'] = 'welcome/terms_of_use';
 $route['privacy_policy'] = 'welcome/privacy_policy';
 $route['verify/(:any)'] = 'login/verify_user_email/$1';
+$route['home/switchLanguage/(:any)'] = 'home/switchLanguage/$1';
 $route['search'] = 'home/searchDetails';
 $route['view-specialist-profile/(:any)'] = 'home/specialistProfile/$1';
 $route['send-message/(:any)'] = 'home/sendMessageToUser/$1';

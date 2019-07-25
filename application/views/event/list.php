@@ -3,20 +3,20 @@
         <div class="breadcum ">
             <ul class="list-unstyled">
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a class="active" href="javascript:">Events Specialist</a></li>
+                <li><a class="active" href="javascript:"><?= lang('upcoming_events') ?></a></li>
             </ul>
         </div>
         <div class="content-area-event mt-2 row shadow">
             <div class="col-8">
                 <div class="left-side row">
                     <div class="col-md-9">
-                        <h1>Upcoming Events</h1>
+                        <h1><?= lang('upcoming_events') ?></h1>
                     </div>
                     <div class="col-md-3 mt-3">
                         <?php
                         if (isset($_SESSION['user']) && (isset($_SESSION['user']['180creditUserType']) && $_SESSION['user']['180creditUserType'] == 1 )) {
                             ?>
-                            <button type="button" onclick="window.location.href='<?= base_url(); ?>events/create'" class="btn btn-primary ml-1">Submit an event</button>
+                            <button type="button" onclick="window.location.href='<?= base_url(); ?>events/create'" class="btn btn-primary ml-1"><?= lang('submit_an_event') ?></button>
                             <?php
                         }
                         ?>
@@ -24,15 +24,15 @@
                     <div class="brd-bottom pb-2 col-md-12">
                         <form class="form-inline" id="filterForm">
                             <div class="form-group">
-                                <label for="event_type">Event type: </label>
+                                <label for="event_type"><?= lang('event_type') ?>: </label>
                                 <select class="form-control ml-1" name="event_type">
-                                    <option value="0">All events</option>
-                                    <option value="1">Physical Location</option>
-                                    <option value="2">Virtual/Online</option>
+                                    <option value="0"><?= lang('all_events') ?></option>
+                                    <option value="1"><?= lang('physical_location') ?></option>
+                                    <option value="2"><?= lang('virtual_online') ?></option>
                                 </select>
-                                <label for="event_type" class=" ml-3">Search: </label>
-                                <input type="text" placeholder="Search" name="event_search" class="form-control" id="pwd">
-                                <button type="button" onclick="filterManagement.applyFilterData(1);" class="btn btn-primary ml-3">Filter</button>
+                                <label for="event_type" class=" ml-3"><?= lang('search') ?>: </label>
+                                <input type="text" placeholder="<?= lang('search') ?>" name="event_search" class="form-control" id="pwd">
+                                <button type="button" onclick="filterManagement.applyFilterData(1);" class="btn btn-primary ml-3"><?= lang('filter') ?></button>
                             </div>
                         </form>
                     </div>
@@ -47,11 +47,11 @@
             </div>
             <div class="col-4">
                 <div class="right-sidebar">
-                    <h2 class="h2-with-bottom">Featured specialists near Cherry Hill, NJ</h2>
+                    <h2 class="h2-with-bottom"><?= lang('featured_specialists') ?></h2>
                     <img src="<?= base_url(); ?>assets/images/featured2.png" class="width-20-rem mb-2"><br><img
                             src="<?= base_url(); ?>assets/images/featured.png" class="width-20-rem mb-2">
 
-                    <h2 class="h2-with-bottom mt-2">Latest News</h2>
+                    <h2 class="h2-with-bottom mt-2"><?= lang('latest_news') ?></h2>
 
                     <img class="width-20-rem" src="<?= base_url(); ?>assets/images/articlesidebar3.png">
                     <hr>
@@ -59,7 +59,7 @@
                     <hr>
                     <img class="width-20-rem" src="<?= base_url(); ?>assets/images/articlesidebar4.png">
 
-                    <h2 class="h2-with-bottom mt-1">Trending Topics</h2>
+                    <h2 class="h2-with-bottom mt-1"><?= lang('trending_topics') ?></h2>
 
                     <div style="padding-left: 15px; font-size: .9em;">
 
@@ -185,8 +185,8 @@ if(isset($_SESSION['success'])){
                         '                    <div class="col-md-12 description">\n' +
                         '<h6>'+jsUcfirst(v.eventTitle)+'</h6>' +
                         '<p>'+jsUcfirst(v.venueName)+'</p>' +
-                        '                        <p><b>Event Type:</b> '+(v.eventType == 1 ? 'Physical location':'Virtual/Online')+'' +
-                        '&nbsp;&nbsp;&nbsp;<b>Cost:</b> '+v.eventCost +
+                        '                        <p><b><?= lang('event_location') ?>:</b> '+(v.eventType == 1 ? '<?= lang('physical_location') ?>':'<?= lang('virtual_online') ?>')+'' +
+                        '&nbsp;&nbsp;&nbsp;<b><?= lang('cost') ?>:</b> '+v.eventCost +
                         '</p>';
                         if(v.startDate && v.endDate){
                             html +=moment(v.startDate).format('Do MMMM, YYYY')+' - '+moment(v.endDate).format('Do MMMM, YYYY');
@@ -198,7 +198,7 @@ if(isset($_SESSION['success'])){
                     }
                     html += '</div></div>' +
                         '<div class="col-md-3 puser-right">' +
-                        '<button type="button" onclick="window.location.href=\'<?= base_url().'event-details/' ?>'+v.id+'\'" class="btn btn-primary ml-3 text-right">Details</button>' +
+                        '<button type="button" onclick="window.location.href=\'<?= base_url().'event-details/' ?>'+v.id+'\'" class="btn btn-primary ml-3 text-right"><?= lang('details') ?></button>' +
                         '</div>' +
                         '                </div>\n' +
                         '            </div>\n' +

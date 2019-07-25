@@ -2,72 +2,72 @@
     <div class="events-section ">
         <div class="breadcum ">
             <ul class="list-unstyled">
-                <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo base_url(); ?>events">Events</a></li>
-                <li><a href="javascript:">create</a></li>
+                <li><a href="<?php echo base_url(); ?>"><?= lang('home') ?></a></li>
+                <li><a href="<?php echo base_url(); ?>events"><?= lang('events') ?></a></li>
+                <li><a href="javascript:"><?= lang('create_event') ?></a></li>
             </ul>
         </div>
         <div class="content-area-event mt-2 row shadow">
             <div class="col-8">
                 <div class="left-side">
-                    <h1>Create Event</h1>
+                    <h1><?= lang('create_event') ?></h1>
                     <div class=" pb-2 ">
                         <div class="about-block p-2">
                             <form id="event_form" method="post" action="<?= base_url(); ?>events/store_event" enctype="multipart/form-data">
                                 <fieldset class="form-group">
                                     <div class="row">
-                                        <legend class="col-form-label col-sm-2 pt-0">Target audience:</legend>
+                                        <legend class="col-form-label col-sm-2 pt-0"><?= lang('target_audience') ?>:</legend>
                                         <div class="col-sm-10">
                                             <select class="form-control" name="target_audience">
-                                                <option value="1">This is an industry event open to industry professionals</option>
-                                                <option value="2">This event is for consumers looking for help and services</option>
+                                                <option value="1"><?= lang('type_industry_event') ?></option>
+                                                <option value="2"><?= lang('type_consumer_event') ?></option>
                                             </select>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset class="form-group">
                                     <div class="row">
-                                        <legend class="col-form-label col-sm-2 pt-0">Event location:</legend>
+                                        <legend class="col-form-label col-sm-2 pt-0"><?= lang('event_location') ?>:</legend>
                                         <div class="col-sm-10">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" checked name="event_type"
                                                        id="physical" value="1">
-                                                <label class="form-check-label" for="physical">Physical location</label>
+                                                <label class="form-check-label" for="physical"><?= lang('physical_location') ?></label>
                                             </div>
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="event_type"
                                                        id="virtual_online" value="2">
                                                 <label class="form-check-label"
-                                                       for="virtual_online">Virtual/Online</label>
+                                                       for="virtual_online"><?= lang('virtual_online') ?></label>
                                             </div>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <div class="form-group row">
-                                    <label for="event_title" class="col-sm-2 col-form-label">Event title:</label>
+                                    <label for="event_title" class="col-sm-2 col-form-label"><?= lang('event_title') ?>:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="event_title" name="event_title"
-                                               placeholder="Event title">
+                                               placeholder="<?= lang('event_title') ?>">
                                     </div>
                                 </div>
                                 <div class="form-group evnt_type_block row show">
-                                    <label for="input_venue" class="col-sm-2 col-form-label">Venue:</label>
+                                    <label for="input_venue" class="col-sm-2 col-form-label"><?= lang('venue') ?>:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="input_venue" name="venue" placeholder="Venue">
+                                        <input type="text" class="form-control" id="input_venue" name="venue" placeholder="<?= lang('venue') ?>">
                                     </div>
                                 </div>
                                 <div class="form-group evnt_type_block row show">
-                                    <label for="input_address" class="col-sm-2 col-form-label">Address:</label>
+                                    <label for="input_address" class="col-sm-2 col-form-label"><?= lang('address') ?>:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="address" id="input_address"
-                                               placeholder="Enter your address" onFocus="geolocate()">
+                                               placeholder="<?= lang('address') ?>" onFocus="geolocate()">
                                         <input class="field" type="hidden" name="city" id="locality" />
                                         <input class="field" type="hidden" name="state" id="administrative_area_level_1" />
                                         <input class="field" type="hidden" name="postal_code" id="postal_code" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_address" class="col-sm-2 col-form-label">Date & time:</label>
+                                    <label for="input_address" class="col-sm-2 col-form-label"><?= lang('date_time') ?>:</label>
                                     <div class="col-sm-10 row">
                                         <div class='col-md-9'>
                                             <div class=" form-group">
@@ -90,7 +90,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_upload_image" class="col-sm-2 col-form-label">Upload image:</label>
+                                    <label for="input_upload_image" class="col-sm-2 col-form-label"><?= lang('upload_image') ?>:</label>
                                     <div class="col-sm-10 row">
                                         <div class='col-md-4'>
                                             <div class=" form-group">
@@ -100,39 +100,38 @@
                                             </div>
                                         </div>
                                         <div class='col-md-8'>
-                                            <p>Your image must be JPG, GIF, or PNG and cannot exceed 2MB.<br>It will be resized to a width of 450px.</p>
+                                            <p><?= lang('image_upload_message') ?></p>
                                             <div class="full-width">
                                                 <input type="file" id="profile-input" accept="image/*" name="profile_image" class="form-control form-input form-style-base">
-                                                <input type="text" id="fake-input" accept="image/*" class="form-control form-input form-style-fake" placeholder="Choose your File" readonly="">
+                                                <input type="text" id="fake-input" accept="image/*" class="form-control form-input form-style-fake" placeholder="<?= lang('choose_your_file') ?>" readonly="">
                                                 <span class="fa fa-upload input-place"></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_event_description" class="col-sm-2 col-form-label">Event
-                                        description:</label>
+                                    <label for="input_event_description" class="col-sm-2 col-form-label"><?= lang('event_description') ?>:</label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control" id="input_event_description"
-                                                  name="event_description" placeholder="Event description"></textarea>
+                                                  name="event_description" placeholder="<?= lang('event_description') ?>"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_cost" class="col-sm-2 col-form-label">Cost:</label>
+                                    <label for="input_cost" class="col-sm-2 col-form-label"><?= lang('cost') ?>:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="input_cost" name="cost" placeholder="Cost">
+                                        <input type="text" class="form-control" id="input_cost" name="cost" placeholder="<?= lang('cost') ?>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="input_site_link" class="col-sm-2 col-form-label">Site Link:</label>
+                                    <label for="input_site_link" class="col-sm-2 col-form-label"><?= lang('site_link') ?>:</label>
                                     <div class="col-sm-10">
                                         <input type="url" class="form-control" id="input_site_link" name="site_link"
-                                               placeholder="Site Link">
+                                               placeholder="<?= lang('site_link') ?>">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-10">
-                                        <button type="submit" id="submit-event_form" class="btn btn-primary">Submit event</button>
+                                        <button type="submit" id="submit-event_form" class="btn btn-primary"><?= lang('submit_an_event') ?></button>
                                     </div>
                                 </div>
                             </form>
@@ -142,11 +141,11 @@
             </div>
             <div class="col-4">
                 <div class="right-sidebar">
-                    <h2 class="h2-with-bottom">Featured specialists near Cherry Hill, NJ</h2>
+                    <h2 class="h2-with-bottom"><?= lang('featured_specialists') ?></h2>
                     <img src="<?= base_url(); ?>assets/images/featured2.png" class="width-20-rem mb-2"><br><img
                             src="<?= base_url(); ?>assets/images/featured.png" class="width-20-rem mb-2">
 
-                    <h2 class="h2-with-bottom mt-2">Latest News</h2>
+                    <h2 class="h2-with-bottom mt-2"><?= lang('latest_news') ?></h2>
 
                     <img class="width-20-rem" src="<?= base_url(); ?>assets/images/articlesidebar3.png">
                     <hr>
@@ -154,7 +153,7 @@
                     <hr>
                     <img class="width-20-rem" src="<?= base_url(); ?>assets/images/articlesidebar4.png">
 
-                    <h2 class="h2-with-bottom mt-1">Trending Topics</h2>
+                    <h2 class="h2-with-bottom mt-1"><?= lang('trending_topics') ?></h2>
 
                     <div style="padding-left: 15px; font-size: .9em;">
 

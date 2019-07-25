@@ -2,8 +2,8 @@
     <div class="events-section ">
         <div class="breadcum ">
             <ul class="list-unstyled">
-                <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                <li><a href="<?php echo base_url(); ?>events">Events</a></li>
+                <li><a href="<?php echo base_url(); ?>"><?= lang('home') ?></a></li>
+                <li><a href="<?php echo base_url(); ?>events"><?= lang('events') ?></a></li>
                 <li><a class="active" href="javascript:"><?= $event_details->eventTitle ?></a></li>
             </ul>
         </div>
@@ -31,13 +31,13 @@
                             if($event_details->eventType == 1){
                                 ?>
                                 <tr>
-                                    <td valign="top">When:</td>
+                                    <td valign="top"><?= lang('when') ?>:</td>
                                     <td><?php
                                         echo date('F dS',strtotime($event_details->startDate)).' - '.date('dS m,Y',strtotime($event_details->endDate));
                                         ?><br></td>
                                 </tr>
                                 <tr>
-                                    <td valign="top">Where:</td>
+                                    <td valign="top"><?= lang('where') ?>:</td>
                                     <td><?= $event_details->venueStreetAddress; ?>, <br><?= $event_details->venueCity; ?>, <?= $event_details->venueStateAbbr; ?>, <?= $event_details->venuePostalCode; ?><br></td>
                                 </tr>
                                 <?php
@@ -45,31 +45,31 @@
 
                         ?>
                         <tr>
-                            <td valign="top">Cost:</td>
+                            <td valign="top"><?= lang('cost') ?>:</td>
                             <td>$<?= $event_details->eventCost; ?><br></td>
                         </tr>
                         <tr>
-                            <td valign="top">Details:</td>
+                            <td valign="top"><?= lang('details') ?>:</td>
                             <td> <?= $event_details->eventDescription; ?></td>
                         </tr>
                         <tr>
                             <td ></td>
-                            <td>For more information, visit: <a href="<?= $event_details->eventURL; ?>"><?= $event_details->eventURL; ?></a><br></td>
+                            <td><?= lang('for_more_information') ?>: <a href="<?= $event_details->eventURL; ?>"><?= $event_details->eventURL; ?></a><br></td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td>Posted by: <?= $event_details->submittedByUserName ?>  &nbsp;&nbsp;&nbsp; <?= date('m/d/Y @ h:m a',strtotime($event_details->createdOn)) ?> &nbsp;&nbsp; <!--<button type="button" onclick="#" class="btn btn-primary">Approve</button>--></td>
+                            <td><?= lang('posted_by') ?>: <?= $event_details->submittedByUserName ?>  &nbsp;&nbsp;&nbsp; <?= date('m/d/Y @ h:m a',strtotime($event_details->createdOn)) ?> &nbsp;&nbsp; <!--<button type="button" onclick="#" class="btn btn-primary">Approve</button>--></td>
                         </tr>
                     </table>
                 </div>
             </div>
             <div class="col-4">
                 <div class="right-sidebar">
-                    <h2 class="h2-with-bottom">Featured specialists near Cherry Hill, NJ</h2>
+                    <h2 class="h2-with-bottom"><?= lang('featured_specialists') ?></h2>
                     <img src="<?= base_url(); ?>assets/images/featured2.png" class="width-20-rem mb-2"><br><img
                             src="<?= base_url(); ?>assets/images/featured.png" class="width-20-rem mb-2">
 
-                    <h2 class="h2-with-bottom mt-2">Latest News</h2>
+                    <h2 class="h2-with-bottom mt-2"><?= lang('latest_news') ?></h2>
 
                     <img class="width-20-rem" src="<?= base_url(); ?>assets/images/articlesidebar3.png">
                     <hr>
@@ -77,7 +77,7 @@
                     <hr>
                     <img class="width-20-rem" src="<?= base_url(); ?>assets/images/articlesidebar4.png">
 
-                    <h2 class="h2-with-bottom mt-1">Trending Topics</h2>
+                    <h2 class="h2-with-bottom mt-1"><?= lang('trending_topics') ?></h2>
 
                     <div style="padding-left: 15px; font-size: .9em;">
 

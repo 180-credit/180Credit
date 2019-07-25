@@ -361,4 +361,10 @@ class Home extends MY_Controller
         $img = "http://localhost/180Credit/assets/images/main2.jpg";
         $this->sendPushNotification($message,$user_id,$url,$headings,$img);
     }
+
+    function switchLanguage($language = "") {
+        $language = ($language != "") ? $language : "english";
+        $this->session->set_userdata('site_lang', $language);
+        redirect($_SERVER['HTTP_REFERER']);
+    }
 }
