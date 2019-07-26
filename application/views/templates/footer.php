@@ -35,7 +35,7 @@
 		<div class="footer-bottom py-3 mt-5">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-8">
 						<div class="footer-logo">
 							<a href="#"><img src="<?php echo base_url(); ?>assets/images/footer-logo.png" title="footer-logo" alt="footer-logo" class="img-res"></a>
 						</div>
@@ -48,7 +48,7 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="social-links mt-3">
 							<ul class="list-unstyled mb-0">
 								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
