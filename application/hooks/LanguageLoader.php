@@ -1,4 +1,5 @@
 <?php
+
 class LanguageLoader
 {
     function initialize()
@@ -7,9 +8,9 @@ class LanguageLoader
         $ci->load->helper('language');
 
         if (isset($_SESSION['site_lang']) && $_SESSION['site_lang'] != 'english') {
-            $ci->lang->load(array('events'), $_SESSION['site_lang']);
+            $ci->lang->load(array('events', 'main'), $_SESSION['site_lang']);
         } else {
-            $ci->lang->load(array('events'), 'english');
+            $ci->lang->load(array('events', 'main'), 'english');
         }
 
     }

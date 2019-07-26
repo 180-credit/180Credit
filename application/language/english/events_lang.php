@@ -2,6 +2,7 @@
 // header
 $lang["upcoming_events"] = "Upcoming Events";
 $lang["create_event"] = "Create Event";
+$lang["events"] = "Events";
 
 // breadcrumb
 $lang["home"] = "Home";

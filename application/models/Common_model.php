@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Common_model extends CI_Model {
     //For Stories 
     private $users = 'users';
-   
+
     public function getUserTable() {
         return $this->users;
     }
@@ -19,7 +19,7 @@ class Common_model extends CI_Model {
         }
         $sqlQuery .= ' ORDER BY `name`;';
         $query = $this->db->query($sqlQuery);
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
 
@@ -61,12 +61,12 @@ class Common_model extends CI_Model {
             $query = $this->db->query("CALL viewZipCodesCityByText('$q');");
             $this->db->close();
             $result['cities'] =  $query->result();
-            
+
             $this->db->reconnect();
             $query1 = $this->db->query("CALL viewZipCodesStateByText('$q');");
             $this->db->close();
             $result['states'] =  $query1->result();
-            
+
             return $result;
         }
     }
@@ -74,7 +74,7 @@ class Common_model extends CI_Model {
     public function loadBillingTypes(){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadBillingTypes()");
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
 
@@ -86,6 +86,43 @@ class Common_model extends CI_Model {
         return $query->result();
     }
 
+    /**
+     * To get result(s) of queries that returns multiple result sets...
+     *
+     * @author Pankaj Garg <garg.pankaj15@gmail.com>
+     *
+     * @param string $queryString
+     *
+     * @return bool|array List of result arrays
+     */
+    /*public function GetMultipleQueryResult($queryString)
+    {
+        if (empty($queryString)) {
+            return false;
+        }
+
+        $index     = 0;
+        $ResultSet = array();
+        $conn = new mysqli($this->db->hostname, $this->db->username, $this->db->password,$this->db->database);
+
+        if (mysqli_multi_query($conn, $queryString)) {
+            do {
+                if (false != $result = mysqli_use_result($conn)) {
+                    $rowID = 0;
+                    while ($row = $result->fetch_assoc()) {
+                        $ResultSet[$index][$rowID] = $row;
+                        $rowID++;
+                    }
+                }
+                $index++;
+                if ($result instanceof mysqli_result){
+                    mysqli_free_result($result);
+                }
+            } while (mysqli_more_results($conn) && mysqli_next_result($conn));
+        }
+        return $ResultSet;
+    }*/
+
     public function loadEvent($eventId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadEvent({$eventId})");
@@ -94,16 +131,16 @@ class Common_model extends CI_Model {
     }
 
     public function loadFeeTypes(){
-        $this->db->reconnect();       
+        $this->db->reconnect();
         $query = $this->db->query("CALL loadFeeTypes()");
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
 
     public function loadUserAboutMe($userId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserAboutMe($userId)");
-        $this->db->close(); 
+        $this->db->close();
         return $query->row();
     }
 
@@ -131,55 +168,55 @@ class Common_model extends CI_Model {
     public function loadUserCompanyProfile($userId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserCompanyProfile($userId)");
-        $this->db->close(); 
+        $this->db->close();
         return $query->row();
     }
 
     public function  loadUserAreasOfSpecialty($userId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserAreasOfSpecialty($userId)");
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
-    
+
     public function loadUserFees($userId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserFees($userId)");
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
-    
+
     public function loadUserTags($userId){
         $this->db->reconnect();
         $query = $this->db->query("CALL loadUserTags($userId)");
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
-    
+
     public function loadStates(){
         $this->db->reconnect();
         $query = $this->db->query("select * from state");
-        $this->db->close(); 
+        $this->db->close();
         return $query->result();
     }
 
     public function setUpdatedSequence($id,$value){
         $this->db->reconnect();
         $query = $this->db->query("update user_fees set displayOrder={$value} where id=".$id);
-        $this->db->close(); 
+        $this->db->close();
     }
 
     public function loadUserFeeFromName($name){
         $this->db->reconnect();
         $query = $this->db->query("select * from fee_types where feeTypeName like '{$name}'");
-        $this->db->close(); 
+        $this->db->close();
         return $query->row();
     }
 
     public function loadUserBillingFromName($name){
         $this->db->reconnect();
         $query = $this->db->query("select * from billing_types where billingTypeName like '{$name}'");
-        $this->db->close(); 
+        $this->db->close();
         return $query->row();
     }
 
@@ -369,7 +406,7 @@ class Common_model extends CI_Model {
         $config['smtp_timeout'] = '30';
         $config['smtp_user'] = 'email@host.com';
         $config['smtp_pass'] = 'pass';
-			
+
         $config['mailtype'] = 'html';
         $this->email->initialize($config);
 
@@ -387,7 +424,7 @@ class Common_model extends CI_Model {
 			foreach($attach as $atch){
 				$this->email->attach($atch);
 			}
-		return $this->email->send();	      
+		return $this->email->send();
       /*  echo $this->email->print_debugger(); */
     }
 }

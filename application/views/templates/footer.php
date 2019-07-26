@@ -2,15 +2,15 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 mb-sm-5">
-					<h5 class="text-uppercase text-white">Quick Link</h5>
+					<h5 class="text-uppercase text-white"><?= lang('quick_link'); ?></h5>
 					<ul class="list-unstyled mb-0">
-						<li> <a href="#">Find a Specialist Near You</a> </li>
-						<li> <a href="#">Free Questions and Answers</a> </li>
-						<li> <a href="#">Latest News and Articles</a> </li>
+						<li> <a href="#"><?= lang('find_a_specialist_near_you'); ?></a></li>
+						<li> <a href="#"><?= lang('free_questions_and_answers'); ?></a></li>
+						<li> <a href="#"><?= lang('latest_news_and_articles'); ?></a></li>
 					</ul>
 				</div>
 				<div class="col-md-4 mb-sm-5">
-                    <h5 class="text-uppercase text-white">Upcoming Events</h5>
+                    <h5 class="text-uppercase text-white"><?= lang('upcoming_events'); ?></h5>
                     <ul class="list-unstyled mb-0">
                         <?php
                         foreach ($upcoming_events as $upcoming_event){
@@ -19,15 +19,15 @@
                             <?php
                         }
                         ?>
-                        <li><a href="<?= base_url('events') ?>">View all upcoming events</a></li>
+                        <li><a href="<?= base_url('events') ?>"><?= lang('view_all_upcoming_events'); ?></a></li>
                     </ul>
 				</div>
 				<div class="col-md-4 mb-sm-5">
-					<h5 class="text-uppercase text-white">Resources</h5>
+					<h5 class="text-uppercase text-white"><?= lang('resources'); ?></h5>
 					<ul class="list-unstyled mb-0">
-						<li> <a href="#">Upcoming Industry Events</a> </li>
-						<li> <a href="#">Free Questions and Answers</a> </li>
-						<li> <a href="#">Latest News and Articles</a> </li>
+						<li> <a href="#"><?= lang('upcoming_industry_events'); ?></a> </li>
+                        <li> <a href="#"><?= lang('free_questions_and_answers'); ?></a></li>
+                        <li> <a href="#"><?= lang('latest_news_and_articles'); ?></a></li>
 					</ul>
 				</div>
 			</div>
@@ -41,10 +41,10 @@
 						</div>
 						<div class="footer-links">
 							<ul class="list-unstyled mb-0 mt-2">
-								<li><a href="#">Contact</a></li>
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Community Guidelines</a></li>
+								<li><a href="#"><?= lang('contact'); ?></a></li>
+								<li><a href="#"><?= lang('terms_of_use'); ?></a></li>
+								<li><a href="#"><?= lang('privacy_policy'); ?></a></li>
+								<li><a href="#"><?= lang('community_guidelines'); ?></a></li>
 							</ul>
 						</div>
 					</div>

@@ -61,7 +61,7 @@
             <div class="col-6 col-md-9">
                 <nav class="navbar navbar-expand-lg p-0">
                     <div class="d-lg-none">
-                        <a class="navbar-brand" href="#">Categories</a>
+                        <a class="navbar-brand" href="#"><?= lang('categories'); ?></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent">
                             <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
@@ -77,34 +77,34 @@
                                 ?>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fas fa-user"></i> Deals</a>
+                                    <a class="nav-link" href="#"><i class="fas fa-user"></i> <?= lang('deals'); ?></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-envelope"></i> Mail</a>
+                                    <a class="nav-link" href="#"><i class="fa fa-envelope"></i> <?= lang('mail'); ?></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#"><i class="fa fa-calendar-check" aria-hidden="true"></i>
-                                        Activities</a>
+                                        <?= lang('activities'); ?></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fas fa-user"></i> Contacts</a>
+                                    <a class="nav-link" href="#"><i class="fas fa-user"></i> <?= lang('contacts'); ?></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#"><i class="fas fa-chart-bar" aria-hidden="true"></i>
-                                        Progress</a>
+                                        <?= lang('progress'); ?></a>
                                 </li>
 
                                 <?php
                             } else {
                                 ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">About Us</a>
+                                    <a class="nav-link" href="#"><?= lang('about_us'); ?></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Free Q & A</a>
+                                    <a class="nav-link" href="#"><?= lang('free_q_and_a'); ?></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">News & Articles</a>
+                                    <a class="nav-link" href="#"><?= lang('news_and_articles'); ?></a>
                                 </li>
                                 <?php
                             }
@@ -126,10 +126,7 @@
                                 <?php
                             } else {
                                 ?>
-                                <button type="button" class="btn list-buis"
-                                        onclick="window.location.href='<?= base_url() . 'list-your-business'; ?>'">List
-                                    Your Business
-                                </button>
+                                <button type="button" class="btn list-buis" onclick="window.location.href='<?= base_url() . 'list-your-business'; ?>'"><?= lang('list_your_business'); ?></button>
                                 <?php
                             }
                             ?>
@@ -192,25 +189,25 @@
 
                                     <div class="dropdown-menu p-2 rounded shadow-sm border-0"
                                          aria-labelledby="dropdownMenuLink">
-                                        <a href="<?= base_url(); ?>my-account" class="btn profile-class">My account</a>
+                                        <a href="<?= base_url(); ?>my-account" class="btn profile-class"><?= lang('my_account'); ?></a>
                                         <!-- <a href="<?= base_url(); ?>my-business-profile" class="btn profile-class">My business profile</a> -->
                                         <!-- <a href="<?= base_url(); ?>password-and-security" class="btn profile-class">Password and security</a> -->
-                                        <a href="<?= base_url(); ?>logout" class="btn profile-class">Logout</a>
+                                        <a href="<?= base_url(); ?>logout" class="btn profile-class"><?= lang('logout'); ?></a>
                                     </div>
                                     <?php
                                 } else {
                                     ?>
                                     <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-user"></i> Log in/Register
+                                        <i class="fas fa-user"></i> <?= lang('log_in_register'); ?>
                                     </a>
 
                                     <div class="dropdown-menu p-2 rounded shadow-sm border-0"
                                          aria-labelledby="dropdownMenuLink">
                                         <a href="<?= base_url(); ?>consumer/login"
-                                           class="btn btn-primary btn-block txtwhite">Consumer</a>
+                                           class="btn btn-primary btn-block txtwhite"><?= lang('consumer'); ?></a>
                                         <a href="<?= base_url(); ?>service-provider/login"
-                                           class="btn btn-secondary btn-block txtwhite">Service Provider</a>
+                                           class="btn btn-secondary btn-block txtwhite"><?= lang('service_provider'); ?></a>
                                     </div>
                                     <?php
                                 }
