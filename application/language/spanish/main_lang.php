@@ -1,7 +1,7 @@
 <?php
 // breadcrumb
 $lang["about_us"] = "Sobre nosotros";
-$lang["free_q_and_a"] = "Preguntas y respuestas gratuitas";
+$lang["free_q_and_a"] = "Q&A gratuitas";
 $lang["news_and_articles"] = "Noticias y Artículos";
 $lang["categories"] = "Las categorías";
 $lang["deals"] = "Ofertas";
@@ -26,7 +26,7 @@ $lang["upcoming_events"] = "Próximos Eventos";
 $lang["resources"] = "Recursos";
 
 $lang["find_a_specialist_near_you"] = "Encuentre un especialista cerca de usted";
-$lang["free_questions_and_answers"] = "Q & A gratuitas";
+$lang["free_questions_and_answers"] = "Preguntas y respuestas gratuitas";
 $lang["latest_news_and_articles"] = "Últimas noticias y artículos";
 
 $lang["upcoming_industry_events"] = "Próximos eventos de la industria";
