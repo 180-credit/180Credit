@@ -47,7 +47,7 @@
 
 </head>
 
-<body>
+<body class="<?= (isset($_SESSION['site_lang']) && $_SESSION['site_lang'] != 'english') ? 'spanish-lang' : '' ?>">
 
 <header class="shadow py-2">
     <div class="container">

@@ -579,3 +579,11 @@ footer .footer-bottom .social-links ul li a:hover { color: #fff; border-color: #
 
 /*---------------------- message-popup.html CSS Ends ----------------------*/
 
+/*Spanish.html Starts*/
+.spanish-lang header .container {
+	max-width: 1350px; }
+@media (max-width: 992px) {
+	.spanish-lang header .container {
+		max-width: 1350px; } }
+
+/*Spanish.html Ends*/
