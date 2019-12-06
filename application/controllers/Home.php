@@ -331,9 +331,7 @@ class Home extends MY_Controller
                 'id' => $token,
                 'redirectURL' => $path
             );
-            $this->db->set($data);
-            $query=$this->db->get_compiled_insert('redirects');
-            $this->db->query($query);
+            $this->db->query("INSERT INTO `redirects` (`id`, `redirectURL`, `createdOn`) VALUES ('{$token}', '{$path}', current_timestamp());");
             $_SESSION['rt'] = $token;
             redirect('consumer/login');
         }
