@@ -345,9 +345,9 @@ class Home extends MY_Controller
         $data['user'] = (array)$this->Login_model->getDataByCondition('users', $condition, true);
         $loginUserId = isset($_SESSION['user']['userId']) ? $_SESSION['user']['userId'] : '';
         $data['userProfile'] = $this->Common_model->loadUserProfile($data['user']['userId'],$loginUserId);
-        $data['upcoming_events'] = $this->upcoming_events;
+//        $data['upcoming_events'] = $this->upcoming_events;
         $this->template->load('layout','sendMessageToUser', $data);
-        redirect('/events');
+//        redirect('/events');
     }
 
 
